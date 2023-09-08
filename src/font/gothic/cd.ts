@@ -1,7 +1,7 @@
 import { generateFattenCurve } from "../../curve";
 import { Polygon } from "../../polygon";
 import { Polygons } from "../../polygons";
-import { normalize, round } from "../../util";
+import { normalize } from "../../util";
 import { Pen } from "../../pen";
 import Gothic from ".";
 
@@ -53,10 +53,7 @@ function cdDrawCurveU(
 	const { left, right } = generateFattenCurve(
 		x1, y1, sx1, sy1, sx2, sy2, x2, y2,
 		font.kRate,
-		() => font.kWidth,
-		([x, y], mag) => (round(x) === 0 && round(y) === 0)
-			? [-mag, 0] // ?????
-			: normalize([x, y], mag)
+		() => font.kWidth
 	);
 
 	const poly = new Polygon();

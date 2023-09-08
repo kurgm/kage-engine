@@ -1,7 +1,7 @@
 import { divide_curve, find_offcurve, generateFattenCurve } from "../../curve";
 import { Polygon } from "../../polygon";
 import { Polygons } from "../../polygons";
-import { hypot, normalize, round } from "../../util";
+import { hypot, normalize } from "../../util";
 import { Pen } from "../../pen";
 import Mincho from ".";
 
@@ -114,10 +114,7 @@ function cdDrawCurveU(
 					deltad = 0.15;
 				}
 				return kMinWidthT * deltad;
-			},
-			([x, y], mag) => (y === 0)
-				? [-mag, 0] // ?????
-				: normalize([x, y], mag)
+			}
 		); // L and R
 
 		const { off: [offL1, offL2], index: indexL } = divide_curve(x1, y1, sx1, sy1, x2, y2, curveL);
@@ -186,10 +183,7 @@ function cdDrawCurveU(
 				}
 
 				return kMinWidthT * deltad;
-			},
-			([x, y], mag) => (round(x) === 0 && round(y) === 0)
-				? [-mag, 0] // ?????
-				: normalize([x, y], mag)
+			}
 		);
 
 		const poly = new Polygon();
