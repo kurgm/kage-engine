@@ -11,9 +11,9 @@
 	},
 	"plugins": ["@typescript-eslint"],
 	"extends": [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked"
 	],
 	"rules": {
 		"array-bracket-spacing": "error",
@@ -86,16 +86,17 @@
 		"@typescript-eslint/no-namespace": "off",
 		"@typescript-eslint/no-non-null-asserted-optional-chain": "error",
 		"@typescript-eslint/no-non-null-assertion": "off",
-		"@typescript-eslint/no-parameter-properties": "warn",
 		"@typescript-eslint/no-unnecessary-qualifier": "warn",
 		"@typescript-eslint/no-unnecessary-type-arguments": "warn",
 		"@typescript-eslint/no-unused-expressions": "error",
 		"@typescript-eslint/no-unused-vars": "off",
 		"@typescript-eslint/no-use-before-define": "off",
 		"@typescript-eslint/no-useless-constructor": "error",
+		"@typescript-eslint/parameter-properties": "warn",
 		"@typescript-eslint/prefer-as-const": "error",
 		"@typescript-eslint/prefer-for-of": "error",
 		"@typescript-eslint/prefer-includes": "warn",
+		"@typescript-eslint/prefer-nullish-coalescing": "off",
 		"@typescript-eslint/prefer-optional-chain": "error",
 		"@typescript-eslint/prefer-reduce-type-parameter": "error",
 		"@typescript-eslint/prefer-string-starts-ends-with": "warn",

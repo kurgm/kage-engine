@@ -3,7 +3,7 @@
  */
 export class Buhin {
 	/** The object whose keys are glyph names and whose values are KAGE data. */
-	protected hash: { [name: string]: string };
+	protected hash: Record<string, string>;
 
 	constructor() {
 		// initialize

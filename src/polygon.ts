@@ -67,7 +67,7 @@ export class Polygon {
 	 * @see {@link Polygon.length} is faster if you only need the length.
 	 * @see {@link Polygon.get} is faster if you need just one element.
 	 */
-	public get array(): ReadonlyArray<Readonly<Point>> {
+	public get array(): readonly Readonly<Point>[] {
 		return this._array.map((_, i) => this.get(i));
 	}
 	/** The number of points in this contour. */
