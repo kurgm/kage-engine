@@ -10,7 +10,8 @@ const banner = `/*! kage.js v${pkg.version}
  *  ${pkg.homepage}
  */`;
 
-export default {
+/** @type {import("rollup").RollupOptions} */
+const options = {
 	input: "src/browser.ts",
 	output: [
 		{
@@ -29,5 +30,15 @@ export default {
 			plugins: [terser()],
 		},
 	],
-	plugins: [typescript({ tsconfig: false, target: "es5" })],
+	plugins: [
+		typescript({
+			compilerOptions: {
+				module: "ESNext",
+				declaration: false,
+				outDir: undefined,
+			},
+		}),
+	],
 };
+
+export default options;

@@ -1,7 +1,7 @@
-export { Kage, Kage as default } from "./kage";
-export { Polygons } from "./polygons";
-export { Buhin } from "./buhin";
-export { KShotai } from "./font";
+export { Kage, Kage as default } from "./kage.js";
+export { Polygons } from "./polygons.js";
+export { Buhin } from "./buhin.js";
+export { KShotai } from "./font/index.js";
 
-export type { Font, Mincho, Gothic } from "./font";
-export type { Polygon, Point } from "./polygon";
+export type { Font, Mincho, Gothic } from "./font/index.js";
+export type { Polygon, Point } from "./polygon.js";

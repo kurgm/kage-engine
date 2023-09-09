@@ -1,4 +1,4 @@
-import { Polygon } from "./polygon";
+import { Polygon } from "./polygon.js";
 
 /**
  * Represents the rendered glyph.

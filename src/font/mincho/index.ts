@@ -1,11 +1,11 @@
-import { Polygon } from "../../polygon";
-import { Polygons } from "../../polygons";
-import { Stroke } from "../../stroke";
-import { hypot, normalize, round } from "../../util";
-import { FontInterface, StrokeDrawer } from "..";
-import { KShotai } from "../shotai";
+import { Polygon } from "../../polygon.js";
+import { Polygons } from "../../polygons.js";
+import { Stroke } from "../../stroke.js";
+import { hypot, normalize, round } from "../../util.js";
+import { FontInterface, StrokeDrawer } from "../index.js";
+import { KShotai } from "../shotai.js";
 
-import { cdDrawBezier, cdDrawCurve, cdDrawLine } from "./cd";
+import { cdDrawBezier, cdDrawCurve, cdDrawLine } from "./cd.js";
 
 interface MinchoAdjustedStroke {
 	readonly stroke: Stroke;
