@@ -1,6 +1,102 @@
 import {cdDrawBezier, cdDrawCurve, cdDrawLine} from "./kagecd.js";
 import {round} from "./2d.js";
 
+function dfTransform(kage, polygons, x1, y1, x2, y2, a2, a3) {
+	if (a2 == 98) {
+		for (var i = 0; i < polygons.array.length; i++) {
+			var inside = true;
+			for (var j = 0; j < polygons.array[i].array.length; j++) {
+				if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
+					y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
+					inside = false;
+				}
+			}
+			if (inside) {
+				for (var j = 0; j < polygons.array[i].array.length; j++) {
+					polygons.array[i].array[j].x = round(x2 - (polygons.array[i].array[j].x - x1));
+					polygons.array[i].array[j].x = Math.floor(polygons.array[i].array[j].x * 10) / 10;
+				}
+			}
+		}
+	} else if (a2 == 97) {
+		for (var i = 0; i < polygons.array.length; i++) {
+			var inside = true;
+			for (var j = 0; j < polygons.array[i].array.length; j++) {
+				if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
+					y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
+					inside = false;
+				}
+			}
+			if (inside) {
+				for (var j = 0; j < polygons.array[i].array.length; j++) {
+					polygons.array[i].array[j].y = round(y2 - (polygons.array[i].array[j].y - y1));
+					polygons.array[i].array[j].y = Math.floor(polygons.array[i].array[j].y * 10) / 10;
+				}
+			}
+		}
+	} else if (a2 == 99 && a3 == 1) {
+		for (var i = 0; i < polygons.array.length; i++) {
+			var inside = true;
+			for (var j = 0; j < polygons.array[i].array.length; j++) {
+				if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
+					y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
+					inside = false;
+				}
+			}
+			if (inside) {
+				for (var j = 0; j < polygons.array[i].array.length; j++) {
+					var x = polygons.array[i].array[j].x;
+					var y = polygons.array[i].array[j].y;
+					polygons.array[i].array[j].x = round(x1 + (y2 - y));
+					polygons.array[i].array[j].y = round(y1 + (x - x1));
+					polygons.array[i].array[j].x = Math.floor(polygons.array[i].array[j].x * 10) / 10;
+					polygons.array[i].array[j].y = Math.floor(polygons.array[i].array[j].y * 10) / 10;
+				}
+			}
+		}
+	} else if (a2 == 99 && a3 == 2) {
+		for (var i = 0; i < polygons.array.length; i++) {
+			var inside = true;
+			for (var j = 0; j < polygons.array[i].array.length; j++) {
+				if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
+					y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
+					inside = false;
+				}
+			}
+			if (inside) {
+				for (var j = 0; j < polygons.array[i].array.length; j++) {
+					var x = polygons.array[i].array[j].x;
+					var y = polygons.array[i].array[j].y;
+					polygons.array[i].array[j].x = round(x2 - (x - x1));
+					polygons.array[i].array[j].y = round(y2 - (y - y1));
+					polygons.array[i].array[j].x = Math.floor(polygons.array[i].array[j].x * 10) / 10;
+					polygons.array[i].array[j].y = Math.floor(polygons.array[i].array[j].y * 10) / 10;
+				}
+			}
+		}
+	} else if (a2 == 99 && a3 == 3) {
+		for (var i = 0; i < polygons.array.length; i++) {
+			var inside = true;
+			for (var j = 0; j < polygons.array[i].array.length; j++) {
+				if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
+					y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
+					inside = false;
+				}
+			}
+			if (inside) {
+				for (var j = 0; j < polygons.array[i].array.length; j++) {
+					var x = polygons.array[i].array[j].x;
+					var y = polygons.array[i].array[j].y;
+					polygons.array[i].array[j].x = round(x1 + (y - y1));
+					polygons.array[i].array[j].y = round(y2 - (x - x1));
+					polygons.array[i].array[j].x = Math.floor(polygons.array[i].array[j].x * 10) / 10;
+					polygons.array[i].array[j].y = Math.floor(polygons.array[i].array[j].y * 10) / 10;
+				}
+			}
+		}
+	}
+}
+
 export function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x4, y4) {
 	var tx1,
 		tx2,
@@ -12,103 +108,12 @@ export function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x
 		ty4,
 		v;
 	var rad;
+	var rate;
 
 	if (kage.kShotai == kage.kMincho) {
 		switch (a1 % 100) { // ... no need to divide
 			case 0:
-				if (a2 == 98) {
-					for (var i = 0; i < polygons.array.length; i++) {
-						var inside = true;
-						for (var j = 0; j < polygons.array[i].array.length; j++) {
-							if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
-								y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
-								inside = false;
-							}
-						}
-						if (inside) {
-							for (var j = 0; j < polygons.array[i].array.length; j++) {
-								polygons.array[i].array[j].x = round(x2 - (polygons.array[i].array[j].x - x1));
-								polygons.array[i].array[j].x = Math.floor(polygons.array[i].array[j].x * 10) / 10;
-							}
-						}
-					}
-				} else if (a2 == 97) {
-					for (var i = 0; i < polygons.array.length; i++) {
-						var inside = true;
-						for (var j = 0; j < polygons.array[i].array.length; j++) {
-							if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
-								y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
-								inside = false;
-							}
-						}
-						if (inside) {
-							for (var j = 0; j < polygons.array[i].array.length; j++) {
-								polygons.array[i].array[j].y = round(y2 - (polygons.array[i].array[j].y - y1));
-								polygons.array[i].array[j].y = Math.floor(polygons.array[i].array[j].y * 10) / 10;
-							}
-						}
-					}
-				} else if (a2 == 99 && a3 == 1) {
-					for (var i = 0; i < polygons.array.length; i++) {
-						var inside = true;
-						for (var j = 0; j < polygons.array[i].array.length; j++) {
-							if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
-								y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
-								inside = false;
-							}
-						}
-						if (inside) {
-							for (var j = 0; j < polygons.array[i].array.length; j++) {
-								var x = polygons.array[i].array[j].x;
-								var y = polygons.array[i].array[j].y;
-								polygons.array[i].array[j].x = round(x1 + (y2 - y));
-								polygons.array[i].array[j].y = round(y1 + (x - x1));
-								polygons.array[i].array[j].x = Math.floor(polygons.array[i].array[j].x * 10) / 10;
-								polygons.array[i].array[j].y = Math.floor(polygons.array[i].array[j].y * 10) / 10;
-							}
-						}
-					}
-				} else if (a2 == 99 && a3 == 2) {
-					for (var i = 0; i < polygons.array.length; i++) {
-						var inside = true;
-						for (var j = 0; j < polygons.array[i].array.length; j++) {
-							if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
-								y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
-								inside = false;
-							}
-						}
-						if (inside) {
-							for (var j = 0; j < polygons.array[i].array.length; j++) {
-								var x = polygons.array[i].array[j].x;
-								var y = polygons.array[i].array[j].y;
-								polygons.array[i].array[j].x = round(x2 - (x - x1));
-								polygons.array[i].array[j].y = round(y2 - (y - y1));
-								polygons.array[i].array[j].x = Math.floor(polygons.array[i].array[j].x * 10) / 10;
-								polygons.array[i].array[j].y = Math.floor(polygons.array[i].array[j].y * 10) / 10;
-							}
-						}
-					}
-				} else if (a2 == 99 && a3 == 3) {
-					for (var i = 0; i < polygons.array.length; i++) {
-						var inside = true;
-						for (var j = 0; j < polygons.array[i].array.length; j++) {
-							if (x1 > polygons.array[i].array[j].x || polygons.array[i].array[j].x > x2 ||
-								y1 > polygons.array[i].array[j].y || polygons.array[i].array[j].y > y2) {
-								inside = false;
-							}
-						}
-						if (inside) {
-							for (var j = 0; j < polygons.array[i].array.length; j++) {
-								var x = polygons.array[i].array[j].x;
-								var y = polygons.array[i].array[j].y;
-								polygons.array[i].array[j].x = round(x1 + (y - y1));
-								polygons.array[i].array[j].y = round(y2 - (x - x1));
-								polygons.array[i].array[j].x = Math.floor(polygons.array[i].array[j].x * 10) / 10;
-								polygons.array[i].array[j].y = Math.floor(polygons.array[i].array[j].y * 10) / 10;
-							}
-						}
-					}
-				}
+				dfTransform(kage, polygons, x1, y1, x2, y2, a2, a3);
 				break;
 			case 1:
 				if (a3 % 100 == 4) {
@@ -296,7 +301,7 @@ export function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x
 				cdDrawLine(kage, polygons, x3, y3, x4, y4, 6, a3);
 				break;
 			case 4:
-				var rate = 6;
+				rate = 6;
 				if ((x3 - x2) * (x3 - x2) + (y3 - y2) * (y3 - y2) < 14400) { // smaller than 120 x 120
 					rate = Math.sqrt((x3 - x2) * (x3 - x2) + (y3 - y2) * (y3 - y2)) / 120 * 6;
 				}
@@ -459,9 +464,10 @@ export function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x
 	} else { // gothic
 		switch (a1 % 100) {
 			case 0:
+				dfTransform(kage, polygons, x1, y1, x2, y2, a2, a3);
 				break;
 			case 1:
-				if (a3 == 4) {
+				if (a3 % 100 == 4) {
 					if (x1 == x2) {
 						if (y1 < y2) {
 							v = 1;
@@ -496,7 +502,7 @@ export function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x
 				break;
 			case 2:
 			case 12:
-				if (a3 == 4) {
+				if (a3 % 100 == 4) {
 					if (x2 == x3) {
 						tx1 = x3;
 						ty1 = y3 - kage.kMage;
@@ -527,7 +533,7 @@ export function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x
 				}
 				break;
 			case 3:
-				if (a3 == 5) {
+				if (a3 % 1000 == 5) {
 					if (x1 == x2) {
 						if (y1 < y2) {
 							v = 1;
@@ -648,8 +654,153 @@ export function dfDrawFont(kage, polygons, a1, a2, a3, x1, y1, x2, y2, x3, y3, x
 					cdDrawLine(kage, polygons, tx2, ty2, x3, y3, 1, a3);
 				}
 				break;
-			case 6:
+			case 4:
+				rate = 6;
+				if ((x3 - x2) * (x3 - x2) + (y3 - y2) * (y3 - y2) < 14400) { // smaller than 120 x 120
+					rate = Math.sqrt((x3 - x2) * (x3 - x2) + (y3 - y2) * (y3 - y2)) / 120 * 6;
+				}
 				if (a3 == 5) {
+					if (x1 == x2) {
+						if (y1 < y2) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx1 = x2;
+						ty1 = y2 - kage.kMage * v * rate;
+					} else if (y1 == y2) {
+						if (x1 < x2) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx1 = x2 - kage.kMage * v * rate;
+						ty1 = y2;
+					} else {
+						rad = Math.atan((y2 - y1) / (x2 - x1));
+						if (x1 < x2) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx1 = x2 - kage.kMage * Math.cos(rad) * v * rate;
+						ty1 = y2 - kage.kMage * Math.sin(rad) * v * rate;
+					}
+					if (x2 == x3) {
+						if (y2 < y3) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx2 = x2;
+						ty2 = y2 + kage.kMage * v * rate;
+					} else if (y2 == y3) {
+						if (x2 < x3) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx2 = x2 + kage.kMage * v * rate;
+						ty2 = y2;
+					} else {
+						rad = Math.atan((y3 - y2) / (x3 - x2));
+						if (x2 < x3) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx2 = x2 + kage.kMage * Math.cos(rad) * v * rate;
+						ty2 = y2 + kage.kMage * Math.sin(rad) * v * rate;
+					}
+					tx3 = x3 - kage.kMage;
+					ty3 = y3;
+					tx4 = x3 + kage.kMage * 0.5;
+					ty4 = y3 - kage.kMage * 2;
+
+					cdDrawLine(kage, polygons, x1, y1, tx1, ty1, a2, 1);
+					cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, 1, 1);
+					cdDrawLine(kage, polygons, tx2, ty2, tx3, ty3, 1, 1);
+					cdDrawCurve(kage, polygons, tx3, ty3, x3, y3, tx4, ty4, 1, 0);
+				} else {
+					if (x1 == x2) {
+						if (y1 < y2) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx1 = x2;
+						ty1 = y2 - kage.kMage * v * rate;
+					} else if (y1 == y2) {
+						if (x1 < x2) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx1 = x2 - kage.kMage * v * rate;
+						ty1 = y2;
+					} else {
+						rad = Math.atan((y2 - y1) / (x2 - x1));
+						if (x1 < x2) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx1 = x2 - kage.kMage * Math.cos(rad) * v * rate;
+						ty1 = y2 - kage.kMage * Math.sin(rad) * v * rate;
+					}
+					if (x2 == x3) {
+						if (y2 < y3) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx2 = x2;
+						ty2 = y2 + kage.kMage * v * rate;
+					} else if (y2 == y3) {
+						if (x2 < x3) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx2 = x2 + kage.kMage * v * rate;
+						ty2 = y2;
+					} else {
+						rad = Math.atan((y3 - y2) / (x3 - x2));
+						if (x2 < x3) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx2 = x2 + kage.kMage * Math.cos(rad) * v * rate;
+						ty2 = y2 + kage.kMage * Math.sin(rad) * v * rate;
+					}
+
+					cdDrawLine(kage, polygons, x1, y1, tx1, ty1, a2, 1);
+					cdDrawCurve(kage, polygons, tx1, ty1, x2, y2, tx2, ty2, 1, 1);
+					cdDrawLine(kage, polygons, tx2, ty2, x3, y3, 1, a3);
+				}
+				break;
+			case 6:
+				if (a3 % 100 == 4) {
+					if (x3 == x4) {
+						tx1 = x4;
+						ty1 = y4 - kage.kMage;
+					} else if (y3 == y4) {
+						tx1 = x4 - kage.kMage;
+						ty1 = y4;
+					} else {
+						rad = Math.atan((y4 - y3) / (x4 - x3));
+						if (x3 < x4) {
+							v = 1;
+						} else {
+							v = -1;
+						}
+						tx1 = x4 - kage.kMage * Math.cos(rad) * v;
+						ty1 = y4 - kage.kMage * Math.sin(rad) * v;
+					}
+					cdDrawBezier(kage, polygons, x1, y1, x2, y2, x3, y3, tx1, ty1, a2, 1);
+					cdDrawCurve(kage, polygons, tx1, ty1, x4, y4, x4 - kage.kMage * 2, y4 - kage.kMage * 0.5, 1, 0);
+				} else if (a3 == 5) {
 					tx1 = x4 - kage.kMage;
 					ty1 = y4;
 					tx2 = x4 + kage.kMage * 0.5;
