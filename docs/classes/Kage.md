@@ -4,7 +4,7 @@
 
 The entry point for KAGE engine (Kanji-glyph Automatic Generating Engine).
 It generates glyph outlines from a kanji's stroke data described in a dedicated
-intermediate format called KAGE data.
+intermediate format called [KAGE data](https://glyphwiki.org/wiki/GlyphWiki:KAGE%e3%83%87%e3%83%bc%e3%82%bf%e4%bb%95%e6%a7%98).
 
 KAGE data may contain references to other glyphs (components), which are
 resolved using a storage at its [kBuhin](Kage.md#kbuhin) property. The data for the
