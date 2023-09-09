@@ -1,4 +1,5 @@
 /** @internal */
+// @ts-expect-error Math.hypot is not defined in es5
 export const hypot: (x: number, y: number) => number = Math.hypot ? Math.hypot.bind(Math) : ((x, y) => Math.sqrt(x * x + y * y));
 
 /**
