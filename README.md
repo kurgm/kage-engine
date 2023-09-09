@@ -2,8 +2,8 @@
 
 [![npm badge](https://img.shields.io/npm/v/@kurgm/kage-engine)](https://www.npmjs.com/package/@kurgm/kage-engine)
 
-[KAGE/engine](http://kamichi.jp/engine.html) (Kanji-glyph Automatic Generating Engine) is a set of scripts that can render kanji glyphs described in KAGE format.
-It is a part of [KAGE system](http://kamichi.jp/kage.html) which also includes a glyph design editor, a TrueType font generator, etc.
+KAGE/engine (Kanji-glyph Automatic Generating Engine) is a set of scripts that can render kanji glyphs described in KAGE format.
+It is a part of KAGE system, which also includes a glyph design editor, a TrueType font generator, etc.
 
 くろごま（[利用者:twe](https://glyphwiki.org/wiki/User:twe)）が改変したKAGEエンジンです。  
 This repository contains KAGE engine modified by @kurgm (a.k.a. [User:twe](https://glyphwiki.org/wiki/User:twe)).
