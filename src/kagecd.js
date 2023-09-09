@@ -431,16 +431,16 @@ function cdDrawCurveU(kage, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, t
 
 		if (a1 == 22 || a1 == 27) { //box's up-right corner, any time same degree
 			poly = new Polygon();
-      poly.push(x1 - cornerOffset - kMinWidthT, y1 - kage.kMinWidthY);
-      poly.push(x1 - cornerOffset, y1 - kage.kMinWidthY - kage.kWidth);
-      poly.push(x1 - cornerOffset + kMinWidthT + kage.kWidth, y1 + kage.kMinWidthY);
-      poly.push(x1 - cornerOffset + kMinWidthT, y1 + kMinWidthT - 1);
-      if (a1 == 27) {
-        poly.push(x1 - cornerOffset, y1 + kMinWidthT + 2);
-        poly.push(x1 - cornerOffset, y1);
-      } else {
-        poly.push(x1 - cornerOffset - kMinWidthT, y1 + kMinWidthT + 4);
-      }
+			poly.push(x1 - cornerOffset - kMinWidthT, y1 - kage.kMinWidthY);
+			poly.push(x1 - cornerOffset, y1 - kage.kMinWidthY - kage.kWidth);
+			poly.push(x1 - cornerOffset + kMinWidthT + kage.kWidth, y1 + kage.kMinWidthY);
+			poly.push(x1 - cornerOffset + kMinWidthT, y1 + kMinWidthT - 1);
+			if (a1 == 27) {
+				poly.push(x1 - cornerOffset, y1 + kMinWidthT + 2);
+				poly.push(x1 - cornerOffset, y1);
+			} else {
+				poly.push(x1 - cornerOffset - kMinWidthT, y1 + kMinWidthT + 4);
+			}
 			polygons.push(poly);
 		}
 
@@ -978,7 +978,7 @@ export function cdDrawLine(kage, polygons, tx1, ty1, tx2, ty2, ta1, ta2) {
 
 				//UROKO
 				if (a2 == 0) {
-          var urokoScale = (kage.kMinWidthU / kage.kMinWidthY - 1.0) / 4.0 + 1.0;
+					var urokoScale = (kage.kMinWidthU / kage.kMinWidthY - 1.0) / 4.0 + 1.0;
 					poly = new Polygon();
 					poly.push(x2 + Math.sin(rad) * kage.kMinWidthY, y2 - Math.cos(rad) * kage.kMinWidthY);
 					poly.push(x2 - Math.cos(rad) * kage.kAdjustUrokoX[opt2] * urokoScale, y2 - Math.sin(rad) * kage.kAdjustUrokoX[opt2] * urokoScale);
