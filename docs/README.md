@@ -25,7 +25,7 @@
 
 - [Point](interfaces/Point.md)
 
-### Type aliases
+### Type Aliases
 
 - [Font](README.md#font)
 
@@ -35,7 +35,7 @@
 
 Renames and re-exports [Kage](classes/Kage.md)
 
-## Type aliases
+## Type Aliases
 
 ### Font
 

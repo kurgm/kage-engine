@@ -39,26 +39,33 @@ The contained [Polygon](Polygon.md)'s can be accessed by the [array](Polygons.md
 
 ### [iterator]
 
-• **[iterator]**: () => `IterableIterator`<[`Polygon`](Polygon.md)\>
+• **[iterator]**: (`this`: [`Polygons`](Polygons.md)) => `IterableIterator`<[`Polygon`](Polygon.md)\>
 
 #### Type declaration
 
-▸ (): `IterableIterator`<[`Polygon`](Polygon.md)\>
+▸ (`this`): `IterableIterator`<[`Polygon`](Polygon.md)\>
 
 Iterates over its contours.
 
-**`example`**
-```ts
-for (const polygon of polygons) {
-	// ...
-}
-```
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Polygons`](Polygons.md) |
 
 ##### Returns
 
 `IterableIterator`<[`Polygon`](Polygon.md)\>
 
 An iterator of its [Polygon](Polygon.md) elements.
+
+**`Example`**
+
+```ts
+for (const polygon of polygons) {
+	// ...
+}
+```
 
 #### Defined in
 
@@ -72,7 +79,8 @@ ___
 
 Stores the rendered glyph as an array of instances of [Polygon](Polygon.md).
 
-**`example`**
+**`Example`**
+
 ```ts
 const polygons = new Polygons();
 kage.makeGlyph(polygons, someGlyphName);
@@ -137,7 +145,7 @@ Generates a string in SVG format that represents the rendered glyph.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `curve?` | `boolean` | Set to true to use `<path />` format or set to false to use     `<polygon />` format. Must be set to true if the glyph was rendered with     `kage.kFont.kUseCurve = true`. The `<polygon />` format is used if     unspecified. |
+| `curve?` | `boolean` | Set to true to use `<path />` format or set to false to use `<polygon />` format. Must be set to true if the glyph was rendered with `kage.kFont.kUseCurve = true`. The `<polygon />` format is used if unspecified. |
 
 #### Returns
 

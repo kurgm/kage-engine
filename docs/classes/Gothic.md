@@ -215,7 +215,7 @@ ___
 
 • **kAdjustUrokoLength**: `number`[]
 
-Threshold length of horizontal strokes for shrinking its ウロコ for each adjustment level ([kAdjustUrokoLengthStep](Gothic.md#kadjusturokolengthstep) to 1).
+Threshold length of horizontal strokes for shrinking its ウロコ for each adjustment level ([kAdjustUrokoLengthStep](Mincho.md#kadjusturokolengthstep) to 1).
 
 #### Inherited from
 
@@ -247,7 +247,7 @@ ___
 
 • **kAdjustUrokoLine**: `number`[]
 
-Size of the collision box to the left of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking adjustment level ([kAdjustUrokoLengthStep](Gothic.md#kadjusturokolengthstep) to 1).
+Size of the collision box to the left of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking adjustment level ([kAdjustUrokoLengthStep](Mincho.md#kadjusturokolengthstep) to 1).
 
 #### Inherited from
 
@@ -263,7 +263,7 @@ ___
 
 • **kAdjustUrokoX**: `number`[]
 
-Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking level (0 to max([kAdjustUrokoLengthStep](Gothic.md#kadjusturokolengthstep), [kAdjustUroko2Step](Gothic.md#kadjusturoko2step))).
+Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking level (0 to max([kAdjustUrokoLengthStep](Mincho.md#kadjusturokolengthstep), [kAdjustUroko2Step](Mincho.md#kadjusturoko2step))).
 
 #### Inherited from
 
@@ -279,7 +279,7 @@ ___
 
 • **kAdjustUrokoY**: `number`[]
 
-Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking level (0 to max([kAdjustUrokoLengthStep](Gothic.md#kadjusturokolengthstep), [kAdjustUroko2Step](Gothic.md#kadjusturoko2step))).
+Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking level (0 to max([kAdjustUrokoLengthStep](Mincho.md#kadjusturokolengthstep), [kAdjustUroko2Step](Mincho.md#kadjusturoko2step))).
 
 #### Inherited from
 
