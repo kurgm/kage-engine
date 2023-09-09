@@ -15,7 +15,7 @@ function cdDrawCurveU(
 	let a2: number;
 
 	let delta1 = 0;
-	switch (a1 % 10) {
+	switch (a1! % 10) { // ?????
 		case 2:
 			delta1 = font.kWidth;
 			break;
@@ -33,7 +33,7 @@ function cdDrawCurveU(
 	}
 
 	let delta2 = 0;
-	switch (a2 % 10) {
+	switch (a2! % 10) { // ?????
 		case 2:
 			delta2 = font.kWidth;
 			break;
