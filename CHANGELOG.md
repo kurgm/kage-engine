@@ -1,6 +1,12 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- Gothic glyphs now support stroke type 4 (otsu-curve as in 乙) and 6 (complex curve).
+- Gothic glyphs now support reflection and rotation operations.
+
+### Fixed
+- Fixed the bug that gothic glyphs sometimes lack left hooks or upward hooks.
 
 ## [0.4.0] - 2022-03-02
 ### Added
