@@ -237,7 +237,7 @@ export class Polygon {
 	 * ```
 	 */
 	// Added by @kurgm
-	public [Symbol.iterator]: (this: this) => Iterator<Point>;
+	public [Symbol.iterator]: (this: this) => Iterator<Readonly<Point>>;
 	static {
 		if (typeof Symbol !== "undefined" && Symbol.iterator) {
 			Polygon.prototype[Symbol.iterator] = function () {

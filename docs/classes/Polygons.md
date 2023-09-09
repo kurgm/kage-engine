@@ -39,11 +39,11 @@ The contained [Polygon](Polygon.md)'s can be accessed by the [array](Polygons.md
 
 ### [iterator]
 
-• **[iterator]**: (`this`: [`Polygons`](Polygons.md)) => `IterableIterator`<[`Polygon`](Polygon.md)\>
+• **[iterator]**: (`this`: [`Polygons`](Polygons.md)) => `Iterator`<[`Polygon`](Polygon.md), `any`, `undefined`\>
 
 #### Type declaration
 
-▸ (`this`): `IterableIterator`<[`Polygon`](Polygon.md)\>
+▸ (`this`): `Iterator`<[`Polygon`](Polygon.md), `any`, `undefined`\>
 
 Iterates over its contours.
 
@@ -55,7 +55,7 @@ Iterates over its contours.
 
 ##### Returns
 
-`IterableIterator`<[`Polygon`](Polygon.md)\>
+`Iterator`<[`Polygon`](Polygon.md), `any`, `undefined`\>
 
 An iterator of its [Polygon](Polygon.md) elements.
 

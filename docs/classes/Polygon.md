@@ -63,11 +63,11 @@ no points.
 
 ### [iterator]
 
-• **[iterator]**: (`this`: [`Polygon`](Polygon.md)) => `Iterator`<[`Point`](../interfaces/Point.md), `any`, `undefined`\>
+• **[iterator]**: (`this`: [`Polygon`](Polygon.md)) => `Iterator`<`Readonly`<[`Point`](../interfaces/Point.md)\>, `any`, `undefined`\>
 
 #### Type declaration
 
-▸ (`this`): `Iterator`<[`Point`](../interfaces/Point.md), `any`, `undefined`\>
+▸ (`this`): `Iterator`<`Readonly`<[`Point`](../interfaces/Point.md)\>, `any`, `undefined`\>
 
 Iterates over its points.
 
@@ -79,7 +79,7 @@ Iterates over its points.
 
 ##### Returns
 
-`Iterator`<[`Point`](../interfaces/Point.md), `any`, `undefined`\>
+`Iterator`<`Readonly`<[`Point`](../interfaces/Point.md)\>, `any`, `undefined`\>
 
 An iterator of its [Point](../interfaces/Point.md)s.
 
