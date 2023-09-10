@@ -65,7 +65,7 @@ export function calculateBezier(x1, y1, sx1, sy1, sx2, sy2, x2, y2, t, width) {
 		ia = Math.sin(ir) * width;
 		ib = Math.cos(ir) * width;
 	} else if (round(ix) == 0) {
-		if (iy < 0) {
+		if (round(iy) < 0) {
 			ia = -width;
 		} else {
 			ia = width;
