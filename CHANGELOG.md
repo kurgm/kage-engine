@@ -5,8 +5,13 @@
 - Gothic glyphs now support stroke type 4 (otsu-curve as in 乙) and 6 (complex curve).
 - Gothic glyphs now support reflection and rotation operations.
 
+### Changed
+- Return type of `[Symbol.iterator]` method of `Polygons` is now an `Iterator<Polygon>` (previously `IterableIterator<Polygon>`).
+- Return type of `[Symbol.iterator]` method of `Polygon` is now an `Iterator<Readonly<Point>>` (previously `Iterator<Point>`).
+
 ### Fixed
 - Fixed the bug that gothic glyphs sometimes lack left hooks or upward hooks.
+- Improved compatibility with the original engine for non-standard head or tail stroke types.
 
 ## [0.4.0] - 2022-03-02
 ### Added
