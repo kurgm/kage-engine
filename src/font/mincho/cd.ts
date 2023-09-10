@@ -84,6 +84,33 @@ function cdDrawCurveU(
 		y2 += dy2;
 	}
 
+	drawCurveBody(
+		font, polygons,
+		x1, y1, sx1, sy1, sx2, sy2, x2, y2,
+		a1, a2,
+		kMinWidthT, opt3, opt4
+	);
+
+	drawCurveHead(
+		polygons, font,
+		x1, y1, sx1, sy1,
+		a1, kMinWidthT, y1 <= y2, cornerOffset
+	);
+
+	drawCurveTail(
+		polygons, font,
+		sx2, sy2, x2, y2,
+		a1, a2,
+		kMinWidthT, haneAdjustment, opt4, y1 >= y2
+	);
+}
+
+function drawCurveBody(
+	font: Mincho, polygons: Polygons,
+	x1: number, y1: number, sx1: number, sy1: number, sx2: number, sy2: number, x2: number, y2: number,
+	a1: number, a2: number,
+	kMinWidthT: number, opt3: number, opt4: number
+) {
 	const isQuadratic = sx1 === sx2 && sy1 === sy2;
 
 	// ---------------------------------------------------------------
@@ -231,7 +258,13 @@ function cdDrawCurveU(
 		poly.concat(poly2);
 		polygons.push(poly);
 	}
+}
 
+function drawCurveHead(
+	polygons: Polygons, font: Mincho,
+	x1: number, y1: number, sx1: number, sy1: number,
+	a1: number, kMinWidthT: number, isUpToBottom: boolean, cornerOffset: number
+) {
 	// process for head of stroke
 
 	switch (a1) {
@@ -249,7 +282,7 @@ function cdDrawCurveU(
 			break;
 		}
 		case 0: {
-			if (y1 <= y2) { // from up to bottom
+			if (isUpToBottom) { // from up to bottom
 				const pen1 = new Pen(x1, y1);
 				if (x1 !== sx1) { // ?????
 					pen1.setDown(sx1, sy1);
@@ -336,7 +369,14 @@ function cdDrawCurveU(
 			break;
 		}
 	}
+}
 
+function drawCurveTail(
+	polygons: Polygons, font: Mincho,
+	sx2: number, sy2: number, x2: number, y2: number,
+	a1: number, a2: number,
+	kMinWidthT: number, haneAdjustment: number, opt4: number, isBottomToUp: boolean
+) {
 	// process for tail
 
 	switch (a2) {
@@ -376,7 +416,7 @@ function cdDrawCurveU(
 			if (a2 === 15) { // jump up ... it can change 15->5
 				// anytime same degree
 				const pen2_r = new Pen(x2, y2);
-				if (y1 >= y2) {
+				if (isBottomToUp) {
 					pen2_r.setMatrix2(-1, 0);
 				}
 				const poly = pen2_r.getPolygon([

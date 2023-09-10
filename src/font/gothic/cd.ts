@@ -50,6 +50,16 @@ function cdDrawCurveU(
 		y2 += dy2;
 	}
 
+	drawCurveBody(
+		polygons, font,
+		x1, y1, sx1, sy1, sx2, sy2, x2, y2
+	);
+}
+
+function drawCurveBody(
+	polygons: Polygons, font: Gothic,
+	x1: number, y1: number, sx1: number, sy1: number, sx2: number, sy2: number, x2: number, y2: number
+) {
 	const { left, right } = generateFattenCurve(
 		x1, y1, sx1, sy1, sx2, sy2, x2, y2,
 		font.kRate,
