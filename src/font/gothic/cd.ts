@@ -1,9 +1,9 @@
-import { generateFattenCurve } from "../../curve";
-import { Polygon } from "../../polygon";
-import { Polygons } from "../../polygons";
-import { normalize, round } from "../../util";
-import { Pen } from "../../pen";
-import Gothic from ".";
+import { generateFattenCurve } from "../../curve.js";
+import { Polygon } from "../../polygon.js";
+import { Polygons } from "../../polygons.js";
+import { normalize } from "../../util.js";
+import { Pen } from "../../pen.js";
+import Gothic from "./index.js";
 
 function cdDrawCurveU(
 	font: Gothic, polygons: Polygons,
@@ -15,7 +15,7 @@ function cdDrawCurveU(
 	let a2: number;
 
 	let delta1 = 0;
-	switch (a1 % 10) {
+	switch (a1! % 10) { // ?????
 		case 2:
 			delta1 = font.kWidth;
 			break;
@@ -33,7 +33,7 @@ function cdDrawCurveU(
 	}
 
 	let delta2 = 0;
-	switch (a2 % 10) {
+	switch (a2! % 10) { // ?????
 		case 2:
 			delta2 = font.kWidth;
 			break;
@@ -50,13 +50,20 @@ function cdDrawCurveU(
 		y2 += dy2;
 	}
 
+	drawCurveBody(
+		polygons, font,
+		x1, y1, sx1, sy1, sx2, sy2, x2, y2
+	);
+}
+
+function drawCurveBody(
+	polygons: Polygons, font: Gothic,
+	x1: number, y1: number, sx1: number, sy1: number, sx2: number, sy2: number, x2: number, y2: number
+) {
 	const { left, right } = generateFattenCurve(
 		x1, y1, sx1, sy1, sx2, sy2, x2, y2,
 		font.kRate,
-		() => font.kWidth,
-		([x, y], mag) => (round(x) === 0 && round(y) === 0)
-			? [-mag, 0] // ?????
-			: normalize([x, y], mag)
+		() => font.kWidth
 	);
 
 	const poly = new Polygon();

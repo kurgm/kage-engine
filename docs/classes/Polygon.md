@@ -57,32 +57,39 @@ no points.
 
 #### Defined in
 
-[../polygon.ts:85](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L85)
+[polygon.ts:85](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L85)
 
 ## Properties
 
 ### [iterator]
 
-• **[iterator]**: () => `Iterator`<[`Point`](../interfaces/Point.md), `any`, `undefined`\>
+• **[iterator]**: (`this`: [`Polygon`](Polygon.md)) => `Iterator`<`Readonly`<[`Point`](../interfaces/Point.md)\>, `any`, `undefined`\>
 
 #### Type declaration
 
-▸ (): `Iterator`<[`Point`](../interfaces/Point.md), `any`, `undefined`\>
+▸ (`this`): `Iterator`<`Readonly`<[`Point`](../interfaces/Point.md)\>, `any`, `undefined`\>
 
 Iterates over its points.
 
-**`example`**
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `this` | [`Polygon`](Polygon.md) |
+
+##### Returns
+
+`Iterator`<`Readonly`<[`Point`](../interfaces/Point.md)\>, `any`, `undefined`\>
+
+An iterator of its [Point](../interfaces/Point.md)s.
+
+**`Example`**
+
 ```ts
 for (const { x, y, off } of polygon) {
 	// ...
 }
 ```
-
-##### Returns
-
-`Iterator`<[`Point`](../interfaces/Point.md), `any`, `undefined`\>
-
-An iterator of its [Point](../interfaces/Point.md)s.
 
 #### Defined in
 
@@ -99,7 +106,12 @@ A read-only array consisting of the points in this contour.
 Modifications to this array do NOT affect the contour;
 call [set](Polygon.md#set) method to modify the contour.
 
-**`example`**
+#### Returns
+
+readonly `Readonly`<[`Point`](../interfaces/Point.md)\>[]
+
+**`Example`**
+
 ```ts
 for (const point of polygon.array) {
 	// ...
@@ -124,13 +136,10 @@ for (let i = 0; i < polygon.array.length; i++) {
 }
 ```
 
-**`see`** [Polygon.length](Polygon.md#length) is faster if you only need the length.
+**`See`**
 
-**`see`** [Polygon.get](Polygon.md#get) is faster if you need just one element.
-
-#### Returns
-
-readonly `Readonly`<[`Point`](../interfaces/Point.md)\>[]
+ - [Polygon.length](Polygon.md#length) is faster if you only need the length.
+ - [Polygon.get](Polygon.md#get) is faster if you need just one element.
 
 #### Defined in
 
@@ -202,14 +211,6 @@ ___
 Retrieves a point in its contour. If the index is out of bounds,
 throws an error.
 
-**`example`**
-```ts
-for (let i = 0; i < polygon.length; i++) {
-	const point = polygon.get(i);
-	// ...
-}
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -223,6 +224,15 @@ for (let i = 0; i < polygon.length; i++) {
 A read-only point object. Modifications made to the returned
     object do NOT affect the values of the point in the contour;
     call [set](Polygon.md#set) method to modify the contour.
+
+**`Example`**
+
+```ts
+for (let i = 0; i < polygon.length; i++) {
+	const point = polygon.get(i);
+	// ...
+}
+```
 
 #### Defined in
 

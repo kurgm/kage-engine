@@ -63,7 +63,7 @@ Gothic style font.
 
 #### Defined in
 
-[font/mincho/index.ts:289](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L289)
+[font/mincho/index.ts:299](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L299)
 
 ## Properties
 
@@ -79,7 +79,7 @@ Length of 左下カド's カカト in mincho for each shortening level (0 to 3) 
 
 #### Defined in
 
-[font/mincho/index.ts:250](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L250)
+[font/mincho/index.ts:260](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L260)
 
 ___
 
@@ -95,7 +95,7 @@ Length of 右下カド's カカト in mincho for each shortening level (0 to 3).
 
 #### Defined in
 
-[font/mincho/index.ts:253](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L253)
+[font/mincho/index.ts:263](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L263)
 
 ___
 
@@ -111,7 +111,7 @@ Width of the collision box below カカト for shortening adjustment.
 
 #### Defined in
 
-[font/mincho/index.ts:256](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L256)
+[font/mincho/index.ts:266](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L266)
 
 ___
 
@@ -127,7 +127,7 @@ Height of the collision box below カカト for each shortening adjustment level
 
 #### Defined in
 
-[font/mincho/index.ts:259](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L259)
+[font/mincho/index.ts:269](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L269)
 
 ___
 
@@ -143,7 +143,7 @@ Number of カカト shortening levels. Must be set to 3.
 
 #### Defined in
 
-[font/mincho/index.ts:262](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L262)
+[font/mincho/index.ts:272](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L272)
 
 ___
 
@@ -159,7 +159,7 @@ Parameter for thinning adjustment of latter half of mincho-style 折れ strokes.
 
 #### Defined in
 
-[font/mincho/index.ts:287](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L287)
+[font/mincho/index.ts:297](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L297)
 
 ___
 
@@ -175,7 +175,7 @@ Parameter for thinning adjustment of mincho-style vertical strokes.
 
 #### Defined in
 
-[font/mincho/index.ts:285](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L285)
+[font/mincho/index.ts:295](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L295)
 
 ___
 
@@ -191,7 +191,7 @@ Parameter for shrinking adjustment of ウロコ using density of horizontal stro
 
 #### Defined in
 
-[font/mincho/index.ts:283](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L283)
+[font/mincho/index.ts:293](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L293)
 
 ___
 
@@ -207,7 +207,7 @@ Number of ウロコ shrinking levels by adjustment using density of horizontal s
 
 #### Defined in
 
-[font/mincho/index.ts:281](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L281)
+[font/mincho/index.ts:291](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L291)
 
 ___
 
@@ -215,7 +215,7 @@ ___
 
 • **kAdjustUrokoLength**: `number`[]
 
-Threshold length of horizontal strokes for shrinking its ウロコ for each adjustment level ([kAdjustUrokoLengthStep](Gothic.md#kadjusturokolengthstep) to 1).
+Threshold length of horizontal strokes for shrinking its ウロコ for each adjustment level ([kAdjustUrokoLengthStep](Mincho.md#kadjusturokolengthstep) to 1).
 
 #### Inherited from
 
@@ -223,7 +223,7 @@ Threshold length of horizontal strokes for shrinking its ウロコ for each adju
 
 #### Defined in
 
-[font/mincho/index.ts:272](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L272)
+[font/mincho/index.ts:282](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L282)
 
 ___
 
@@ -239,7 +239,7 @@ Number of ウロコ shrinking levels by adjustment using collision detection.
 
 #### Defined in
 
-[font/mincho/index.ts:275](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L275)
+[font/mincho/index.ts:285](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L285)
 
 ___
 
@@ -247,7 +247,7 @@ ___
 
 • **kAdjustUrokoLine**: `number`[]
 
-Size of the collision box to the left of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking adjustment level ([kAdjustUrokoLengthStep](Gothic.md#kadjusturokolengthstep) to 1).
+Size of the collision box to the left of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking adjustment level ([kAdjustUrokoLengthStep](Mincho.md#kadjusturokolengthstep) to 1).
 
 #### Inherited from
 
@@ -255,7 +255,7 @@ Size of the collision box to the left of ウロコ at the 開放 end of mincho-s
 
 #### Defined in
 
-[font/mincho/index.ts:278](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L278)
+[font/mincho/index.ts:288](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L288)
 
 ___
 
@@ -263,7 +263,7 @@ ___
 
 • **kAdjustUrokoX**: `number`[]
 
-Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking level (0 to max([kAdjustUrokoLengthStep](Gothic.md#kadjusturokolengthstep), [kAdjustUroko2Step](Gothic.md#kadjusturoko2step))).
+Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking level (0 to max([kAdjustUrokoLengthStep](Mincho.md#kadjusturokolengthstep), [kAdjustUroko2Step](Mincho.md#kadjusturoko2step))).
 
 #### Inherited from
 
@@ -271,7 +271,7 @@ Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each 
 
 #### Defined in
 
-[font/mincho/index.ts:266](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L266)
+[font/mincho/index.ts:276](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L276)
 
 ___
 
@@ -279,7 +279,7 @@ ___
 
 • **kAdjustUrokoY**: `number`[]
 
-Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking level (0 to max([kAdjustUrokoLengthStep](Gothic.md#kadjusturokolengthstep), [kAdjustUroko2Step](Gothic.md#kadjusturoko2step))).
+Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each shrinking level (0 to max([kAdjustUrokoLengthStep](Mincho.md#kadjusturokolengthstep), [kAdjustUroko2Step](Mincho.md#kadjusturoko2step))).
 
 #### Inherited from
 
@@ -287,7 +287,7 @@ Size of ウロコ at the 開放 end of mincho-style horizontal strokes for each 
 
 #### Defined in
 
-[font/mincho/index.ts:269](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L269)
+[font/mincho/index.ts:279](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L279)
 
 ___
 
@@ -303,7 +303,7 @@ Size of カカト in gothic.
 
 #### Defined in
 
-[font/mincho/index.ts:237](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L237)
+[font/mincho/index.ts:247](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L247)
 
 ___
 
@@ -319,7 +319,7 @@ Width at the end of 右払い relative to `2 * kMinWidthT`.
 
 #### Defined in
 
-[font/mincho/index.ts:239](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L239)
+[font/mincho/index.ts:249](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L249)
 
 ___
 
@@ -335,7 +335,7 @@ Size of curve at the end of 左ハネ, and at the middle of 折れ and 乙線 st
 
 #### Defined in
 
-[font/mincho/index.ts:241](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L241)
+[font/mincho/index.ts:251](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L251)
 
 ___
 
@@ -351,7 +351,7 @@ Half of the width of mincho-style vertical (thicker) strokes.
 
 #### Defined in
 
-[font/mincho/index.ts:230](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L230)
+[font/mincho/index.ts:240](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L240)
 
 ___
 
@@ -367,7 +367,7 @@ Determines the size of ウロコ at the 開放 end of mincho-style horizontal st
 
 #### Defined in
 
-[font/mincho/index.ts:228](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L228)
+[font/mincho/index.ts:238](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L238)
 
 ___
 
@@ -383,7 +383,7 @@ Half of the width of mincho-style horizontal (thinner) strokes.
 
 #### Defined in
 
-[font/mincho/index.ts:226](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L226)
+[font/mincho/index.ts:236](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L236)
 
 ___
 
@@ -402,7 +402,7 @@ smoother curves approximated with the larger number of points (roughly
 
 #### Defined in
 
-[font/mincho/index.ts:224](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L224)
+[font/mincho/index.ts:234](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L234)
 
 ___
 
@@ -423,7 +423,7 @@ FontInterface.kUseCurve
 
 #### Defined in
 
-[font/mincho/index.ts:246](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L246)
+[font/mincho/index.ts:256](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L256)
 
 ___
 
@@ -440,7 +440,7 @@ Also used to determine the size of mincho's ornamental elements.
 
 #### Defined in
 
-[font/mincho/index.ts:235](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L235)
+[font/mincho/index.ts:245](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L245)
 
 ___
 
@@ -458,7 +458,7 @@ FontInterface.shotai
 
 #### Defined in
 
-[font/gothic/index.ts:135](https://github.com/kurgm/kage-engine/blob/master/src/font/gothic/index.ts#L135)
+[font/gothic/index.ts:166](https://github.com/kurgm/kage-engine/blob/master/src/font/gothic/index.ts#L166)
 
 ## Methods
 
@@ -486,4 +486,4 @@ FontInterface.setSize
 
 #### Defined in
 
-[font/mincho/index.ts:293](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L293)
+[font/mincho/index.ts:303](https://github.com/kurgm/kage-engine/blob/master/src/font/mincho/index.ts#L303)

@@ -1,4 +1,4 @@
-import { normalize, quadraticBezier, quadraticBezierDeriv, cubicBezier, cubicBezierDeriv, ternarySearchMin } from "./util";
+import { normalize, quadraticBezier, quadraticBezierDeriv, cubicBezier, cubicBezierDeriv, ternarySearchMin, round } from "./util.js";
 
 /** @internal */
 export function divide_curve(
@@ -53,8 +53,7 @@ export function find_offcurve(
 export function generateFattenCurve(
 	x1: number, y1: number, sx1: number, sy1: number,
 	sx2: number, sy2: number, x2: number, y2: number,
-	kRate: number, widthFunc: (t: number) => number,
-	normalize_: ([x, y]: [number, number], mag: number) => [number, number] = normalize
+	kRate: number, widthFunc: (t: number) => number
 ): { left: [number, number][]; right: [number, number][] } {
 	const curve: { left: [number, number][]; right: [number, number][] } = { left: [], right: [] };
 
@@ -87,7 +86,9 @@ export function generateFattenCurve(
 		const width = widthFunc(t);
 
 		// line SUICHOKU by vector
-		const [ia, ib] = normalize_([-iy, ix], width);
+		const [ia, ib] = (round(ix) === 0 && round(iy) === 0)
+			? [-width, 0] // ?????
+			: normalize([-iy, ix], width);
 
 		curve.left.push([x - ia, y - ib]);
 		curve.right.push([x + ia, y + ib]);

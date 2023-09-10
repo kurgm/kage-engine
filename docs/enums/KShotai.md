@@ -6,20 +6,22 @@ Enum of the supported fonts.
 
 ## Table of contents
 
-### Enumeration members
+### Enumeration Members
 
 - [kGothic](KShotai.md#kgothic)
 - [kMincho](KShotai.md#kmincho)
 
-## Enumeration members
+## Enumeration Members
 
 ### kGothic
 
-• **kGothic** = `1`
+• **kGothic** = ``1``
 
 Gothic style font.
 
-**`see`** [Gothic](../classes/Gothic.md) for its corresponding font class.
+**`See`**
+
+[Gothic](../classes/Gothic.md) for its corresponding font class.
 
 #### Defined in
 
@@ -29,11 +31,13 @@ ___
 
 ### kMincho
 
-• **kMincho** = `0`
+• **kMincho** = ``0``
 
 Mincho style font.
 
-**`see`** [Mincho](../classes/Mincho.md) for its corresponding font class.
+**`See`**
+
+[Mincho](../classes/Mincho.md) for its corresponding font class.
 
 #### Defined in
 

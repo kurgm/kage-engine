@@ -1,5 +1,5 @@
-import { Point, PointOptOff, Polygon } from "./polygon";
-import { normalize } from "./util";
+import { Point, PointOptOff, Polygon } from "./polygon.js";
+import { normalize } from "./util.js";
 
 /**
  * Calculates global coordinates from local coordinates around a pen
@@ -55,7 +55,7 @@ export class Pen {
 		return this;
 	}
 
-	getPoint(localX: number, localY: number, off?: boolean): Point {
+	getPoint(localX: number, localY: number, off: boolean = false): Point {
 		return {
 			x: this.x + this.cos_theta * localX + -this.sin_theta * localY,
 			y: this.y + this.sin_theta * localX + this.cos_theta * localY,

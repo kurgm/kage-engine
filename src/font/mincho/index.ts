@@ -1,11 +1,11 @@
-import { Polygon } from "../../polygon";
-import { Polygons } from "../../polygons";
-import { Stroke } from "../../stroke";
-import { hypot, normalize, round } from "../../util";
-import { FontInterface, StrokeDrawer } from "..";
-import { KShotai } from "../shotai";
+import { Polygon } from "../../polygon.js";
+import { Polygons } from "../../polygons.js";
+import { Stroke } from "../../stroke.js";
+import { hypot, normalize, round } from "../../util.js";
+import { FontInterface, StrokeDrawer } from "../index.js";
+import { KShotai } from "../shotai.js";
 
-import { cdDrawBezier, cdDrawCurve, cdDrawLine } from "./cd";
+import { cdDrawBezier, cdDrawCurve, cdDrawLine } from "./cd.js";
 
 interface MinchoAdjustedStroke {
 	readonly stroke: Stroke;
@@ -33,6 +33,45 @@ function selectPolygonsRect(
 	));
 }
 
+/** @internal */
+export function dfTransform(
+	polygons: Polygons,
+	x1: number, y1: number, x2: number, y2: number,
+	a2_100: number, a3_100: number, a2_opt: number, a3_opt: number
+): void {
+	if (a2_100 === 98 && a2_opt === 0) {
+		const dx = x1 + x2, dy = 0;
+		for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
+			polygon.reflectX().translate(dx, dy).floor();
+		}
+	} else if (a2_100 === 97 && a2_opt === 0) {
+		const dx = 0, dy = y1 + y2;
+		for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
+			polygon.reflectY().translate(dx, dy).floor();
+		}
+	} else if (a2_100 === 99 && a2_opt === 0) {
+		if (a3_100 === 1 && a3_opt === 0) {
+			const dx = x1 + y2, dy = y1 - x1;
+			for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
+				// polygon.translate(-x1, -y2).rotate90().translate(x1, y1);
+				polygon.rotate90().translate(dx, dy).floor();
+			}
+		} else if (a3_100 === 2 && a3_opt === 0) {
+			const dx = x1 + x2, dy = y1 + y2;
+			for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
+				polygon.rotate180().translate(dx, dy).floor();
+			}
+		} else if (a3_100 === 3 && a3_opt === 0) {
+			const dx = x1 - y1, dy = y2 + x1;
+			for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
+				// polygon.translate(-x1, -y1).rotate270().translate(x1, y2);
+				polygon.rotate270().translate(dx, dy).floor();
+			}
+		}
+	}
+}
+
+
 function dfDrawFont(
 	font: Mincho, polygons: Polygons,
 	{
@@ -48,36 +87,7 @@ function dfDrawFont(
 
 	switch (a1_100) { // ... no need to divide
 		case 0:
-			if (a2_100 === 98 && a2_opt === 0) {
-				const dx = x1 + x2, dy = 0;
-				for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
-					polygon.reflectX().translate(dx, dy).floor();
-				}
-			} else if (a2_100 === 97 && a2_opt === 0) {
-				const dx = 0, dy = y1 + y2;
-				for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
-					polygon.reflectY().translate(dx, dy).floor();
-				}
-			} else if (a2_100 === 99 && a2_opt === 0) {
-				if (a3_100 === 1 && a3_opt === 0) {
-					const dx = x1 + y2, dy = y1 - x1;
-					for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
-						// polygon.translate(-x1, -y2).rotate90().translate(x1, y1);
-						polygon.rotate90().translate(dx, dy).floor();
-					}
-				} else if (a3_100 === 2 && a3_opt === 0) {
-					const dx = x1 + x2, dy = y1 + y2;
-					for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
-						polygon.rotate180().translate(dx, dy).floor();
-					}
-				} else if (a3_100 === 3 && a3_opt === 0) {
-					const dx = x1 - y1, dy = y2 + x1;
-					for (const polygon of selectPolygonsRect(polygons, x1, y1, x2, y2)) {
-						// polygon.translate(-x1, -y1).rotate270().translate(x1, y2);
-						polygon.rotate270().translate(dx, dy).floor();
-					}
-				}
-			}
+			dfTransform(polygons, x1, y1, x2, y2, a2_100, a3_100, a2_opt, a3_opt);
 			break;
 		case 1: {
 			if (a3_100 === 4) {

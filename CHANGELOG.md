@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [0.5.0] - 2023-09-10
+### Added
+- Gothic glyphs now support stroke type 4 (otsu-curve as in 乙) and 6 (complex curve).
+- Gothic glyphs now support reflection and rotation operations.
+
+### Changed
+- Return type of `[Symbol.iterator]` method of `Polygons` is now an `Iterator<Polygon>` (previously `IterableIterator<Polygon>`).
+- Return type of `[Symbol.iterator]` method of `Polygon` is now an `Iterator<Readonly<Point>>` (previously `Iterator<Point>`).
+
+### Fixed
+- Fixed the bug that gothic glyphs sometimes lack left hooks or upward hooks.
+- Improved compatibility with the original engine for non-standard head or tail stroke types.
+
 ## [0.4.0] - 2022-03-02
 ### Added
 - Added TSDoc to the public APIs in the type definition files (`lib/*.d.ts`). Internal methods are now marked `@internal`.
@@ -67,7 +80,8 @@
 ## [0.2.0] - 2020-06-05
 
 
-[Unreleased]: https://github.com/kurgm/kage-engine/compare/v0.4.0...master
+[Unreleased]: https://github.com/kurgm/kage-engine/compare/v0.5.0...master
+[0.5.0]: https://github.com/kurgm/kage-engine/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/kurgm/kage-engine/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/kurgm/kage-engine/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/kurgm/kage-engine/compare/v0.2.3...v0.3.0

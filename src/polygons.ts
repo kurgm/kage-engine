@@ -1,4 +1,4 @@
-import { Polygon } from "./polygon";
+import { Polygon } from "./polygon.js";
 
 /**
  * Represents the rendered glyph.
@@ -156,7 +156,7 @@ export class Polygons {
 	 * ```
 	 */
 	// Added by @kurgm
-	public [Symbol.iterator]: (this: this) => IterableIterator<Polygon>;
+	public [Symbol.iterator]: (this: this) => Iterator<Polygon>;
 	static {
 		if (typeof Symbol !== "undefined" && Symbol.iterator) {
 			Polygons.prototype[Symbol.iterator] = function () {
