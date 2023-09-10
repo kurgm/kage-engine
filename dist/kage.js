@@ -1,4 +1,4 @@
-/*! kage.js v0.4.0
+/*! kage.js v0.5.0
  *  Licensed under GPL-3.0
  *  https://github.com/kurgm/kage-engine#readme
  */
@@ -183,6 +183,7 @@ var Kage = (function () {
     })();
 
     /** @internal */
+    // @ts-expect-error Math.hypot is not defined in es5
     var hypot = Math.hypot ? Math.hypot.bind(Math) : (function (x, y) { return Math.sqrt(x * x + y * y); });
     /**
      * Calculates a new vector with the same angle and a new magnitude.
@@ -488,8 +489,7 @@ var Kage = (function () {
     }
     // ------------------------------------------------------------------
     /** @internal */
-    function generateFattenCurve(x1, y1, sx1, sy1, sx2, sy2, x2, y2, kRate, widthFunc, normalize_) {
-        if (normalize_ === void 0) { normalize_ = normalize; }
+    function generateFattenCurve(x1, y1, sx1, sy1, sx2, sy2, x2, y2, kRate, widthFunc) {
         var curve = { left: [], right: [] };
         var isQuadratic = sx1 === sx2 && sy1 === sy2;
         var xFunc, yFunc, ixFunc, iyFunc;
@@ -516,7 +516,9 @@ var Kage = (function () {
             var iy = iyFunc(t);
             var width = widthFunc(t);
             // line SUICHOKU by vector
-            var _a = normalize_([-iy, ix], width), ia = _a[0], ib = _a[1];
+            var _a = (round(ix) === 0 && round(iy) === 0)
+                ? [-width, 0] // ?????
+                : normalize([-iy, ix], width), ia = _a[0], ib = _a[1];
             curve.left.push([x - ia, y - ib]);
             curve.right.push([x + ia, y + ib]);
         }
@@ -906,6 +908,7 @@ var Kage = (function () {
             return this;
         };
         Pen.prototype.getPoint = function (localX, localY, off) {
+            if (off === void 0) { off = false; }
             return {
                 x: this.x + this.cos_theta * localX + -this.sin_theta * localY,
                 y: this.y + this.sin_theta * localX + this.cos_theta * localY,
@@ -922,11 +925,13 @@ var Kage = (function () {
         return Pen;
     }());
 
-    function cdDrawCurveU$1(font, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, ta1, ta2, opt1, haneAdjustment, opt3, opt4) {
+    function cdDrawCurveU$1(font, polygons, x1_, y1_, sx1, sy1, sx2, sy2, x2_, y2_, ta1, ta2, opt1, haneAdjustment, opt3, opt4) {
         var a1 = ta1;
         var a2 = ta2;
         var kMinWidthT = font.kMinWidthT - opt1 / 2;
-        var delta1;
+        var x1 = x1_;
+        var y1 = y1_;
+        var delta1 = undefined;
         switch (a1 % 100) {
             case 0:
             case 7:
@@ -944,10 +949,11 @@ var Kage = (function () {
                 // case 32:
                 delta1 = font.kMinWidthY;
                 break;
-            default:
-                return;
         }
-        if (delta1 !== 0) {
+        if (delta1 === undefined) {
+            x1 = y1 = undefined; // ????? (was NaN in original code)
+        }
+        else if (delta1 !== 0) {
             var _a = (x1 === sx1 && y1 === sy1)
                 ? [0, delta1] // ?????
                 : normalize([x1 - sx1, y1 - sy1], delta1), dx1 = _a[0], dy1 = _a[1];
@@ -955,13 +961,15 @@ var Kage = (function () {
             y1 += dy1;
         }
         var cornerOffset = 0;
-        if ((a1 === 22 || a1 === 27) && a2 === 7 && kMinWidthT > 6) {
-            var contourLength = hypot(sx1 - x1, sy1 - y1) + hypot(sx2 - sx1, sy2 - sy1) + hypot(x2 - sx2, y2 - sy2);
+        if (x1 !== undefined && y1 !== undefined && (a1 === 22 || a1 === 27) && a2 === 7 && kMinWidthT > 6) {
+            var contourLength = hypot(sx1 - x1, sy1 - y1) + hypot(sx2 - sx1, sy2 - sy1) + hypot(x2_ - sx2, y2_ - sy2);
             if (contourLength < 100) {
                 cornerOffset = (kMinWidthT - 6) * ((100 - contourLength) / 100);
                 x1 += cornerOffset;
             }
         }
+        var x2 = x2_;
+        var y2 = y2_;
         var delta2;
         switch (a2 % 100) {
             case 0:
@@ -981,13 +989,29 @@ var Kage = (function () {
                 delta2 = delta1; // ?????
                 break;
         }
-        if (delta2 !== 0) {
+        if (delta2 === undefined) {
+            x2 = y2 = undefined; // ????? (was NaN in original code)
+        }
+        else if (delta2 !== 0) {
             var _b = (sx2 === x2 && sy2 === y2)
                 ? [0, -delta2] // ?????
                 : normalize([x2 - sx2, y2 - sy2], delta2), dx2 = _b[0], dy2 = _b[1];
             x2 += dx2;
             y2 += dy2;
         }
+        if (x1 !== undefined && y1 !== undefined && x2 !== undefined && y2 !== undefined) {
+            drawCurveBody$1(font, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, a1, a2, kMinWidthT, opt3, opt4);
+        }
+        if (x1 !== undefined && y1 !== undefined) {
+            var isUpToBottom = y2 === undefined ? false : y1 <= y2;
+            drawCurveHead(polygons, font, x1, y1, sx1, sy1, a1, kMinWidthT, isUpToBottom, cornerOffset);
+        }
+        if (x2 !== undefined && y2 !== undefined) {
+            var isBottomToUp = y1 === undefined ? false : y2 <= y1;
+            drawCurveTail(polygons, font, sx2, sy2, x2, y2, a1, a2, kMinWidthT, haneAdjustment, opt4, isBottomToUp);
+        }
+    }
+    function drawCurveBody$1(font, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, a1, a2, kMinWidthT, opt3, opt4) {
         var isQuadratic = sx1 === sx2 && sy1 === sy2;
         // ---------------------------------------------------------------
         if (isQuadratic && font.kUseCurve) {
@@ -1003,22 +1027,17 @@ var Kage = (function () {
                         : (opt3 > 0) // should be (opt3 > 0 || opt4 > 0) ?
                             ? function (t) { return 1 - opt3 / 2 / (kMinWidthT - opt4 / 2) + opt3 / 2 / (kMinWidthT - opt4) * t; } // ??????
                             : function () { return 1; };
-            var _c = generateFattenCurve(x1, y1, sx1, sy1, sx1, sy1, x2, y2, 10, function (t) {
+            var _a = generateFattenCurve(x1, y1, sx1, sy1, sx1, sy1, x2, y2, 10, function (t) {
                 var deltad = deltadFunc_1(t);
                 if (deltad < 0.15) {
                     deltad = 0.15;
                 }
                 return kMinWidthT * deltad;
-            }, function (_a, mag) {
-                var x = _a[0], y = _a[1];
-                return (y === 0)
-                    ? [-mag, 0] // ?????
-                    : normalize([x, y], mag);
-            }), curveL = _c.left, curveR = _c.right; // L and R
-            var _d = divide_curve(x1, y1, sx1, sy1, x2, y2, curveL), _e = _d.off, offL1 = _e[0], offL2 = _e[1], indexL = _d.index;
+            }), curveL = _a.left, curveR = _a.right; // L and R
+            var _b = divide_curve(x1, y1, sx1, sy1, x2, y2, curveL), _c = _b.off, offL1 = _c[0], offL2 = _c[1], indexL = _b.index;
             var curveL1 = curveL.slice(0, indexL + 1);
             var curveL2 = curveL.slice(indexL);
-            var _f = divide_curve(x1, y1, sx1, sy1, x2, y2, curveR), _g = _f.off, offR1 = _g[0], offR2 = _g[1], indexR = _f.index;
+            var _d = divide_curve(x1, y1, sx1, sy1, x2, y2, curveR), _e = _d.off, offR1 = _e[0], offR2 = _e[1], indexR = _d.index;
             var ncl1 = find_offcurve(curveL1, offL1[2], offL1[3]);
             var ncl2 = find_offcurve(curveL2, offL2[2], offL2[3]);
             var poly = new Polygon([
@@ -1064,34 +1083,29 @@ var Kage = (function () {
                         : isQuadratic && (opt3 > 0 || opt4 > 0) // ?????
                             ? function (t) { return ((font.kMinWidthT - opt3 / 2) - (opt4 - opt3) / 2 * t) / font.kMinWidthT; }
                             : function () { return 1; };
-            var _h = generateFattenCurve(x1, y1, sx1, sy1, sx2, sy2, x2, y2, font.kRate, function (t) {
+            var _f = generateFattenCurve(x1, y1, sx1, sy1, sx2, sy2, x2, y2, font.kRate, function (t) {
                 var deltad = deltadFunc_2(t);
                 if (deltad < 0.15) {
                     deltad = 0.15;
                 }
                 return kMinWidthT * deltad;
-            }, function (_a, mag) {
-                var x = _a[0], y = _a[1];
-                return (round(x) === 0 && round(y) === 0)
-                    ? [-mag, 0] // ?????
-                    : normalize([x, y], mag);
-            }), left = _h.left, right = _h.right;
+            }), left = _f.left, right = _f.right;
             var poly = new Polygon();
             var poly2 = new Polygon();
             // copy to polygon structure
             for (var _i = 0, left_1 = left; _i < left_1.length; _i++) {
-                var _j = left_1[_i], x = _j[0], y = _j[1];
+                var _g = left_1[_i], x = _g[0], y = _g[1];
                 poly.push(x, y);
             }
-            for (var _k = 0, right_1 = right; _k < right_1.length; _k++) {
-                var _l = right_1[_k], x = _l[0], y = _l[1];
+            for (var _h = 0, right_1 = right; _h < right_1.length; _h++) {
+                var _j = right_1[_h], x = _j[0], y = _j[1];
                 poly2.push(x, y);
             }
             // suiheisen ni setsuzoku
             if (a1 === 132 || a1 === 22 && (isQuadratic ? (y1 > y2) : (x1 > sx1))) { // ?????
                 poly.floor();
                 poly2.floor();
-                for (var index = 0, length_1 = poly2.length; index + 1 < length_1; index++) {
+                for (var index = 0, length = poly2.length; index + 1 < length; index++) {
                     var point1 = poly2.get(index);
                     var point2 = poly2.get(index + 1);
                     if (point1.y <= y1 && y1 <= point2.y) {
@@ -1118,6 +1132,8 @@ var Kage = (function () {
             poly.concat(poly2);
             polygons.push(poly);
         }
+    }
+    function drawCurveHead(polygons, font, x1, y1, sx1, sy1, a1, kMinWidthT, isUpToBottom, cornerOffset) {
         // process for head of stroke
         switch (a1) {
             case 12: {
@@ -1134,7 +1150,7 @@ var Kage = (function () {
                 break;
             }
             case 0: {
-                if (y1 <= y2) { // from up to bottom
+                if (isUpToBottom) { // from up to bottom
                     var pen1 = new Pen(x1, y1);
                     if (x1 !== sx1) { // ?????
                         pen1.setDown(sx1, sy1);
@@ -1223,6 +1239,8 @@ var Kage = (function () {
                 break;
             }
         }
+    }
+    function drawCurveTail(polygons, font, sx2, sy2, x2, y2, a1, a2, kMinWidthT, haneAdjustment, opt4, isBottomToUp) {
         // process for tail
         switch (a2) {
             case 1:
@@ -1260,7 +1278,7 @@ var Kage = (function () {
                 if (a2 === 15) { // jump up ... it can change 15->5
                     // anytime same degree
                     var pen2_r = new Pen(x2, y2);
-                    if (y1 >= y2) {
+                    if (isBottomToUp) {
                         pen2_r.setMatrix2(-1, 0);
                     }
                     var poly_1 = pen2_r.getPolygon([
@@ -1654,55 +1672,59 @@ var Kage = (function () {
             return x1 <= x && x <= x2 && y1 <= y && y <= y2;
         })); });
     }
+    /** @internal */
+    function dfTransform(polygons, x1, y1, x2, y2, a2_100, a3_100, a2_opt, a3_opt) {
+        if (a2_100 === 98 && a2_opt === 0) {
+            var dx = x1 + x2, dy = 0;
+            for (var _i = 0, _a = selectPolygonsRect(polygons, x1, y1, x2, y2); _i < _a.length; _i++) {
+                var polygon = _a[_i];
+                polygon.reflectX().translate(dx, dy).floor();
+            }
+        }
+        else if (a2_100 === 97 && a2_opt === 0) {
+            var dx = 0, dy = y1 + y2;
+            for (var _b = 0, _c = selectPolygonsRect(polygons, x1, y1, x2, y2); _b < _c.length; _b++) {
+                var polygon = _c[_b];
+                polygon.reflectY().translate(dx, dy).floor();
+            }
+        }
+        else if (a2_100 === 99 && a2_opt === 0) {
+            if (a3_100 === 1 && a3_opt === 0) {
+                var dx = x1 + y2, dy = y1 - x1;
+                for (var _d = 0, _e = selectPolygonsRect(polygons, x1, y1, x2, y2); _d < _e.length; _d++) {
+                    var polygon = _e[_d];
+                    // polygon.translate(-x1, -y2).rotate90().translate(x1, y1);
+                    polygon.rotate90().translate(dx, dy).floor();
+                }
+            }
+            else if (a3_100 === 2 && a3_opt === 0) {
+                var dx = x1 + x2, dy = y1 + y2;
+                for (var _f = 0, _g = selectPolygonsRect(polygons, x1, y1, x2, y2); _f < _g.length; _f++) {
+                    var polygon = _g[_f];
+                    polygon.rotate180().translate(dx, dy).floor();
+                }
+            }
+            else if (a3_100 === 3 && a3_opt === 0) {
+                var dx = x1 - y1, dy = y2 + x1;
+                for (var _h = 0, _j = selectPolygonsRect(polygons, x1, y1, x2, y2); _h < _j.length; _h++) {
+                    var polygon = _j[_h];
+                    // polygon.translate(-x1, -y1).rotate270().translate(x1, y2);
+                    polygon.rotate270().translate(dx, dy).floor();
+                }
+            }
+        }
+    }
     function dfDrawFont$1(font, polygons, _a) {
         var _b = _a.stroke, a1_100 = _b.a1_100, a2_100 = _b.a2_100, a2_opt = _b.a2_opt, a2_opt_1 = _b.a2_opt_1, a2_opt_2 = _b.a2_opt_2, a2_opt_3 = _b.a2_opt_3, a3_100 = _b.a3_100, a3_opt = _b.a3_opt, a3_opt_1 = _b.a3_opt_1, a3_opt_2 = _b.a3_opt_2, x1 = _b.x1, y1 = _b.y1, x2 = _b.x2, y2 = _b.y2, x3 = _b.x3, y3 = _b.y3, x4 = _b.x4, y4 = _b.y4, kirikuchiAdjustment = _a.kirikuchiAdjustment, tateAdjustment = _a.tateAdjustment, haneAdjustment = _a.haneAdjustment, urokoAdjustment = _a.urokoAdjustment, kakatoAdjustment = _a.kakatoAdjustment, mageAdjustment = _a.mageAdjustment;
         switch (a1_100) { // ... no need to divide
             case 0:
-                if (a2_100 === 98 && a2_opt === 0) {
-                    var dx = x1 + x2, dy = 0;
-                    for (var _i = 0, _c = selectPolygonsRect(polygons, x1, y1, x2, y2); _i < _c.length; _i++) {
-                        var polygon = _c[_i];
-                        polygon.reflectX().translate(dx, dy).floor();
-                    }
-                }
-                else if (a2_100 === 97 && a2_opt === 0) {
-                    var dx = 0, dy = y1 + y2;
-                    for (var _d = 0, _e = selectPolygonsRect(polygons, x1, y1, x2, y2); _d < _e.length; _d++) {
-                        var polygon = _e[_d];
-                        polygon.reflectY().translate(dx, dy).floor();
-                    }
-                }
-                else if (a2_100 === 99 && a2_opt === 0) {
-                    if (a3_100 === 1 && a3_opt === 0) {
-                        var dx = x1 + y2, dy = y1 - x1;
-                        for (var _f = 0, _g = selectPolygonsRect(polygons, x1, y1, x2, y2); _f < _g.length; _f++) {
-                            var polygon = _g[_f];
-                            // polygon.translate(-x1, -y2).rotate90().translate(x1, y1);
-                            polygon.rotate90().translate(dx, dy).floor();
-                        }
-                    }
-                    else if (a3_100 === 2 && a3_opt === 0) {
-                        var dx = x1 + x2, dy = y1 + y2;
-                        for (var _h = 0, _j = selectPolygonsRect(polygons, x1, y1, x2, y2); _h < _j.length; _h++) {
-                            var polygon = _j[_h];
-                            polygon.rotate180().translate(dx, dy).floor();
-                        }
-                    }
-                    else if (a3_100 === 3 && a3_opt === 0) {
-                        var dx = x1 - y1, dy = y2 + x1;
-                        for (var _k = 0, _l = selectPolygonsRect(polygons, x1, y1, x2, y2); _k < _l.length; _k++) {
-                            var polygon = _l[_k];
-                            // polygon.translate(-x1, -y1).rotate270().translate(x1, y2);
-                            polygon.rotate270().translate(dx, dy).floor();
-                        }
-                    }
-                }
+                dfTransform(polygons, x1, y1, x2, y2, a2_100, a3_100, a2_opt, a3_opt);
                 break;
             case 1: {
                 if (a3_100 === 4) {
-                    var _m = (x1 === x2 && y1 === y2)
+                    var _c = (x1 === x2 && y1 === y2)
                         ? [0, font.kMage] // ?????
-                        : normalize([x1 - x2, y1 - y2], font.kMage), dx1 = _m[0], dy1 = _m[1];
+                        : normalize([x1 - x2, y1 - y2], font.kMage), dx1 = _c[0], dy1 = _c[1];
                     var tx1 = x2 + dx1;
                     var ty1 = y2 + dy1;
                     cdDrawLine$1(font, polygons, x1, y1, tx1, ty1, a2_100 + a2_opt_1 * 100, 1, tateAdjustment, 0, 0);
@@ -1716,11 +1738,11 @@ var Kage = (function () {
             case 2: {
                 // case 12: // ... no need
                 if (a3_100 === 4) {
-                    var _o = (x2 === x3)
+                    var _d = (x2 === x3)
                         ? [0, -font.kMage] // ?????
                         : (y2 === y3)
                             ? [-font.kMage, 0] // ?????
-                            : normalize([x2 - x3, y2 - y3], font.kMage), dx1 = _o[0], dy1 = _o[1];
+                            : normalize([x2 - x3, y2 - y3], font.kMage), dx1 = _d[0], dy1 = _d[1];
                     var tx1 = x3 + dx1;
                     var ty1 = y3 + dy1;
                     cdDrawCurve$1(font, polygons, x1, y1, x2, y2, tx1, ty1, a2_100 + kirikuchiAdjustment * 100, 0, a2_opt_2, 0, a2_opt_3, 0);
@@ -1732,14 +1754,14 @@ var Kage = (function () {
                 break;
             }
             case 3: {
-                var _p = (x1 === x2 && y1 === y2)
+                var _e = (x1 === x2 && y1 === y2)
                     ? [0, font.kMage] // ?????
-                    : normalize([x1 - x2, y1 - y2], font.kMage), dx1 = _p[0], dy1 = _p[1];
+                    : normalize([x1 - x2, y1 - y2], font.kMage), dx1 = _e[0], dy1 = _e[1];
                 var tx1 = x2 + dx1;
                 var ty1 = y2 + dy1;
-                var _q = (x2 === x3 && y2 === y3)
+                var _f = (x2 === x3 && y2 === y3)
                     ? [0, -font.kMage] // ?????
-                    : normalize([x3 - x2, y3 - y2], font.kMage), dx2 = _q[0], dy2 = _q[1];
+                    : normalize([x3 - x2, y3 - y2], font.kMage), dx2 = _f[0], dy2 = _f[1];
                 var tx2 = x2 + dx2;
                 var ty2 = y2 + dy2;
                 cdDrawLine$1(font, polygons, x1, y1, tx1, ty1, a2_100 + a2_opt_1 * 100, 1, tateAdjustment, 0, 0);
@@ -1760,14 +1782,14 @@ var Kage = (function () {
                 if (rate > 6) {
                     rate = 6;
                 }
-                var _r = (x1 === x2 && y1 === y2)
+                var _g = (x1 === x2 && y1 === y2)
                     ? [0, font.kMage * rate] // ?????
-                    : normalize([x1 - x2, y1 - y2], font.kMage * rate), dx1 = _r[0], dy1 = _r[1];
+                    : normalize([x1 - x2, y1 - y2], font.kMage * rate), dx1 = _g[0], dy1 = _g[1];
                 var tx1 = x2 + dx1;
                 var ty1 = y2 + dy1;
-                var _s = (x2 === x3 && y2 === y3)
+                var _h = (x2 === x3 && y2 === y3)
                     ? [0, -font.kMage * rate] // ?????
-                    : normalize([x3 - x2, y3 - y2], font.kMage * rate), dx2 = _s[0], dy2 = _s[1];
+                    : normalize([x3 - x2, y3 - y2], font.kMage * rate), dx2 = _h[0], dy2 = _h[1];
                 var tx2 = x2 + dx2;
                 var ty2 = y2 + dy2;
                 cdDrawLine$1(font, polygons, x1, y1, tx1, ty1, a2_100 + a2_opt_1 * 100, 1, a2_opt_2 + a2_opt_3 * 10, 0, 0);
@@ -1779,11 +1801,11 @@ var Kage = (function () {
             }
             case 6: {
                 if (a3_100 === 4) {
-                    var _t = (x3 === x4)
+                    var _j = (x3 === x4)
                         ? [0, -font.kMage] // ?????
                         : (y3 === y4)
                             ? [-font.kMage, 0] // ?????
-                            : normalize([x3 - x4, y3 - y4], font.kMage), dx1 = _t[0], dy1 = _t[1];
+                            : normalize([x3 - x4, y3 - y4], font.kMage), dx1 = _j[0], dy1 = _j[1];
                     var tx1 = x4 + dx1;
                     var ty1 = y4 + dy1;
                     cdDrawBezier$1(font, polygons, x1, y1, x2, y2, x3, y3, tx1, ty1, a2_100 + a2_opt_1 * 100, 1, a2_opt_2, 0, a2_opt_3, 0);
@@ -1914,8 +1936,10 @@ var Kage = (function () {
                 var stroke = adjStroke.stroke;
                 if ((stroke.a1_100 === 1 || stroke.a1_100 === 2 || stroke.a1_100 === 6) && stroke.a1_opt === 0
                     && stroke.a3_100 === 4 && stroke.a3_opt === 0) {
-                    var lpx = void 0; // lastPointX
-                    var lpy = void 0; // lastPointY
+                    var lpx = // lastPointX
+                     void 0; // lastPointX
+                    var lpy = // lastPointY
+                     void 0; // lastPointY
                     if (stroke.a1_100 === 1) {
                         lpx = stroke.x2;
                         lpy = stroke.y2;
@@ -2177,7 +2201,7 @@ var Kage = (function () {
         return Mincho;
     }());
 
-    /*! *****************************************************************************
+    /******************************************************************************
     Copyright (c) Microsoft Corporation.
 
     Permission to use, copy, modify, and/or distribute this software for any
@@ -2191,7 +2215,7 @@ var Kage = (function () {
     OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
     PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
-    /* global Reflect, Promise */
+    /* global Reflect, Promise, SuppressedError, Symbol */
 
     var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -2208,11 +2232,16 @@ var Kage = (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
+    typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+        var e = new Error(message);
+        return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+    };
+
     function cdDrawCurveU(font, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, _ta1, _ta2) {
         var a1;
         var a2;
         var delta1 = 0;
-        switch (a1 % 10) {
+        switch (a1 % 10) { // ?????
             case 2:
                 delta1 = font.kWidth;
                 break;
@@ -2228,7 +2257,7 @@ var Kage = (function () {
             y1 += dy1;
         }
         var delta2 = 0;
-        switch (a2 % 10) {
+        switch (a2 % 10) { // ?????
             case 2:
                 delta2 = font.kWidth;
                 break;
@@ -2243,21 +2272,19 @@ var Kage = (function () {
             x2 += dx2;
             y2 += dy2;
         }
-        var _c = generateFattenCurve(x1, y1, sx1, sy1, sx2, sy2, x2, y2, font.kRate, function () { return font.kWidth; }, function (_a, mag) {
-            var x = _a[0], y = _a[1];
-            return (round(x) === 0 && round(y) === 0)
-                ? [-mag, 0] // ?????
-                : normalize([x, y], mag);
-        }), left = _c.left, right = _c.right;
+        drawCurveBody(polygons, font, x1, y1, sx1, sy1, sx2, sy2, x2, y2);
+    }
+    function drawCurveBody(polygons, font, x1, y1, sx1, sy1, sx2, sy2, x2, y2) {
+        var _a = generateFattenCurve(x1, y1, sx1, sy1, sx2, sy2, x2, y2, font.kRate, function () { return font.kWidth; }), left = _a.left, right = _a.right;
         var poly = new Polygon();
         var poly2 = new Polygon();
         // save to polygon
         for (var _i = 0, left_1 = left; _i < left_1.length; _i++) {
-            var _d = left_1[_i], x = _d[0], y = _d[1];
+            var _b = left_1[_i], x = _b[0], y = _b[1];
             poly.push(x, y);
         }
-        for (var _e = 0, right_1 = right; _e < right_1.length; _e++) {
-            var _f = right_1[_e], x = _f[0], y = _f[1];
+        for (var _c = 0, right_1 = right; _c < right_1.length; _c++) {
+            var _d = right_1[_c], x = _d[0], y = _d[1];
             poly2.push(x, y);
         }
         poly2.reverse();
@@ -2329,15 +2356,16 @@ var Kage = (function () {
     }
 
     function dfDrawFont(font, polygons, _a) {
-        var _b = _a.stroke, a1_100 = _b.a1_100, a2_100 = _b.a2_100, a3_100 = _b.a3_100, a3_opt = _b.a3_opt, a3_opt_1 = _b.a3_opt_1, a3_opt_2 = _b.a3_opt_2, x1 = _b.x1, y1 = _b.y1, x2 = _b.x2, y2 = _b.y2, x3 = _b.x3, y3 = _b.y3, x4 = _b.x4, y4 = _b.y4, haneAdjustment = _a.haneAdjustment, mageAdjustment = _a.mageAdjustment;
+        var a1_100 = _a.a1_100, a2_100 = _a.a2_100, a2_opt = _a.a2_opt, a3_100 = _a.a3_100, a3_opt = _a.a3_opt, a3_opt_1 = _a.a3_opt_1, x1 = _a.x1, y1 = _a.y1, x2 = _a.x2, y2 = _a.y2, x3 = _a.x3, y3 = _a.y3, x4 = _a.x4, y4 = _a.y4;
         switch (a1_100) {
             case 0:
+                dfTransform(polygons, x1, y1, x2, y2, a2_100, a3_100, a2_opt, a3_opt);
                 break;
             case 1: {
-                if (a3_100 === 4 && haneAdjustment === 0 && a3_opt_2 === 0) {
-                    var _c = (x1 === x2 && y1 === y2)
+                if (a3_100 === 4) {
+                    var _b = (x1 === x2 && y1 === y2)
                         ? [0, font.kMage] // ?????
-                        : normalize([x1 - x2, y1 - y2], font.kMage), dx1 = _c[0], dy1 = _c[1];
+                        : normalize([x1 - x2, y1 - y2], font.kMage), dx1 = _b[0], dy1 = _b[1];
                     var tx1 = x2 + dx1;
                     var ty1 = y2 + dy1;
                     cdDrawLine(font, polygons, x1, y1, tx1, ty1, a2_100, 1);
@@ -2350,12 +2378,12 @@ var Kage = (function () {
             }
             case 2:
             case 12: {
-                if (a3_100 === 4 && haneAdjustment === 0 && a3_opt_2 === 0) {
-                    var _d = (x2 === x3)
+                if (a3_100 === 4) {
+                    var _c = (x2 === x3)
                         ? [0, -font.kMage] // ?????
                         : (y2 === y3)
                             ? [-font.kMage, 0] // ?????
-                            : normalize([x2 - x3, y2 - y3], font.kMage), dx1 = _d[0], dy1 = _d[1];
+                            : normalize([x2 - x3, y2 - y3], font.kMage), dx1 = _c[0], dy1 = _c[1];
                     var tx1 = x3 + dx1;
                     var ty1 = y3 + dy1;
                     cdDrawCurve(font, polygons, x1, y1, x2, y2, tx1, ty1);
@@ -2375,19 +2403,49 @@ var Kage = (function () {
                 break;
             }
             case 3: {
-                var _e = (x1 === x2 && y1 === y2)
+                var _d = (x1 === x2 && y1 === y2)
                     ? [0, font.kMage] // ?????
-                    : normalize([x1 - x2, y1 - y2], font.kMage), dx1 = _e[0], dy1 = _e[1];
+                    : normalize([x1 - x2, y1 - y2], font.kMage), dx1 = _d[0], dy1 = _d[1];
                 var tx1 = x2 + dx1;
                 var ty1 = y2 + dy1;
-                var _f = (x2 === x3 && y2 === y3)
+                var _e = (x2 === x3 && y2 === y3)
                     ? [0, -font.kMage] // ?????
-                    : normalize([x3 - x2, y3 - y2], font.kMage), dx2 = _f[0], dy2 = _f[1];
+                    : normalize([x3 - x2, y3 - y2], font.kMage), dx2 = _e[0], dy2 = _e[1];
                 var tx2 = x2 + dx2;
                 var ty2 = y2 + dy2;
                 cdDrawLine(font, polygons, x1, y1, tx1, ty1, a2_100, 1);
                 cdDrawCurve(font, polygons, tx1, ty1, x2, y2, tx2, ty2);
-                if (a3_100 === 5 && a3_opt_1 === 0 && mageAdjustment === 0) {
+                if (a3_100 === 5 && a3_opt_1 === 0) {
+                    var tx3 = x3 - font.kMage;
+                    var ty3 = y3;
+                    var tx4 = x3 + font.kMage * 0.5;
+                    var ty4 = y3 - font.kMage * 2;
+                    cdDrawLine(font, polygons, tx2, ty2, tx3, ty3, 1, 1);
+                    cdDrawCurve(font, polygons, tx3, ty3, x3, y3, tx4, ty4);
+                }
+                else {
+                    cdDrawLine(font, polygons, tx2, ty2, x3, y3, 1, a3_100);
+                }
+                break;
+            }
+            case 4: {
+                var rate = hypot(x3 - x2, y3 - y2) / 120 * 6;
+                if (rate > 6) {
+                    rate = 6;
+                }
+                var _f = (x1 === x2 && y1 === y2)
+                    ? [0, font.kMage * rate] // ?????
+                    : normalize([x1 - x2, y1 - y2], font.kMage * rate), dx1 = _f[0], dy1 = _f[1];
+                var tx1 = x2 + dx1;
+                var ty1 = y2 + dy1;
+                var _g = (x2 === x3 && y2 === y3)
+                    ? [0, -font.kMage * rate] // ?????
+                    : normalize([x3 - x2, y3 - y2], font.kMage * rate), dx2 = _g[0], dy2 = _g[1];
+                var tx2 = x2 + dx2;
+                var ty2 = y2 + dy2;
+                cdDrawLine(font, polygons, x1, y1, tx1, ty1, a2_100, 1);
+                cdDrawCurve(font, polygons, tx1, ty1, x2, y2, tx2, ty2);
+                if (a3_100 === 5 && a3_opt === 0) {
                     var tx3 = x3 - font.kMage;
                     var ty3 = y3;
                     var tx4 = x3 + font.kMage * 0.5;
@@ -2401,7 +2459,18 @@ var Kage = (function () {
                 break;
             }
             case 6: {
-                if (a3_100 === 5 && a3_opt === 0) {
+                if (a3_100 === 4) {
+                    var _h = (x3 === x4)
+                        ? [0, -font.kMage] // ?????
+                        : (y3 === y4)
+                            ? [-font.kMage, 0] // ?????
+                            : normalize([x3 - x4, y3 - y4], font.kMage), dx1 = _h[0], dy1 = _h[1];
+                    var tx1 = x4 + dx1;
+                    var ty1 = y4 + dy1;
+                    cdDrawBezier(font, polygons, x1, y1, x2, y2, x3, y3, tx1, ty1);
+                    cdDrawCurve(font, polygons, tx1, ty1, x4, y4, x4 - font.kMage * 2, y4 - font.kMage * 0.5);
+                }
+                else if (a3_100 === 5 && a3_opt === 0) {
                     var tx1 = x4 - font.kMage;
                     var ty1 = y4;
                     var tx2 = x4 + font.kMage * 0.5;
@@ -2440,7 +2509,7 @@ var Kage = (function () {
         /** @internal */
         Gothic.prototype.getDrawers = function (strokesArray) {
             var _this = this;
-            return this.adjustStrokes(strokesArray).map(function (stroke) { return function (polygons) {
+            return strokesArray.map(function (stroke) { return function (polygons) {
                 dfDrawFont(_this, polygons, stroke);
             }; });
         };
@@ -2459,7 +2528,7 @@ var Kage = (function () {
     /**
      * The entry point for KAGE engine (Kanji-glyph Automatic Generating Engine).
      * It generates glyph outlines from a kanji's stroke data described in a dedicated
-     * intermediate format called KAGE data.
+     * intermediate format called {@link https://glyphwiki.org/wiki/GlyphWiki:KAGE%e3%83%87%e3%83%bc%e3%82%bf%e4%bb%95%e6%a7%98 | KAGE data}.
      *
      * KAGE data may contain references to other glyphs (components), which are
      * resolved using a storage at its {@link kBuhin} property. The data for the
