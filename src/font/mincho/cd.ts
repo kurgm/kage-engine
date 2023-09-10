@@ -7,8 +7,8 @@ import Mincho from "./index.js";
 
 function cdDrawCurveU(
 	font: Mincho, polygons: Polygons,
-	x1: number, y1: number, sx1: number, sy1: number,
-	sx2: number, sy2: number, x2: number, y2: number,
+	x1_: number, y1_: number, sx1: number, sy1: number,
+	sx2: number, sy2: number, x2_: number, y2_: number,
 	ta1: number, ta2: number,
 	opt1: number, haneAdjustment: number, opt3: number, opt4: number) {
 
@@ -17,7 +17,9 @@ function cdDrawCurveU(
 
 	const kMinWidthT = font.kMinWidthT - opt1 / 2;
 
-	let delta1;
+	let x1: number | undefined = x1_;
+	let y1: number | undefined = y1_;
+	let delta1: number | undefined = undefined;
 	switch (a1 % 100) {
 		case 0:
 		case 7:
@@ -36,10 +38,12 @@ function cdDrawCurveU(
 			delta1 = font.kMinWidthY;
 			break;
 		default:
-			return;
+			break;
 	}
 
-	if (delta1 !== 0) {
+	if (delta1 === undefined) {
+		x1 = y1 = undefined; // ????? (was NaN in original code)
+	} else if (delta1 !== 0) {
 		const [dx1, dy1] = (x1 === sx1 && y1 === sy1)
 			? [0, delta1] // ?????
 			: normalize([x1 - sx1, y1 - sy1], delta1);
@@ -48,14 +52,16 @@ function cdDrawCurveU(
 	}
 
 	let cornerOffset = 0;
-	if ((a1 === 22 || a1 === 27) && a2 === 7 && kMinWidthT > 6) {
-		const contourLength = hypot(sx1 - x1, sy1 - y1) + hypot(sx2 - sx1, sy2 - sy1) + hypot(x2 - sx2, y2 - sy2);
+	if (x1 !== undefined && y1 !== undefined && (a1 === 22 || a1 === 27) && a2 === 7 && kMinWidthT > 6) {
+		const contourLength = hypot(sx1 - x1, sy1 - y1) + hypot(sx2 - sx1, sy2 - sy1) + hypot(x2_ - sx2, y2_ - sy2);
 		if (contourLength < 100) {
 			cornerOffset = (kMinWidthT - 6) * ((100 - contourLength) / 100);
 			x1 += cornerOffset;
 		}
 	}
 
+	let x2: number | undefined = x2_;
+	let y2: number | undefined = y2_;
 	let delta2;
 	switch (a2 % 100) {
 		case 0:
@@ -76,7 +82,9 @@ function cdDrawCurveU(
 			break;
 	}
 
-	if (delta2 !== 0) {
+	if (delta2 === undefined) {
+		x2 = y2 = undefined; // ????? (was NaN in original code)
+	} else if (delta2 !== 0) {
 		const [dx2, dy2] = (sx2 === x2 && sy2 === y2)
 			? [0, -delta2] // ?????
 			: normalize([x2 - sx2, y2 - sy2], delta2);
@@ -84,25 +92,33 @@ function cdDrawCurveU(
 		y2 += dy2;
 	}
 
-	drawCurveBody(
-		font, polygons,
-		x1, y1, sx1, sy1, sx2, sy2, x2, y2,
-		a1, a2,
-		kMinWidthT, opt3, opt4
-	);
+	if (x1 !== undefined && y1 !== undefined && x2 !== undefined && y2 !== undefined) {
+		drawCurveBody(
+			font, polygons,
+			x1, y1, sx1, sy1, sx2, sy2, x2, y2,
+			a1, a2,
+			kMinWidthT, opt3, opt4
+		);
+	}
 
-	drawCurveHead(
-		polygons, font,
-		x1, y1, sx1, sy1,
-		a1, kMinWidthT, y1 <= y2, cornerOffset
-	);
+	if (x1 !== undefined && y1 !== undefined) {
+		const isUpToBottom = y2 === undefined ? false : y1 <= y2;
+		drawCurveHead(
+			polygons, font,
+			x1, y1, sx1, sy1,
+			a1, kMinWidthT, isUpToBottom, cornerOffset
+		);
+	}
 
-	drawCurveTail(
-		polygons, font,
-		sx2, sy2, x2, y2,
-		a1, a2,
-		kMinWidthT, haneAdjustment, opt4, y1 >= y2
-	);
+	if (x2 !== undefined && y2 !== undefined) {
+		const isBottomToUp = y1 === undefined ? false : y2 <= y1;
+		drawCurveTail(
+			polygons, font,
+			sx2, sy2, x2, y2,
+			a1, a2,
+			kMinWidthT, haneAdjustment, opt4, isBottomToUp
+		);
+	}
 }
 
 function drawCurveBody(
