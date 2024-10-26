@@ -9,5 +9,5 @@ export enum KShotai {
 	 * Gothic style font.
 	 * @see {@link Gothic} for its corresponding font class.
 	 */
-	kGothic = 1
+	kGothic = 1,
 }
