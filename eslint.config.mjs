@@ -9,9 +9,6 @@ export default tseslint.config(
 	...tseslint.configs.recommendedTypeChecked,
 	...tseslint.configs.stylisticTypeChecked,
 	{
-		plugins: {
-			"@stylistic": stylistic,
-		},
 		languageOptions: {
 			ecmaVersion: 5,
 			parserOptions: {
@@ -20,7 +17,6 @@ export default tseslint.config(
 		},
 		rules: {
 			"arrow-body-style": "error",
-			"class-methods-use-this": "warn",
 			"eqeqeq": "error",
 			"grouped-accessor-pairs": "error",
 			"guard-for-in": "error",
@@ -29,8 +25,6 @@ export default tseslint.config(
 			"no-eval": "error",
 			"no-else-return": ["warn", { allowElseIf: false }],
 			"no-extra-label": "warn",
-			"no-implied-eval": "error",
-			"no-inner-declarations": "off",
 			"no-template-curly-in-string": "warn",
 			"no-unmodified-loop-condition": "warn",
 			"no-useless-computed-key": "error",
@@ -43,34 +37,29 @@ export default tseslint.config(
 			"prefer-regex-literals": "error",
 			"prefer-template": "error",
 			"unicode-bom": "error",
-			"@typescript-eslint/adjacent-overload-signatures": "error",
+			"@typescript-eslint/class-methods-use-this": "warn",
 			"@typescript-eslint/explicit-module-boundary-types": "error",
-			"@typescript-eslint/no-base-to-string": "error",
 			"@typescript-eslint/no-dupe-class-members": "error",
-			"@typescript-eslint/no-explicit-any": "off",
 			"@typescript-eslint/no-extraneous-class": "warn",
-			"@typescript-eslint/no-implied-eval": "error",
 			"@typescript-eslint/no-inferrable-types": "off",
 			"@typescript-eslint/no-invalid-this": "error",
 			"@typescript-eslint/no-invalid-void-type": "error",
 			"@typescript-eslint/no-namespace": "off",
-			"@typescript-eslint/no-non-null-asserted-optional-chain": "error",
 			"@typescript-eslint/no-non-null-assertion": "off",
 			"@typescript-eslint/no-unnecessary-qualifier": "warn",
 			"@typescript-eslint/no-unnecessary-type-arguments": "warn",
-			"@typescript-eslint/no-unused-expressions": "error",
 			"@typescript-eslint/no-unused-vars": "off",
-			"@typescript-eslint/no-use-before-define": "off",
 			"@typescript-eslint/no-useless-constructor": "error",
 			"@typescript-eslint/parameter-properties": "warn",
-			"@typescript-eslint/prefer-as-const": "error",
-			"@typescript-eslint/prefer-for-of": "error",
-			"@typescript-eslint/prefer-includes": "warn",
-			"@typescript-eslint/prefer-nullish-coalescing": "off",
-			"@typescript-eslint/prefer-optional-chain": "error",
 			"@typescript-eslint/prefer-reduce-type-parameter": "error",
 			"@typescript-eslint/prefer-string-starts-ends-with": "warn",
-			"@typescript-eslint/restrict-plus-operands": "warn",
+		},
+	},
+	{
+		plugins: {
+			"@stylistic": stylistic,
+		},
+		rules: {
 			"@stylistic/array-bracket-spacing": "error",
 			"@stylistic/arrow-parens": "error",
 			"@stylistic/arrow-spacing": "error",
@@ -81,7 +70,7 @@ export default tseslint.config(
 			"@stylistic/comma-style": "error",
 			"@stylistic/computed-property-spacing": "error",
 			"@stylistic/eol-last": "error",
-			"@stylistic/func-call-spacing": "error",
+			"@stylistic/function-call-spacing": "error",
 			"@stylistic/generator-star-spacing": "error",
 			"@stylistic/indent": ["error", "tab"],
 			"@stylistic/key-spacing": "error",
@@ -112,5 +101,8 @@ export default tseslint.config(
 	{
 		files: ["**/*.js", "**/*.mjs"],
 		...tseslint.configs.disableTypeChecked,
+	},
+	{
+		ignores: ["dist/", "lib/"],
 	},
 );
