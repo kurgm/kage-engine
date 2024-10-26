@@ -1,22 +1,18 @@
+[**@kurgm/kage-engine**](../README.md) • **Docs**
+
+***
+
 [@kurgm/kage-engine](../README.md) / Point
 
 # Interface: Point
 
 Represents an element of [Polygon](../classes/Polygon.md).
 
-## Table of contents
-
-### Properties
-
-- [off](Point.md#off)
-- [x](Point.md#x)
-- [y](Point.md#y)
-
 ## Properties
 
 ### off
 
-• **off**: `boolean`
+> **off**: `boolean`
 
 Whether the point is an off-curve point, i.e. a control point in a quadratic
 Bézier curve.
@@ -25,11 +21,11 @@ Bézier curve.
 
 [polygon.ts:11](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L11)
 
-___
+***
 
 ### x
 
-• **x**: `number`
+> **x**: `number`
 
 The x-coordinate of the point.
 
@@ -37,11 +33,11 @@ The x-coordinate of the point.
 
 [polygon.ts:4](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L4)
 
-___
+***
 
 ### y
 
-• **y**: `number`
+> **y**: `number`
 
 The y-coordinate of the point.
 

@@ -1,18 +1,20 @@
-@kurgm/kage-engine
+**@kurgm/kage-engine** • **Docs**
+
+***
 
 # @kurgm/kage-engine
 
-## Table of contents
+## References
 
-### References
+### default
 
-- [default](README.md#default)
+Renames and re-exports [Kage](classes/Kage.md)
 
-### Enumerations
+## Enumerations
 
-- [KShotai](enums/KShotai.md)
+- [KShotai](enumerations/KShotai.md)
 
-### Classes
+## Classes
 
 - [Buhin](classes/Buhin.md)
 - [Gothic](classes/Gothic.md)
@@ -21,26 +23,10 @@
 - [Polygon](classes/Polygon.md)
 - [Polygons](classes/Polygons.md)
 
-### Interfaces
+## Interfaces
 
 - [Point](interfaces/Point.md)
 
-### Type Aliases
-
-- [Font](README.md#font)
-
-## References
-
-### default
-
-Renames and re-exports [Kage](classes/Kage.md)
-
 ## Type Aliases
 
-### Font
-
-Ƭ **Font**: [`Mincho`](classes/Mincho.md) \| [`Gothic`](classes/Gothic.md)
-
-#### Defined in
-
-[font/index.ts:23](https://github.com/kurgm/kage-engine/blob/master/src/font/index.ts#L23)
+- [Font](type-aliases/Font.md)
