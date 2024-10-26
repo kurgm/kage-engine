@@ -3,7 +3,7 @@
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 
-import pkg from "./package.json" assert { type: "json" };
+import pkg from "./package.json" with { type: "json" };
 
 const banner = `/*! kage.js v${pkg.version}
  *  Licensed under ${pkg.license}
