@@ -1,25 +1,22 @@
+[**@kurgm/kage-engine**](../README.md) • **Docs**
+
+***
+
 [@kurgm/kage-engine](../README.md) / KShotai
 
 # Enumeration: KShotai
 
 Enum of the supported fonts.
 
-## Table of contents
-
-### Enumeration Members
-
-- [kGothic](KShotai.md#kgothic)
-- [kMincho](KShotai.md#kmincho)
-
 ## Enumeration Members
 
 ### kGothic
 
-• **kGothic** = ``1``
+> **kGothic**: `1`
 
 Gothic style font.
 
-**`See`**
+#### See
 
 [Gothic](../classes/Gothic.md) for its corresponding font class.
 
@@ -27,15 +24,15 @@ Gothic style font.
 
 [font/shotai.ts:12](https://github.com/kurgm/kage-engine/blob/master/src/font/shotai.ts#L12)
 
-___
+***
 
 ### kMincho
 
-• **kMincho** = ``0``
+> **kMincho**: `0`
 
 Mincho style font.
 
-**`See`**
+#### See
 
 [Mincho](../classes/Mincho.md) for its corresponding font class.
 
