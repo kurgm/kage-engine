@@ -45,7 +45,7 @@ The initial number of points in the contour.
 
 ### \[iterator\]()
 
-> **\[iterator\]**: (`this`) => `Iterator`\<`Readonly`\<[`Point`](../interfaces/Point.md)\>, `any`, `undefined`\>
+> **\[iterator\]**: (`this`) => `Iterator`\<`Readonly`\<[`Point`](../interfaces/Point.md)\>, `any`, `any`\>
 
 Iterates over its points.
 
@@ -55,7 +55,7 @@ Iterates over its points.
 
 #### Returns
 
-`Iterator`\<`Readonly`\<[`Point`](../interfaces/Point.md)\>, `any`, `undefined`\>
+`Iterator`\<`Readonly`\<[`Point`](../interfaces/Point.md)\>, `any`, `any`\>
 
 An iterator of its [Point](../interfaces/Point.md)s.
 
