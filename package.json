@@ -32,7 +32,8 @@
     "build:doc": "typedoc",
     "clean": "rm -r lib dist",
     "lint": "eslint 'src/**/*.ts'",
-    "test": "node test/index.js"
+    "test": "node test/index.js",
+    "version": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -46,10 +47,13 @@
   "homepage": "https://github.com/kurgm/kage-engine#readme",
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@release-it/bumper": "^6.0.1",
+    "@release-it/keep-a-changelog": "^5.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.1",
     "@stylistic/eslint-plugin": "^2.9.0",
     "eslint": "^9.13.0",
+    "release-it": "^17.10.0",
     "rollup": "^4.24.0",
     "tsconfig-to-dual-package": "^1.2.0",
     "tslib": "^2.8.0",
