@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Changed
+- Changed the package format from CommonJS (CJS) only to a dual package supporting both CommonJS and ES Modules (ESM).
 
 ## [0.5.0] - 2023-09-10
 ### Added
