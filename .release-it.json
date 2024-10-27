@@ -21,6 +21,7 @@
 	"git": {
 		"tagName": "v${version}",
 		"commitMessage": "${version}",
+		"tagAnnotation": "${version}",
 		"requireBranch": "master"
 	},
 	"github": {
