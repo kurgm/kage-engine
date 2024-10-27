@@ -1,7 +1,7 @@
-import { Buhin } from "./buhin";
-import { Polygons } from "./polygons";
-import { stretch, Stroke } from "./stroke";
-import { KShotai, Font, select as selectFont } from "./font";
+import { Buhin } from "./buhin.js";
+import { Polygons } from "./polygons.js";
+import { stretch, Stroke } from "./stroke.js";
+import { KShotai, Font, select as selectFont } from "./font/index.js";
 
 /**
  * The entry point for KAGE engine (Kanji-glyph Automatic Generating Engine).

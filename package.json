@@ -5,14 +5,29 @@
   "directories": {
     "doc": "docs"
   },
-  "main": "lib/index.js",
+  "type": "module",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/esm/index.d.ts",
+        "default": "./lib/esm/index.js"
+      },
+      "require": {
+        "types": "./lib/cjs/index.d.ts",
+        "default": "./lib/cjs/index.js"
+      }
+    }
+  },
   "files": [
     "lib",
     "dist"
   ],
   "scripts": {
     "build": "npm run build:lib && npm run build:dist",
-    "build:lib": "tsc",
+    "build:lib": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && tsconfig-to-dual-package tsconfig.esm.json tsconfig.cjs.json",
     "build:dist": "mkdir -p dist && rollup -c",
     "build:doc": "typedoc",
     "clean": "rm -r lib dist",
@@ -36,6 +51,7 @@
     "@stylistic/eslint-plugin": "^2.9.0",
     "eslint": "^9.13.0",
     "rollup": "^4.24.0",
+    "tsconfig-to-dual-package": "^1.2.0",
     "tslib": "^2.8.0",
     "typedoc": "^0.26.10",
     "typedoc-plugin-markdown": "^4.2.9",

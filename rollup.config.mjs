@@ -29,13 +29,7 @@ const options = {
 		},
 	],
 	plugins: [
-		typescript({
-			compilerOptions: {
-				module: "ESNext",
-				declaration: false,
-				outDir: undefined,
-			},
-		}),
+		typescript({}),
 	],
 };
 
