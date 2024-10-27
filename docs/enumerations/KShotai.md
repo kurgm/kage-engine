@@ -14,11 +14,11 @@ Enum of the supported fonts.
 
 > **kGothic**: `1`
 
-Gothic style font.
+Gothic-style font (ゴシック体).
 
 #### See
 
-[Gothic](../classes/Gothic.md) for its corresponding font class.
+[Gothic](../classes/Gothic.md) for the corresponding font class.
 
 #### Defined in
 
@@ -30,11 +30,11 @@ Gothic style font.
 
 > **kMincho**: `0`
 
-Mincho style font.
+Mincho-style font (明朝体).
 
 #### See
 
-[Mincho](../classes/Mincho.md) for its corresponding font class.
+[Mincho](../classes/Mincho.md) for the corresponding font class.
 
 #### Defined in
 

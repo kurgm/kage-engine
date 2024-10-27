@@ -6,9 +6,9 @@
 
 # Class: Polygons
 
-Represents the rendered glyph.
+Represents a rendered glyph.
 
-A glyph is represented as a series of [Polygon](Polygon.md)'s.
+A glyph is represented as a series of [Polygon](Polygon.md) instances.
 The contained [Polygon](Polygon.md)'s can be accessed by the [array](Polygons.md#array) property.
 
 ## Constructors
@@ -61,7 +61,7 @@ for (const polygon of polygons) {
 
 > **array**: [`Polygon`](Polygon.md)[]
 
-Stores the rendered glyph as an array of instances of [Polygon](Polygon.md).
+Stores the rendered glyph as an array of [Polygon](Polygon.md) instances.
 
 #### Example
 
@@ -129,10 +129,10 @@ Generates a string in SVG format that represents the rendered glyph.
 
 • **curve?**: `boolean`
 
-Set to true to use `<path />` format or set to false to use
-    `<polygon />` format. Must be set to true if the glyph was rendered with
-    `kage.kFont.kUseCurve = true`. The `<polygon />` format is used if
-    unspecified.
+Set to true to use the `<path />` format, or set to false to
+use the `<polygon />` format. Must be set to true if the glyph was rendered
+with `kage.kFont.kUseCurve = true`. Defaults to false (the `<polygon />` format
+is used).
 
 #### Returns
 
@@ -151,13 +151,13 @@ The string representation of the rendered glyph in SVG format.
 > **push**(`polygon`): `void`
 
 Appends a new [Polygon](Polygon.md) to the end of the array.
-Nothing is performed if `polygon` is not a valid polygon.
+Does nothing if `polygon` is not a valid polygon.
 
 #### Parameters
 
 • **polygon**: [`Polygon`](Polygon.md)
 
-An instance of [Polygon](Polygon.md) to be appended.
+A [Polygon](Polygon.md) instance to be appended.
 
 #### Returns
 

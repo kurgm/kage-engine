@@ -2,11 +2,11 @@
 
 [![npm badge](https://img.shields.io/npm/v/@kurgm/kage-engine)](https://www.npmjs.com/package/@kurgm/kage-engine)
 
-KAGE/engine (Kanji-glyph Automatic Generating Engine) is a set of scripts that can render kanji glyphs described in [KAGE format](https://glyphwiki.org/wiki/GlyphWiki:KAGE%e3%83%87%e3%83%bc%e3%82%bf%e4%bb%95%e6%a7%98).
-It is a part of KAGE system, which also includes a glyph design editor, a TrueType font generator, etc.
+KAGE/engine (Kanji-glyph Automatic Generating Engine) is a set of scripts that renders kanji glyphs described in [KAGE format](https://glyphwiki.org/wiki/GlyphWiki:KAGE%e3%83%87%e3%83%bc%e3%82%bf%e4%bb%95%e6%a7%98).
+It is a part of the KAGE system, which also includes a glyph design editor, a TrueType font generator, etc.
 
 くろごま（[利用者:twe](https://glyphwiki.org/wiki/User:twe)）が改変したKAGEエンジンです。  
-This repository contains KAGE engine modified by @kurgm (a.k.a. [User:twe](https://glyphwiki.org/wiki/User:twe)).
+This repository contains the KAGE engine modified by @kurgm (a.k.a. [User:twe](https://glyphwiki.org/wiki/User:twe)).
 
 [デモページ Demo page](https://kurgm.github.io/kage-engine/)
 
@@ -14,11 +14,11 @@ This repository contains KAGE engine modified by @kurgm (a.k.a. [User:twe](https
 
 ### Installation
 
-You can install the package to your project using npm:
-```sh
+You can install the package in your project using npm:
+```console
 $ npm install @kurgm/kage-engine
 ```
-Then you can import or require to use it in your code:
+Then you can use `import` or `require` to load the module in your code:
 ```js
 // ES style
 import { Kage, Polygons } from "@kurgm/kage-engine";
@@ -27,11 +27,11 @@ import { Kage, Polygons } from "@kurgm/kage-engine";
 const { Kage, Polygons } = require("@kurgm/kage-engine");
 ```
 
-Alternatively, you can also load the bundled file from CDN to your web page:
+Alternatively, you can load the bundled file from a CDN in your web page:
 ```html
 <script src="https://unpkg.com/@kurgm/kage-engine@0.5.0/dist/kage.min.js"></script>
 ```
-This way, only `Kage` is defined in the global scope. You can access `Polygons` and `Buhin` as `Kage`'s properties:
+This will define only `Kage` in the global scope. You can access `Polygons` and `Buhin` as `Kage`'s properties:
 ```js
 const Polygons = Kage.Polygons;
 const Buhin = Kage.Buhin;
@@ -39,7 +39,7 @@ const Buhin = Kage.Buhin;
 
 ### Drawing glyphs
 
-*See [docs](docs/classes/Kage.md) for more detailed API documentations (of development version).*
+*See [docs](docs/classes/Kage.md) for more detailed API documentation (of development version).*
 
 ```js
 // First create a Kage instance

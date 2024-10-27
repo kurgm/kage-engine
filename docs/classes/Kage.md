@@ -6,22 +6,22 @@
 
 # Class: Kage
 
-The entry point for KAGE engine (Kanji-glyph Automatic Generating Engine).
-It generates glyph outlines from a kanji's stroke data described in a dedicated
+The entry point for the KAGE engine (Kanji-glyph Automatic Generating Engine).
+It generates glyph outlines from kanji stroke data described in a dedicated
 intermediate format called [KAGE data](https://glyphwiki.org/wiki/GlyphWiki:KAGE%e3%83%87%e3%83%bc%e3%82%bf%e4%bb%95%e6%a7%98).
 
 KAGE data may contain references to other glyphs (components), which are
-resolved using a storage at its [kBuhin](Kage.md#kbuhin) property. The data for the
-referenced glyphs must be registered to the storage prior to generating the outline.
+resolved using a storage in its [kBuhin](Kage.md#kbuhin) property. The data for the
+referenced glyphs must be registered in the storage prior to generating the outline.
 
-The font (mincho or gothic) can be changed with its [kShotai](Kage.md#kshotai) property.
-The font parameters (stroke width, etc.) can be configured with properties of
+The font (mincho or gothic) can be changed using the [kShotai](Kage.md#kshotai) property.
+Font parameters (stroke width, etc.) can be configured using properties of
 [kFont](Kage.md#kfont).
 
 ## See
 
 [Kage.makeGlyph](Kage.md#makeglyph), [Kage.makeGlyph2](Kage.md#makeglyph2), [Kage.makeGlyph3](Kage.md#makeglyph3) and
-    [Kage.makeGlyphSeparated](Kage.md#makeglyphseparated) for usage examples.
+[Kage.makeGlyphSeparated](Kage.md#makeglyphseparated) for usage examples.
 
 ## Constructors
 
@@ -47,7 +47,7 @@ The font parameters (stroke width, etc.) can be configured with properties of
 
 > **kBuhin**: [`Buhin`](Buhin.md)
 
-A storage from which components are looked up.
+A storage used to look up components.
 
 #### Defined in
 
@@ -59,8 +59,8 @@ A storage from which components are looked up.
 
 > **kFont**: [`Font`](../type-aliases/Font.md)
 
-Provides the way to configure parameters of the currently selected font.
-Its parameters are reset to the default values when [Kage.kShotai](Kage.md#kshotai) is set.
+Allows configuration of the parameters for the currently selected font.
+Its parameters reset to their default values when [Kage.kShotai](Kage.md#kshotai) is set.
 
 #### Example
 
@@ -80,7 +80,7 @@ kage.kFont.kWidth = 3;
 
 > `readonly` **kGothic**: [`kGothic`](../enumerations/KShotai.md#kgothic) = `KShotai.kGothic`
 
-An alias of [KShotai.kGothic](../enumerations/KShotai.md#kgothic).
+An alias for [KShotai.kGothic](../enumerations/KShotai.md#kgothic).
 
 #### See
 
@@ -96,7 +96,7 @@ An alias of [KShotai.kGothic](../enumerations/KShotai.md#kgothic).
 
 > `readonly` **kMincho**: [`kMincho`](../enumerations/KShotai.md#kmincho) = `KShotai.kMincho`
 
-An alias of [KShotai.kMincho](../enumerations/KShotai.md#kmincho).
+An alias for [KShotai.kMincho](../enumerations/KShotai.md#kmincho).
 
 #### See
 
@@ -112,7 +112,7 @@ An alias of [KShotai.kMincho](../enumerations/KShotai.md#kmincho).
 
 > `readonly` `static` **Buhin**: *typeof* [`Buhin`](Buhin.md)
 
-An alias of Buhin constructor.
+An alias for Buhin constructor.
 
 #### Defined in
 
@@ -124,7 +124,7 @@ An alias of Buhin constructor.
 
 > `readonly` `static` **Polygons**: *typeof* [`Polygons`](Polygons.md)
 
-An alias of Polygons constructor.
+An alias for Polygons constructor.
 
 #### Defined in
 
@@ -136,7 +136,7 @@ An alias of Polygons constructor.
 
 > `get` **kShotai**(): [`KShotai`](../enumerations/KShotai.md)
 
-Gets or sets the font as [KShotai](../enumerations/KShotai.md). Setting this property resets all the
+Gets or sets the font as [KShotai](../enumerations/KShotai.md). Setting this property resets all
 font parameters in [Kage.kFont](Kage.md#kfont). Defaults to [KShotai.kMincho](../enumerations/KShotai.md#kmincho).
 
 #### Example
@@ -190,7 +190,7 @@ An alias of [Kage.kFont](Kage.md#kfont).kUseCurve.
 > **makeGlyph**(`polygons`, `buhin`): `void`
 
 Renders the glyph of the given name. Existing data in `polygons` (if any) are
-NOT cleared; new glyph is "overprinted".
+NOT cleared; the new glyph is "overprinted".
 
 #### Parameters
 
@@ -227,7 +227,7 @@ const svg = polygons.generateSVG(); // now `svg` has the string of the rendered 
 > **makeGlyph2**(`polygons`, `data`): `void`
 
 Renders the glyph of the given KAGE data. Existing data in `polygons` (if any) are
-NOT cleared; new glyph is "overprinted".
+NOT cleared; the new glyph is "overprinted".
 
 #### Parameters
 
@@ -262,8 +262,7 @@ const svg = polygons.generateSVG(); // now `svg` has the string of the rendered 
 
 > **makeGlyph3**(`data`): [`Polygons`](Polygons.md)[]
 
-Renders each stroke of the given KAGE data on separate instances of
-[Polygons](Polygons.md).
+Renders each stroke of the given KAGE data on separate instances of [Polygons](Polygons.md).
 
 #### Parameters
 
@@ -276,7 +275,7 @@ The KAGE data to be rendered (in which lines are delimited by `"$"`).
 [`Polygons`](Polygons.md)[]
 
 An array of [Polygons](Polygons.md) instances holding the rendered data
-    of each stroke in the glyph.
+of each stroke in the glyph.
 
 #### Example
 
@@ -289,7 +288,7 @@ console.log(array[0] instanceof Polygons); // => true
 
 #### Defined in
 
-[kage.ts:148](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L148)
+[kage.ts:147](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L147)
 
 ***
 
@@ -298,22 +297,22 @@ console.log(array[0] instanceof Polygons); // => true
 > **makeGlyphSeparated**(`data`): [`Polygons`](Polygons.md)[]
 
 Renders each KAGE data fragment in the given array on separate instances of
-[Polygons](Polygons.md), with stroke parameters adjusted as if all the fragments joined
-together compose a single glyph.
+[Polygons](Polygons.md), with stroke parameters adjusted as if all fragments together
+compose a single glyph.
 
 #### Parameters
 
 • **data**: readonly `string`[]
 
 An array of KAGE data fragments (in which lines are delimited by `"$"`)
-    to be rendered.
+to be rendered.
 
 #### Returns
 
 [`Polygons`](Polygons.md)[]
 
 An array of [Polygons](Polygons.md) instances holding the rendered data
-    of each KAGE data fragment.
+of each KAGE data fragment.
 
 #### Example
 
@@ -329,4 +328,4 @@ console.log(array[0] instanceof Polygons); // => true
 
 #### Defined in
 
-[kage.ts:182](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L182)
+[kage.ts:181](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L181)

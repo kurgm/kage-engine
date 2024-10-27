@@ -4,41 +4,41 @@ import { stretch, Stroke } from "./stroke.js";
 import { KShotai, Font, select as selectFont } from "./font/index.js";
 
 /**
- * The entry point for KAGE engine (Kanji-glyph Automatic Generating Engine).
- * It generates glyph outlines from a kanji's stroke data described in a dedicated
+ * The entry point for the KAGE engine (Kanji-glyph Automatic Generating Engine).
+ * It generates glyph outlines from kanji stroke data described in a dedicated
  * intermediate format called {@link https://glyphwiki.org/wiki/GlyphWiki:KAGE%e3%83%87%e3%83%bc%e3%82%bf%e4%bb%95%e6%a7%98 | KAGE data}.
  *
  * KAGE data may contain references to other glyphs (components), which are
- * resolved using a storage at its {@link kBuhin} property. The data for the
- * referenced glyphs must be registered to the storage prior to generating the outline.
+ * resolved using a storage in its {@link kBuhin} property. The data for the
+ * referenced glyphs must be registered in the storage prior to generating the outline.
  *
- * The font (mincho or gothic) can be changed with its {@link kShotai} property.
- * The font parameters (stroke width, etc.) can be configured with properties of
+ * The font (mincho or gothic) can be changed using the {@link kShotai} property.
+ * Font parameters (stroke width, etc.) can be configured using properties of
  * {@link kFont}.
  *
  * @see {@link Kage.makeGlyph}, {@link Kage.makeGlyph2}, {@link Kage.makeGlyph3} and
- *     {@link Kage.makeGlyphSeparated} for usage examples.
+ * {@link Kage.makeGlyphSeparated} for usage examples.
  */
 export class Kage {
-	/** An alias of Buhin constructor. */
+	/** An alias for Buhin constructor. */
 	static readonly Buhin = Buhin;
-	/** An alias of Polygons constructor. */
+	/** An alias for Polygons constructor. */
 	static readonly Polygons = Polygons;
 
 	/**
-	 * An alias of {@link KShotai.kMincho}.
+	 * An alias for {@link KShotai.kMincho}.
 	 * @see {@link Kage.kShotai} for usage.
 	 */
 	public readonly kMincho = KShotai.kMincho;
 	/**
-	 * An alias of {@link KShotai.kGothic}.
+	 * An alias for {@link KShotai.kGothic}.
 	 * @see {@link Kage.kShotai} for usage.
 	 */
 	public readonly kGothic = KShotai.kGothic;
 
 	/**
-	 * Provides the way to configure parameters of the currently selected font.
-	 * Its parameters are reset to the default values when {@link Kage.kShotai} is set.
+	 * Allows configuration of the parameters for the currently selected font.
+	 * Its parameters reset to their default values when {@link Kage.kShotai} is set.
 	 * @example
 	 * ```ts
 	 * const kage = new Kage();
@@ -50,7 +50,7 @@ export class Kage {
 
 	// properties
 	/**
-	 * Gets or sets the font as {@link KShotai}. Setting this property resets all the
+	 * Gets or sets the font as {@link KShotai}. Setting this property resets all
 	 * font parameters in {@link Kage.kFont}. Defaults to {@link KShotai.kMincho}.
 	 * @example
 	 * ```ts
@@ -76,7 +76,7 @@ export class Kage {
 		this.kFont.kUseCurve = value;
 	}
 
-	/** A storage from which components are looked up. */
+	/** A storage used to look up components. */
 	public kBuhin: Buhin;
 
 	// Probably this can be removed. Keeping here just in case someone is using it...
@@ -91,7 +91,7 @@ export class Kage {
 	// method
 	/**
 	 * Renders the glyph of the given name. Existing data in `polygons` (if any) are
-	 * NOT cleared; new glyph is "overprinted".
+	 * NOT cleared; the new glyph is "overprinted".
 	 * @example
 	 * ```ts
 	 * const kage = new Kage();
@@ -100,8 +100,8 @@ export class Kage {
 	 * kage.makeGlyph(polygons, "uXXXX");
 	 * const svg = polygons.generateSVG(); // now `svg` has the string of the rendered glyph
 	 * ```
-	 * @param polygons A {@link Polygons} instance on which the glyph is rendered.
-	 * @param buhin The name of the glyph to be rendered.
+	 * @param polygons - A {@link Polygons} instance on which the glyph is rendered.
+	 * @param buhin - The name of the glyph to be rendered.
 	 */
 	public makeGlyph(polygons: Polygons, buhin: string): void {
 		const glyphData = this.kBuhin.search(buhin);
@@ -110,7 +110,7 @@ export class Kage {
 
 	/**
 	 * Renders the glyph of the given KAGE data. Existing data in `polygons` (if any) are
-	 * NOT cleared; new glyph is "overprinted".
+	 * NOT cleared; the new glyph is "overprinted".
 	 * @example
 	 * ```ts
 	 * const kage = new Kage();
@@ -118,8 +118,8 @@ export class Kage {
 	 * kage.makeGlyph2(polygons, "1:0:2:32:31:176:31$2:22:7:176:31:170:43:156:63");
 	 * const svg = polygons.generateSVG(); // now `svg` has the string of the rendered glyph
 	 * ```
-	 * @param polygons A {@link Polygons} instance on which the glyph is rendered.
-	 * @param data The KAGE data to be rendered (in which lines are delimited by `"$"`).
+	 * @param polygons - A {@link Polygons} instance on which the glyph is rendered.
+	 * @param data - The KAGE data to be rendered (in which lines are delimited by `"$"`).
 	 */
 	public makeGlyph2(polygons: Polygons, data: string): void {
 		if (data !== "") {
@@ -132,8 +132,7 @@ export class Kage {
 	}
 
 	/**
-	 * Renders each stroke of the given KAGE data on separate instances of
-	 * {@link Polygons}.
+	 * Renders each stroke of the given KAGE data on separate instances of {@link Polygons}.
 	 * @example
 	 * ```ts
 	 * const kage = new Kage();
@@ -141,9 +140,9 @@ export class Kage {
 	 * console.log(array.length); // => 2
 	 * console.log(array[0] instanceof Polygons); // => true
 	 * ```
-	 * @param data The KAGE data to be rendered (in which lines are delimited by `"$"`).
+	 * @param data - The KAGE data to be rendered (in which lines are delimited by `"$"`).
 	 * @returns An array of {@link Polygons} instances holding the rendered data
-	 *     of each stroke in the glyph.
+	 * of each stroke in the glyph.
 	 */
 	public makeGlyph3(data: string): Polygons[] {
 		const result: Polygons[] = [];
@@ -161,8 +160,8 @@ export class Kage {
 
 	/**
 	 * Renders each KAGE data fragment in the given array on separate instances of
-	 * {@link Polygons}, with stroke parameters adjusted as if all the fragments joined
-	 * together compose a single glyph.
+	 * {@link Polygons}, with stroke parameters adjusted as if all fragments together
+	 * compose a single glyph.
 	 * @example
 	 * ```ts
 	 * const kage = new Kage();
@@ -173,10 +172,10 @@ export class Kage {
 	 * console.log(array.length); // => 2
 	 * console.log(array[0] instanceof Polygons); // => true
 	 * ```
-	 * @param data An array of KAGE data fragments (in which lines are delimited by `"$"`)
-	 *     to be rendered.
+	 * @param data - An array of KAGE data fragments (in which lines are delimited by `"$"`)
+	 * to be rendered.
 	 * @returns An array of {@link Polygons} instances holding the rendered data
-	 *     of each KAGE data fragment.
+	 * of each KAGE data fragment.
 	 */
 	// Added by @kurgm
 	public makeGlyphSeparated(data: readonly string[]): Polygons[] {

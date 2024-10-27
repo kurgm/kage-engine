@@ -3,7 +3,7 @@ import { normalize } from "./util.js";
 
 /**
  * Calculates global coordinates from local coordinates around a pen
- * using its position and direction.
+ * based on its position and direction.
  * @internal
  */
 export class Pen {
