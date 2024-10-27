@@ -37,6 +37,15 @@ const Polygons = Kage.Polygons;
 const Buhin = Kage.Buhin;
 ```
 
+Bundled ESM file is also available:
+```html
+<script type="module">
+  import { Kage, Polygons } from "https://unpkg.com/@kurgm/kage-engine@0.6.0/dist/kage.min.mjs";
+
+  // Your code goes here
+</script>
+```
+
 ### Drawing glyphs
 
 *See [docs](docs/classes/Kage.md) for more detailed API documentations (of development version).*
