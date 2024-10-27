@@ -221,15 +221,15 @@ function dfDrawFont(
 	}
 }
 
-/** Mincho style font. */
+/** Mincho-style font (明朝体). */
 class Mincho implements FontInterface {
 	public readonly shotai: KShotai = KShotai.kMincho;
 
 	/**
 	 * Precision for polygon approximation of curving strokes.
-	 * It must be a positive divisor of 1000. The smaller `kRate` will give
-	 * smoother curves approximated with the larger number of points (roughly
-	 * 2 × 1000 / `kRate` per one curve stroke).
+	 * It must be a positive divisor of 1000. A smaller `kRate` will result in
+	 * smoother curves approximated with a larger number of points (roughly
+	 * 2 × 1000 / `kRate` per curve stroke).
 	 */
 	public kRate: number = 100; // must divide 1000
 	/** Half of the width of mincho-style horizontal (thinner) strokes. */
@@ -247,11 +247,11 @@ class Mincho implements FontInterface {
 	public kKakato: number;
 	/** Width at the end of 右払い relative to `2 * kMinWidthT`. */
 	public kL2RDfatten: number;
-	/** Size of curve at the end of 左ハネ, and at the middle of 折れ and 乙線 strokes. */
+	/** Size of the curve at the end of 左ハネ, and at the middle of 折れ and 乙線 strokes. */
 	public kMage: number;
 	/**
 	 * Whether to use off-curve points to approximate curving strokes
-	 * with quadratic Bézier curve (experimental).
+	 * with quadratic Bézier curves (experimental).
 	 */
 	public kUseCurve: boolean;
 
@@ -287,13 +287,13 @@ class Mincho implements FontInterface {
 	// check for crossing. corresponds to length
 	public kAdjustUrokoLine: number[];
 
-	/** Number of ウロコ shrinking levels by adjustment using density of horizontal strokes. */
+	/** Number of ウロコ shrinking levels by adjustment based on the density of horizontal strokes. */
 	public kAdjustUroko2Step: number;
-	/** Parameter for shrinking adjustment of ウロコ using density of horizontal strokes. */
+	/** Parameter for shrinking adjustment of ウロコ based on the density of horizontal strokes. */
 	public kAdjustUroko2Length: number;
 	/** Parameter for thinning adjustment of mincho-style vertical strokes. */
 	public kAdjustTateStep: number;
-	/** Parameter for thinning adjustment of latter half of mincho-style 折れ strokes. */
+	/** Parameter for thinning adjustment of the latter half of mincho-style 折れ strokes. */
 	public kAdjustMageStep: number;
 
 	public constructor() {

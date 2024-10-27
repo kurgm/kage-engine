@@ -54,7 +54,7 @@ export function cubicBezierDeriv(p1: number, p2: number, p3: number, p4: number,
 }
 
 /**
- * Find the minimum of a function by ternary search. 
+ * Finds the minimum of a function using ternary search. 
  * @internal
  */
 export function ternarySearchMin(func: (x: number) => number, left: number, right: number, eps: number = 1E-5): number {
@@ -73,7 +73,7 @@ export function ternarySearchMin(func: (x: number) => number, left: number, righ
 }
 
 /**
- * Find the maximum of a function by ternary search. 
+ * Finds the maximum of a function using ternary search. 
  * @internal
  */
 export function ternarySearchMax(func: (x: number) => number, left: number, right: number, eps?: number): number {

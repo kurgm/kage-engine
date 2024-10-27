@@ -6,7 +6,7 @@
 
 # Class: Gothic
 
-Gothic style font.
+Gothic-style font (ゴシック体).
 
 ## Extends
 
@@ -120,7 +120,7 @@ Number of カカト shortening levels. Must be set to 3.
 
 > **kAdjustMageStep**: `number`
 
-Parameter for thinning adjustment of latter half of mincho-style 折れ strokes.
+Parameter for thinning adjustment of the latter half of mincho-style 折れ strokes.
 
 #### Inherited from
 
@@ -152,7 +152,7 @@ Parameter for thinning adjustment of mincho-style vertical strokes.
 
 > **kAdjustUroko2Length**: `number`
 
-Parameter for shrinking adjustment of ウロコ using density of horizontal strokes.
+Parameter for shrinking adjustment of ウロコ based on the density of horizontal strokes.
 
 #### Inherited from
 
@@ -168,7 +168,7 @@ Parameter for shrinking adjustment of ウロコ using density of horizontal stro
 
 > **kAdjustUroko2Step**: `number`
 
-Number of ウロコ shrinking levels by adjustment using density of horizontal strokes.
+Number of ウロコ shrinking levels by adjustment based on the density of horizontal strokes.
 
 #### Inherited from
 
@@ -296,7 +296,7 @@ Width at the end of 右払い relative to `2 * kMinWidthT`.
 
 > **kMage**: `number`
 
-Size of curve at the end of 左ハネ, and at the middle of 折れ and 乙線 strokes.
+Size of the curve at the end of 左ハネ, and at the middle of 折れ and 乙線 strokes.
 
 #### Inherited from
 
@@ -361,9 +361,9 @@ Half of the width of mincho-style horizontal (thinner) strokes.
 > **kRate**: `number` = `100`
 
 Precision for polygon approximation of curving strokes.
-It must be a positive divisor of 1000. The smaller `kRate` will give
-smoother curves approximated with the larger number of points (roughly
-2 × 1000 / `kRate` per one curve stroke).
+It must be a positive divisor of 1000. A smaller `kRate` will result in
+smoother curves approximated with a larger number of points (roughly
+2 × 1000 / `kRate` per curve stroke).
 
 #### Inherited from
 
@@ -380,7 +380,7 @@ smoother curves approximated with the larger number of points (roughly
 > **kUseCurve**: `boolean`
 
 Whether to use off-curve points to approximate curving strokes
-with quadratic Bézier curve (experimental).
+with quadratic Bézier curves (experimental).
 
 #### Implementation of
 

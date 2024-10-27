@@ -24,9 +24,9 @@ export type PointOptOff = Omit<Point, "off"> & Partial<Pick<Point, "off">>;
  * A contour that a Polygon represents is a closed curve made up of straight line
  * segments or quadratic Bézier curve segments. A Polygon is represented as a
  * series of {@link Point}'s, each of which is an on-curve point or an off-curve
- * point. Two consecutive on-curve points define a line segment. A sequence of
- * two on-curve points with an off-curve point in between defines a curve segment.
- * The last point and the first point of a Polygon define a line segment that closes
+ * point. Two consecutive on-curve points form a line segment. A sequence of
+ * two on-curve points with an off-curve point in between forms a curve segment.
+ * The last point and the first point of a Polygon form a line segment that closes
  * the loop (if the two points differ).
  */
 export class Polygon {
@@ -37,7 +37,7 @@ export class Polygon {
 	 * A read-only array consisting of the points in this contour.
 	 *
 	 * Modifications to this array do NOT affect the contour;
-	 * call {@link set} method to modify the contour.
+	 * use the {@link set} method to modify the contour.
 	 *
 	 * @example
 	 * ```ts
@@ -46,9 +46,9 @@ export class Polygon {
 	 * }
 	 * ```
 	 *
-	 * Note that the computation of coordinates of all the points is performed
-	 * every time this property is accessed. To get a better performance, consider
-	 * caching the result in a variable when you need to access the array repeatedly.
+	 * Note that the coordinates of all points are computed each time this property
+	 * is accessed. If you need to access the array repeatedly, consider storing
+	 * the result in a variable to avoid redundant computation.
 	 * ```ts
 	 * // DO:
 	 * const array = polygon.array;
@@ -76,16 +76,16 @@ export class Polygon {
 		return this._array.length;
 	}
 	/**
-	 * Construct the `Polygon` object. If the argument `length` is given,
-	 * constructed object has contour of size `length` whose members are all
-	 * initialized to the origin point (0, 0). Otherwise the contour has
+	 * Constructs a `Polygon` object. If the `length` argument is given,
+	 * the constructed object represents a contour of size `length`, with all
+	 * its points initialized to the origin (0, 0). Otherwise the contour has
 	 * no points.
-	 * @param length The initial number of points in the contour.
+	 * @param length - The initial number of points in the contour.
 	 */
 	constructor(length?: number);
 	/**
-	 * Construct the `Polygon` object with the given points as its contour.
-	 * @param points The points in the contour.
+	 * Constructs a `Polygon` object with the given points as its contour.
+	 * @param points - The points in the contour.
 	 * @internal
 	 */
 	// Added by @kurgm
@@ -110,18 +110,18 @@ export class Polygon {
 
 	// method
 	/**
-	 * Appends a point at the end of its contour.
-	 * @param x The x-coordinate of the appended point.
-	 * @param y The y-coordiante of the appended point.
-	 * @param off Whether the appended point is an off-curve point. Defaults to `false`.
+	 * Appends a point to the end of its contour.
+	 * @param x - The x-coordinate of the appended point.
+	 * @param y - The y-coordinate of the appended point.
+	 * @param off - Whether the appended point is an off-curve point. Defaults to `false`.
 	 */
 	public push(x: number, y: number, off: boolean = false): void {
 		this._array.push(this.createInternalPoint(x, y, off));
 	}
 
 	/**
-	 * Appends a point at the end of its contour.
-	 * @param point The appended point.
+	 * Appends a point to the end of its contour.
+	 * @param point - The appended point.
 	 * @internal
 	 */
 	// Added by @kurgm
@@ -130,21 +130,21 @@ export class Polygon {
 	}
 
 	/**
-	 * Mutates a point in its contour.
-	 * @param index The index in the contour of the point to be mutated.
-	 * @param x The new x-coordinate of the point.
-	 * @param y The new y-coordinate of the point.
-	 * @param off Whether the new point is an off-curve point. Defaults to `false`.
+	 * Modifies a point in its contour.
+	 * @param index - The index in the contour of the point to be modified.
+	 * @param x - The new x-coordinate of the point.
+	 * @param y - The new y-coordinate of the point.
+	 * @param off - Whether the new point is an off-curve point. Defaults to `false`.
 	 */
 	public set(index: number, x: number, y: number, off: boolean = false): void {
 		this._array[index] = this.createInternalPoint(x, y, off);
 	}
 
 	/**
-	 * Mutates a point in its contour.
-	 * @param index The index in the contour of the point to be mutated.
-	 * @param point A point of the new coordinate values. Omitting `off` property makes
-	 *     the point an on-curve point (as if `off: false` were specified).
+	 * Modifies a point in its contour.
+	 * @param index - The index in the contour of the point to be modified.
+	 * @param point - A point of the new coordinate values. If `off` property is
+	 * omitted, the point is treated as an on-curve point.
 	 * @internal
 	 */
 	// Added by @kurgm
@@ -153,12 +153,12 @@ export class Polygon {
 	}
 
 	/**
-	 * Retrieves a point in its contour. If the index is out of bounds,
-	 * throws an error.
-	 * @param index The index in the contour of the point to be retrieved.
+	 * Retrieves a point from its contour. Throws an error if the index is
+	 * out of bounds.
+	 * @param index - The index in the contour of the point to be retrieved.
 	 * @returns A read-only point object. Modifications made to the returned
-	 *     object do NOT affect the values of the point in the contour;
-	 *     call {@link set} method to modify the contour.
+	 * object do NOT affect the values of the point in this Polygon's contour;
+	 * use the {@link set} method to modify the contour.
 	 * @example
 	 * ```ts
 	 * for (let i = 0; i < polygon.length; i++) {
@@ -181,16 +181,16 @@ export class Polygon {
 	}
 
 	/**
-	 * Reverses the points in its contour.
+	 * Reverses the order of points in its contour.
 	 */
 	public reverse(): void {
 		this._array.reverse();
 	}
 
 	/**
-	 * Appends the points in the contour of another {@link Polygon} at the end of
+	 * Appends the points from the contour of another {@link Polygon} to the end of
 	 * this contour. The other Polygon is not mutated.
-	 * @param poly The other {@link Polygon} to be appended.
+	 * @param poly - The other {@link Polygon} to be appended.
 	 */
 	public concat(poly: Polygon): void {
 		if (this._precision !== poly._precision) {
@@ -200,18 +200,17 @@ export class Polygon {
 	}
 
 	/**
-	 * Removes the first point in its contour. If there are no points in the contour,
-	 * nothing is performed.
+	 * Removes the first point from its contour. Does nothing if the contour is empty.
 	 */
 	public shift(): void {
 		this._array.shift();
 	}
 
 	/**
-	 * Inserts a new point at the start of its contour.
-	 * @param x The x-coordinate of the inserted point.
-	 * @param y The y-coordiante of the inserted point.
-	 * @param off Whether the inserted point is an off-curve point. Defaults to `false`.
+	 * Inserts a new point at the beginning of its contour.
+	 * @param x - The x-coordinate of the inserted point.
+	 * @param y - The y-coordiante of the inserted point.
+	 * @param off - Whether the inserted point is an off-curve point. Defaults to `false`.
 	 */
 	public unshift(x: number, y: number, off: boolean = false): void {
 		this._array.unshift(this.createInternalPoint(x, y, off));
@@ -270,8 +269,8 @@ export class Polygon {
 
 	/**
 	 * Translates the whole polygon by the given amount.
-	 * @param dx The x-amount of translation.
-	 * @param dy The y-amount of translation.
+	 * @param dx - The x-amount of translation.
+	 * @param dy - The y-amount of translation.
 	 * @returns This object (for chaining).
 	 * @internal
 	 */
@@ -331,7 +330,6 @@ export class Polygon {
 
 	/**
 	 * Rotates the whole polygon by 180 degrees.
-	 * {@link scale}(-1).
 	 * @returns This object (for chaining).
 	 * @internal
 	 */

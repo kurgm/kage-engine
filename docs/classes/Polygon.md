@@ -11,9 +11,9 @@ Represents a single contour of a rendered glyph.
 A contour that a Polygon represents is a closed curve made up of straight line
 segments or quadratic Bézier curve segments. A Polygon is represented as a
 series of [Point](../interfaces/Point.md)'s, each of which is an on-curve point or an off-curve
-point. Two consecutive on-curve points define a line segment. A sequence of
-two on-curve points with an off-curve point in between defines a curve segment.
-The last point and the first point of a Polygon define a line segment that closes
+point. Two consecutive on-curve points form a line segment. A sequence of
+two on-curve points with an off-curve point in between forms a curve segment.
+The last point and the first point of a Polygon form a line segment that closes
 the loop (if the two points differ).
 
 ## Constructors
@@ -22,9 +22,9 @@ the loop (if the two points differ).
 
 > **new Polygon**(`length`?): [`Polygon`](Polygon.md)
 
-Construct the `Polygon` object. If the argument `length` is given,
-constructed object has contour of size `length` whose members are all
-initialized to the origin point (0, 0). Otherwise the contour has
+Constructs a `Polygon` object. If the `length` argument is given,
+the constructed object represents a contour of size `length`, with all
+its points initialized to the origin (0, 0). Otherwise the contour has
 no points.
 
 #### Parameters
@@ -69,7 +69,7 @@ for (const { x, y, off } of polygon) {
 
 #### Defined in
 
-[polygon.ts:240](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L240)
+[polygon.ts:239](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L239)
 
 ## Accessors
 
@@ -80,7 +80,7 @@ for (const { x, y, off } of polygon) {
 A read-only array consisting of the points in this contour.
 
 Modifications to this array do NOT affect the contour;
-call [set](Polygon.md#set) method to modify the contour.
+use the [set](Polygon.md#set) method to modify the contour.
 
 #### Example
 
@@ -90,9 +90,9 @@ for (const point of polygon.array) {
 }
 ```
 
-Note that the computation of coordinates of all the points is performed
-every time this property is accessed. To get a better performance, consider
-caching the result in a variable when you need to access the array repeatedly.
+Note that the coordinates of all points are computed each time this property
+is accessed. If you need to access the array repeatedly, consider storing
+the result in a variable to avoid redundant computation.
 ```ts
 // DO:
 const array = polygon.array;
@@ -153,7 +153,7 @@ A new [Polygon](Polygon.md) instance.
 
 #### Defined in
 
-[polygon.ts:225](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L225)
+[polygon.ts:224](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L224)
 
 ***
 
@@ -161,7 +161,7 @@ A new [Polygon](Polygon.md) instance.
 
 > **concat**(`poly`): `void`
 
-Appends the points in the contour of another [Polygon](Polygon.md) at the end of
+Appends the points from the contour of another [Polygon](Polygon.md) to the end of
 this contour. The other Polygon is not mutated.
 
 #### Parameters
@@ -184,8 +184,8 @@ The other [Polygon](Polygon.md) to be appended.
 
 > **get**(`index`): `Readonly`\<[`Point`](../interfaces/Point.md)\>
 
-Retrieves a point in its contour. If the index is out of bounds,
-throws an error.
+Retrieves a point from its contour. Throws an error if the index is
+out of bounds.
 
 #### Parameters
 
@@ -198,8 +198,8 @@ The index in the contour of the point to be retrieved.
 `Readonly`\<[`Point`](../interfaces/Point.md)\>
 
 A read-only point object. Modifications made to the returned
-    object do NOT affect the values of the point in the contour;
-    call [set](Polygon.md#set) method to modify the contour.
+object do NOT affect the values of the point in this Polygon's contour;
+use the [set](Polygon.md#set) method to modify the contour.
 
 #### Example
 
@@ -220,7 +220,7 @@ for (let i = 0; i < polygon.length; i++) {
 
 > **push**(`x`, `y`, `off`): `void`
 
-Appends a point at the end of its contour.
+Appends a point to the end of its contour.
 
 #### Parameters
 
@@ -230,7 +230,7 @@ The x-coordinate of the appended point.
 
 • **y**: `number`
 
-The y-coordiante of the appended point.
+The y-coordinate of the appended point.
 
 • **off**: `boolean` = `false`
 
@@ -250,7 +250,7 @@ Whether the appended point is an off-curve point. Defaults to `false`.
 
 > **reverse**(): `void`
 
-Reverses the points in its contour.
+Reverses the order of points in its contour.
 
 #### Returns
 
@@ -266,13 +266,13 @@ Reverses the points in its contour.
 
 > **set**(`index`, `x`, `y`, `off`): `void`
 
-Mutates a point in its contour.
+Modifies a point in its contour.
 
 #### Parameters
 
 • **index**: `number`
 
-The index in the contour of the point to be mutated.
+The index in the contour of the point to be modified.
 
 • **x**: `number`
 
@@ -300,8 +300,7 @@ Whether the new point is an off-curve point. Defaults to `false`.
 
 > **shift**(): `void`
 
-Removes the first point in its contour. If there are no points in the contour,
-nothing is performed.
+Removes the first point from its contour. Does nothing if the contour is empty.
 
 #### Returns
 
@@ -309,7 +308,7 @@ nothing is performed.
 
 #### Defined in
 
-[polygon.ts:206](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L206)
+[polygon.ts:205](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L205)
 
 ***
 
@@ -317,7 +316,7 @@ nothing is performed.
 
 > **unshift**(`x`, `y`, `off`): `void`
 
-Inserts a new point at the start of its contour.
+Inserts a new point at the beginning of its contour.
 
 #### Parameters
 
@@ -339,4 +338,4 @@ Whether the inserted point is an off-curve point. Defaults to `false`.
 
 #### Defined in
 
-[polygon.ts:216](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L216)
+[polygon.ts:215](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L215)

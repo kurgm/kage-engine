@@ -28,8 +28,8 @@ A key-value store that maps a glyph name to a string of KAGE data.
 
 > **push**(`name`, `data`): `void`
 
-Adds or updates and element with a given glyph name and KAGE data.
-It is an alias of [set](Buhin.md#set) method.
+Adds or updates an element with the given glyph name and KAGE data.
+It is an alias for the [set](Buhin.md#set) method.
 
 #### Parameters
 
@@ -55,7 +55,7 @@ The KAGE data.
 
 > **search**(`name`): `string`
 
-Search the store for a specified glyph name and returns the corresponding
+Searches the store for the given glyph name and returns the corresponding
 KAGE data.
 
 #### Parameters
@@ -68,7 +68,7 @@ The name of the glyph to be looked up.
 
 `string`
 
-The KAGE data if found, or an empty string if not found.
+The KAGE data if found, otherwise an empty string.
 
 #### Defined in
 
@@ -80,7 +80,7 @@ The KAGE data if found, or an empty string if not found.
 
 > **set**(`name`, `data`): `void`
 
-Adds or updates an element with a given glyph name and KAGE data.
+Adds or updates an element with the given glyph name and KAGE data.
 
 #### Parameters
 
