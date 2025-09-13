@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
 jobs:
   typedoc:
     runs-on: ubuntu-latest
