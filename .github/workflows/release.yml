@@ -15,16 +15,18 @@ jobs:
       id-token: write
     environment: release
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: master
           fetch-tags: true
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: lts/*
           registry-url: https://registry.npmjs.org
           cache: "npm"
+      # OIDC requires npm v11.5.1 or later
+      - run: npm install -g 'npm@>=11.5.1'
       - run: npm ci
       - name: Configure Git
         run: |
@@ -35,5 +37,4 @@ jobs:
         env:
           TZ: Asia/Tokyo
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           RELEASE_VERSION: ${{ github.event.inputs.version }}
