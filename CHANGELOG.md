@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Fixed
+- Improved the pinhole between the end of horizontal stroke and the head stroke type 27 in mincho style.
 
 ## [0.6.0] - 2024-10-28
 ### Changed
