@@ -193,7 +193,7 @@ for (let i = 0; i < polygon.length; i++) {
 
 ### push()
 
-> **push**(`x`, `y`, `off`): `void`
+> **push**(`x`, `y`, `off?`): `void`
 
 Defined in: [polygon.ts:118](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L118)
 
@@ -213,7 +213,7 @@ The x-coordinate of the appended point.
 
 The y-coordinate of the appended point.
 
-##### off
+##### off?
 
 `boolean` = `false`
 
@@ -241,7 +241,7 @@ Reverses the order of points in its contour.
 
 ### set()
 
-> **set**(`index`, `x`, `y`, `off`): `void`
+> **set**(`index`, `x`, `y`, `off?`): `void`
 
 Defined in: [polygon.ts:139](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L139)
 
@@ -267,7 +267,7 @@ The new x-coordinate of the point.
 
 The new y-coordinate of the point.
 
-##### off
+##### off?
 
 `boolean` = `false`
 
@@ -295,7 +295,7 @@ Removes the first point from its contour. Does nothing if the contour is empty.
 
 ### unshift()
 
-> **unshift**(`x`, `y`, `off`): `void`
+> **unshift**(`x`, `y`, `off?`): `void`
 
 Defined in: [polygon.ts:215](https://github.com/kurgm/kage-engine/blob/master/src/polygon.ts#L215)
 
@@ -315,7 +315,7 @@ The x-coordinate of the inserted point.
 
 The y-coordiante of the inserted point.
 
-##### off
+##### off?
 
 `boolean` = `false`
 
