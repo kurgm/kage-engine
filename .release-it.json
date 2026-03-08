@@ -16,7 +16,8 @@
 		}
 	},
 	"npm": {
-		"publishArgs": ["--provenance"]
+		"publishArgs": ["--provenance"],
+		"skipChecks": true
 	},
 	"git": {
 		"tagName": "v${version}",
