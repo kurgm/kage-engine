@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.6.1] - 2026-03-08
 ### Fixed
 - Improved the pinhole between the end of horizontal stroke and the head stroke type 27 in mincho style.
 
@@ -86,7 +88,7 @@
 ## [0.2.0] - 2020-06-05
 
 
-[unreleased]: https://github.com/kurgm/kage-engine/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/kurgm/kage-engine/compare/v0.6.1...HEAD
 [0.6.0]: https://github.com/kurgm/kage-engine/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kurgm/kage-engine/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/kurgm/kage-engine/compare/v0.3.1...v0.4.0
@@ -96,3 +98,5 @@
 [0.2.2]: https://github.com/kurgm/kage-engine/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/kurgm/kage-engine/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/kurgm/kage-engine/releases/tag/v0.2.0
+
+[0.6.1]: https://github.com/kurgm/kage-engine/releases/tag/v0.6.1
