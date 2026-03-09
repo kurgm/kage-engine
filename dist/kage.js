@@ -1,4 +1,4 @@
-/*! kage.js v0.5.0
+/*! kage.js v0.6.1
  *  Licensed under GPL-3.0
  *  https://github.com/kurgm/kage-engine#readme
  */
@@ -16,18 +16,18 @@ var Kage = (function () {
         }
         // method
         /**
-         * Adds or updates an element with a given glyph name and KAGE data.
-         * @param name The name of the glyph.
-         * @param data The KAGE data.
+         * Adds or updates an element with the given glyph name and KAGE data.
+         * @param name - The name of the glyph.
+         * @param data - The KAGE data.
          */
         Buhin.prototype.set = function (name, data) {
             this.hash[name] = data;
         };
         /**
-         * Search the store for a specified glyph name and returns the corresponding
+         * Searches the store for the given glyph name and returns the corresponding
          * KAGE data.
-         * @param name The name of the glyph to be looked up.
-         * @returns The KAGE data if found, or an empty string if not found.
+         * @param name - The name of the glyph to be looked up.
+         * @returns The KAGE data if found, otherwise an empty string.
          */
         Buhin.prototype.search = function (name) {
             if (this.hash[name]) {
@@ -36,10 +36,10 @@ var Kage = (function () {
             return ""; // no data
         };
         /**
-         * Adds or updates and element with a given glyph name and KAGE data.
-         * It is an alias of {@link set} method.
-         * @param name The name of the glyph.
-         * @param data The KAGE data.
+         * Adds or updates an element with the given glyph name and KAGE data.
+         * It is an alias for the {@link set} method.
+         * @param name - The name of the glyph.
+         * @param data - The KAGE data.
          */
         Buhin.prototype.push = function (name, data) {
             this.set(name, data);
@@ -48,9 +48,9 @@ var Kage = (function () {
     }());
 
     /**
-     * Represents the rendered glyph.
+     * Represents a rendered glyph.
      *
-     * A glyph is represented as a series of {@link Polygon}'s.
+     * A glyph is represented as a series of {@link Polygon} instances.
      * The contained {@link Polygon}'s can be accessed by the {@link array} property.
      */
     var Polygons = /** @class */ (function () {
@@ -65,8 +65,8 @@ var Kage = (function () {
         };
         /**
          * Appends a new {@link Polygon} to the end of the array.
-         * Nothing is performed if `polygon` is not a valid polygon.
-         * @param polygon An instance of {@link Polygon} to be appended.
+         * Does nothing if `polygon` is not a valid polygon.
+         * @param polygon - A {@link Polygon} instance to be appended.
          */
         Polygons.prototype.push = function (polygon) {
             // only a simple check
@@ -102,10 +102,10 @@ var Kage = (function () {
         };
         /**
          * Generates a string in SVG format that represents the rendered glyph.
-         * @param curve Set to true to use `<path />` format or set to false to use
-         *     `<polygon />` format. Must be set to true if the glyph was rendered with
-         *     `kage.kFont.kUseCurve = true`. The `<polygon />` format is used if
-         *     unspecified.
+         * @param curve - Set to true to use the `<path />` format, or set to false to
+         * use the `<polygon />` format. Must be set to true if the glyph was rendered
+         * with `kage.kFont.kUseCurve = true`. Defaults to false (the `<polygon />` format
+         * is used).
          * @returns The string representation of the rendered glyph in SVG format.
          */
         Polygons.prototype.generateSVG = function (curve) {
@@ -184,6 +184,7 @@ var Kage = (function () {
 
     /** @internal */
     // @ts-expect-error Math.hypot is not defined in es5
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     var hypot = Math.hypot ? Math.hypot.bind(Math) : (function (x, y) { return Math.sqrt(x * x + y * y); });
     /**
      * Calculates a new vector with the same angle and a new magnitude.
@@ -233,7 +234,7 @@ var Kage = (function () {
         return 3 * (t * (t * (-p1 + 3 * p2 - 3 * p3 + p4) + 2 * (p1 - 2 * p2 + p3)) - p1 + p2);
     }
     /**
-     * Find the minimum of a function by ternary search.
+     * Finds the minimum of a function using ternary search.
      * @internal
      */
     function ternarySearchMin(func, left, right, eps) {
@@ -441,13 +442,13 @@ var Kage = (function () {
     var KShotai;
     (function (KShotai) {
         /**
-         * Mincho style font.
-         * @see {@link Mincho} for its corresponding font class.
+         * Mincho-style font (明朝体).
+         * @see {@link Mincho} for the corresponding font class.
          */
         KShotai[KShotai["kMincho"] = 0] = "kMincho";
         /**
-         * Gothic style font.
-         * @see {@link Gothic} for its corresponding font class.
+         * Gothic-style font (ゴシック体).
+         * @see {@link Gothic} for the corresponding font class.
          */
         KShotai[KShotai["kGothic"] = 1] = "kGothic";
     })(KShotai || (KShotai = {}));
@@ -531,9 +532,9 @@ var Kage = (function () {
      * A contour that a Polygon represents is a closed curve made up of straight line
      * segments or quadratic Bézier curve segments. A Polygon is represented as a
      * series of {@link Point}'s, each of which is an on-curve point or an off-curve
-     * point. Two consecutive on-curve points define a line segment. A sequence of
-     * two on-curve points with an off-curve point in between defines a curve segment.
-     * The last point and the first point of a Polygon define a line segment that closes
+     * point. Two consecutive on-curve points form a line segment. A sequence of
+     * two on-curve points with an off-curve point in between forms a curve segment.
+     * The last point and the first point of a Polygon form a line segment that closes
      * the loop (if the two points differ).
      */
     var Polygon = /** @class */ (function () {
@@ -561,7 +562,7 @@ var Kage = (function () {
              * A read-only array consisting of the points in this contour.
              *
              * Modifications to this array do NOT affect the contour;
-             * call {@link set} method to modify the contour.
+             * use the {@link set} method to modify the contour.
              *
              * @example
              * ```ts
@@ -570,9 +571,9 @@ var Kage = (function () {
              * }
              * ```
              *
-             * Note that the computation of coordinates of all the points is performed
-             * every time this property is accessed. To get a better performance, consider
-             * caching the result in a variable when you need to access the array repeatedly.
+             * Note that the coordinates of all points are computed each time this property
+             * is accessed. If you need to access the array repeatedly, consider storing
+             * the result in a variable to avoid redundant computation.
              * ```ts
              * // DO:
              * const array = polygon.array;
@@ -609,18 +610,18 @@ var Kage = (function () {
         });
         // method
         /**
-         * Appends a point at the end of its contour.
-         * @param x The x-coordinate of the appended point.
-         * @param y The y-coordiante of the appended point.
-         * @param off Whether the appended point is an off-curve point. Defaults to `false`.
+         * Appends a point to the end of its contour.
+         * @param x - The x-coordinate of the appended point.
+         * @param y - The y-coordinate of the appended point.
+         * @param off - Whether the appended point is an off-curve point. Defaults to `false`.
          */
         Polygon.prototype.push = function (x, y, off) {
             if (off === void 0) { off = false; }
             this._array.push(this.createInternalPoint(x, y, off));
         };
         /**
-         * Appends a point at the end of its contour.
-         * @param point The appended point.
+         * Appends a point to the end of its contour.
+         * @param point - The appended point.
          * @internal
          */
         // Added by @kurgm
@@ -628,21 +629,21 @@ var Kage = (function () {
             this.push(point.x, point.y, point.off);
         };
         /**
-         * Mutates a point in its contour.
-         * @param index The index in the contour of the point to be mutated.
-         * @param x The new x-coordinate of the point.
-         * @param y The new y-coordinate of the point.
-         * @param off Whether the new point is an off-curve point. Defaults to `false`.
+         * Modifies a point in its contour.
+         * @param index - The index in the contour of the point to be modified.
+         * @param x - The new x-coordinate of the point.
+         * @param y - The new y-coordinate of the point.
+         * @param off - Whether the new point is an off-curve point. Defaults to `false`.
          */
         Polygon.prototype.set = function (index, x, y, off) {
             if (off === void 0) { off = false; }
             this._array[index] = this.createInternalPoint(x, y, off);
         };
         /**
-         * Mutates a point in its contour.
-         * @param index The index in the contour of the point to be mutated.
-         * @param point A point of the new coordinate values. Omitting `off` property makes
-         *     the point an on-curve point (as if `off: false` were specified).
+         * Modifies a point in its contour.
+         * @param index - The index in the contour of the point to be modified.
+         * @param point - A point of the new coordinate values. If `off` property is
+         * omitted, the point is treated as an on-curve point.
          * @internal
          */
         // Added by @kurgm
@@ -650,12 +651,12 @@ var Kage = (function () {
             this.set(index, point.x, point.y, point.off);
         };
         /**
-         * Retrieves a point in its contour. If the index is out of bounds,
-         * throws an error.
-         * @param index The index in the contour of the point to be retrieved.
+         * Retrieves a point from its contour. Throws an error if the index is
+         * out of bounds.
+         * @param index - The index in the contour of the point to be retrieved.
          * @returns A read-only point object. Modifications made to the returned
-         *     object do NOT affect the values of the point in the contour;
-         *     call {@link set} method to modify the contour.
+         * object do NOT affect the values of the point in this Polygon's contour;
+         * use the {@link set} method to modify the contour.
          * @example
          * ```ts
          * for (let i = 0; i < polygon.length; i++) {
@@ -677,15 +678,15 @@ var Kage = (function () {
             };
         };
         /**
-         * Reverses the points in its contour.
+         * Reverses the order of points in its contour.
          */
         Polygon.prototype.reverse = function () {
             this._array.reverse();
         };
         /**
-         * Appends the points in the contour of another {@link Polygon} at the end of
+         * Appends the points from the contour of another {@link Polygon} to the end of
          * this contour. The other Polygon is not mutated.
-         * @param poly The other {@link Polygon} to be appended.
+         * @param poly - The other {@link Polygon} to be appended.
          */
         Polygon.prototype.concat = function (poly) {
             if (this._precision !== poly._precision) {
@@ -694,17 +695,16 @@ var Kage = (function () {
             this._array = this._array.concat(poly._array);
         };
         /**
-         * Removes the first point in its contour. If there are no points in the contour,
-         * nothing is performed.
+         * Removes the first point from its contour. Does nothing if the contour is empty.
          */
         Polygon.prototype.shift = function () {
             this._array.shift();
         };
         /**
-         * Inserts a new point at the start of its contour.
-         * @param x The x-coordinate of the inserted point.
-         * @param y The y-coordiante of the inserted point.
-         * @param off Whether the inserted point is an off-curve point. Defaults to `false`.
+         * Inserts a new point at the beginning of its contour.
+         * @param x - The x-coordinate of the inserted point.
+         * @param y - The y-coordiante of the inserted point.
+         * @param off - Whether the inserted point is an off-curve point. Defaults to `false`.
          */
         Polygon.prototype.unshift = function (x, y, off) {
             if (off === void 0) { off = false; }
@@ -731,8 +731,8 @@ var Kage = (function () {
         };
         /**
          * Translates the whole polygon by the given amount.
-         * @param dx The x-amount of translation.
-         * @param dy The y-amount of translation.
+         * @param dx - The x-amount of translation.
+         * @param dy - The y-amount of translation.
          * @returns This object (for chaining).
          * @internal
          */
@@ -792,7 +792,6 @@ var Kage = (function () {
         };
         /**
          * Rotates the whole polygon by 180 degrees.
-         * {@link scale}(-1).
          * @returns This object (for chaining).
          * @internal
          */
@@ -861,7 +860,7 @@ var Kage = (function () {
 
     /**
      * Calculates global coordinates from local coordinates around a pen
-     * using its position and direction.
+     * based on its position and direction.
      * @internal
      */
     var Pen = /** @class */ (function () {
@@ -1164,7 +1163,7 @@ var Kage = (function () {
                     }
                     var pm = type < 0 ? -1 : 1;
                     var poly = pen1.getPolygon([
-                        { x: -kMinWidthT, y: 1 },
+                        { x: -kMinWidthT, y: 1 }, // 1 ???
                         { x: +kMinWidthT, y: 0 },
                         { x: -pm * kMinWidthT, y: -font.kMinWidthY * Math.abs(type) },
                     ]);
@@ -1230,7 +1229,7 @@ var Kage = (function () {
                 ].concat((a1 === 27)
                     ? [
                         { x: 0, y: +kMinWidthT + 2 },
-                        { x: 0, y: 0 },
+                        { x: 0, y: 0.5 },
                     ]
                     : [
                         { x: -kMinWidthT, y: +kMinWidthT + 4 },
@@ -1283,7 +1282,7 @@ var Kage = (function () {
                     }
                     var poly_1 = pen2_r.getPolygon([
                         { x: 0, y: -kMinWidthT + 1 },
-                        { x: +2, y: -kMinWidthT - font.kWidth * 5 },
+                        { x: 2, y: -kMinWidthT - font.kWidth * 5 },
                         { x: 0, y: -kMinWidthT - font.kWidth * 5 },
                         { x: -kMinWidthT, y: -kMinWidthT + 1 },
                     ]);
@@ -1823,15 +1822,15 @@ var Kage = (function () {
             }
         }
     }
-    /** Mincho style font. */
+    /** Mincho-style font (明朝体). */
     var Mincho = /** @class */ (function () {
         function Mincho() {
             this.shotai = KShotai.kMincho;
             /**
              * Precision for polygon approximation of curving strokes.
-             * It must be a positive divisor of 1000. The smaller `kRate` will give
-             * smoother curves approximated with the larger number of points (roughly
-             * 2 × 1000 / `kRate` per one curve stroke).
+             * It must be a positive divisor of 1000. A smaller `kRate` will result in
+             * smoother curves approximated with a larger number of points (roughly
+             * 2 × 1000 / `kRate` per curve stroke).
              */
             this.kRate = 100; // must divide 1000
             this.setSize();
@@ -2215,7 +2214,7 @@ var Kage = (function () {
     OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
     PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
-    /* global Reflect, Promise, SuppressedError, Symbol */
+    /* global Reflect, Promise, SuppressedError, Symbol, Iterator */
 
     var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -2238,7 +2237,9 @@ var Kage = (function () {
     };
 
     function cdDrawCurveU(font, polygons, x1, y1, sx1, sy1, sx2, sy2, x2, y2, _ta1, _ta2) {
+        // eslint-disable-next-line no-unassigned-vars
         var a1;
+        // eslint-disable-next-line no-unassigned-vars
         var a2;
         var delta1 = 0;
         switch (a1 % 10) { // ?????
@@ -2498,7 +2499,7 @@ var Kage = (function () {
             }
         }
     }
-    /** Gothic style font. */
+    /** Gothic-style font (ゴシック体). */
     var Gothic = /** @class */ (function (_super) {
         __extends(Gothic, _super);
         function Gothic() {
@@ -2526,36 +2527,36 @@ var Kage = (function () {
     }
 
     /**
-     * The entry point for KAGE engine (Kanji-glyph Automatic Generating Engine).
-     * It generates glyph outlines from a kanji's stroke data described in a dedicated
+     * The entry point for the KAGE engine (Kanji-glyph Automatic Generating Engine).
+     * It generates glyph outlines from kanji stroke data described in a dedicated
      * intermediate format called {@link https://glyphwiki.org/wiki/GlyphWiki:KAGE%e3%83%87%e3%83%bc%e3%82%bf%e4%bb%95%e6%a7%98 | KAGE data}.
      *
      * KAGE data may contain references to other glyphs (components), which are
-     * resolved using a storage at its {@link kBuhin} property. The data for the
-     * referenced glyphs must be registered to the storage prior to generating the outline.
+     * resolved using a storage in its {@link kBuhin} property. The data for the
+     * referenced glyphs must be registered in the storage prior to generating the outline.
      *
-     * The font (mincho or gothic) can be changed with its {@link kShotai} property.
-     * The font parameters (stroke width, etc.) can be configured with properties of
+     * The font (mincho or gothic) can be changed using the {@link kShotai} property.
+     * Font parameters (stroke width, etc.) can be configured using properties of
      * {@link kFont}.
      *
      * @see {@link Kage.makeGlyph}, {@link Kage.makeGlyph2}, {@link Kage.makeGlyph3} and
-     *     {@link Kage.makeGlyphSeparated} for usage examples.
+     * {@link Kage.makeGlyphSeparated} for usage examples.
      */
     var Kage = /** @class */ (function () {
         function Kage(size) {
             /**
-             * An alias of {@link KShotai.kMincho}.
+             * An alias for {@link KShotai.kMincho}.
              * @see {@link Kage.kShotai} for usage.
              */
             this.kMincho = KShotai.kMincho;
             /**
-             * An alias of {@link KShotai.kGothic}.
+             * An alias for {@link KShotai.kGothic}.
              * @see {@link Kage.kShotai} for usage.
              */
             this.kGothic = KShotai.kGothic;
             /**
-             * Provides the way to configure parameters of the currently selected font.
-             * Its parameters are reset to the default values when {@link Kage.kShotai} is set.
+             * Allows configuration of the parameters for the currently selected font.
+             * Its parameters reset to their default values when {@link Kage.kShotai} is set.
              * @example
              * ```ts
              * const kage = new Kage();
@@ -2573,7 +2574,7 @@ var Kage = (function () {
         Object.defineProperty(Kage.prototype, "kShotai", {
             // properties
             /**
-             * Gets or sets the font as {@link KShotai}. Setting this property resets all the
+             * Gets or sets the font as {@link KShotai}. Setting this property resets all
              * font parameters in {@link Kage.kFont}. Defaults to {@link KShotai.kMincho}.
              * @example
              * ```ts
@@ -2607,7 +2608,7 @@ var Kage = (function () {
         // method
         /**
          * Renders the glyph of the given name. Existing data in `polygons` (if any) are
-         * NOT cleared; new glyph is "overprinted".
+         * NOT cleared; the new glyph is "overprinted".
          * @example
          * ```ts
          * const kage = new Kage();
@@ -2616,8 +2617,8 @@ var Kage = (function () {
          * kage.makeGlyph(polygons, "uXXXX");
          * const svg = polygons.generateSVG(); // now `svg` has the string of the rendered glyph
          * ```
-         * @param polygons A {@link Polygons} instance on which the glyph is rendered.
-         * @param buhin The name of the glyph to be rendered.
+         * @param polygons - A {@link Polygons} instance on which the glyph is rendered.
+         * @param buhin - The name of the glyph to be rendered.
          */
         Kage.prototype.makeGlyph = function (polygons, buhin) {
             var glyphData = this.kBuhin.search(buhin);
@@ -2625,7 +2626,7 @@ var Kage = (function () {
         };
         /**
          * Renders the glyph of the given KAGE data. Existing data in `polygons` (if any) are
-         * NOT cleared; new glyph is "overprinted".
+         * NOT cleared; the new glyph is "overprinted".
          * @example
          * ```ts
          * const kage = new Kage();
@@ -2633,8 +2634,8 @@ var Kage = (function () {
          * kage.makeGlyph2(polygons, "1:0:2:32:31:176:31$2:22:7:176:31:170:43:156:63");
          * const svg = polygons.generateSVG(); // now `svg` has the string of the rendered glyph
          * ```
-         * @param polygons A {@link Polygons} instance on which the glyph is rendered.
-         * @param data The KAGE data to be rendered (in which lines are delimited by `"$"`).
+         * @param polygons - A {@link Polygons} instance on which the glyph is rendered.
+         * @param data - The KAGE data to be rendered (in which lines are delimited by `"$"`).
          */
         Kage.prototype.makeGlyph2 = function (polygons, data) {
             if (data !== "") {
@@ -2647,8 +2648,7 @@ var Kage = (function () {
             }
         };
         /**
-         * Renders each stroke of the given KAGE data on separate instances of
-         * {@link Polygons}.
+         * Renders each stroke of the given KAGE data on separate instances of {@link Polygons}.
          * @example
          * ```ts
          * const kage = new Kage();
@@ -2656,9 +2656,9 @@ var Kage = (function () {
          * console.log(array.length); // => 2
          * console.log(array[0] instanceof Polygons); // => true
          * ```
-         * @param data The KAGE data to be rendered (in which lines are delimited by `"$"`).
+         * @param data - The KAGE data to be rendered (in which lines are delimited by `"$"`).
          * @returns An array of {@link Polygons} instances holding the rendered data
-         *     of each stroke in the glyph.
+         * of each stroke in the glyph.
          */
         Kage.prototype.makeGlyph3 = function (data) {
             var result = [];
@@ -2676,8 +2676,8 @@ var Kage = (function () {
         };
         /**
          * Renders each KAGE data fragment in the given array on separate instances of
-         * {@link Polygons}, with stroke parameters adjusted as if all the fragments joined
-         * together compose a single glyph.
+         * {@link Polygons}, with stroke parameters adjusted as if all fragments together
+         * compose a single glyph.
          * @example
          * ```ts
          * const kage = new Kage();
@@ -2688,10 +2688,10 @@ var Kage = (function () {
          * console.log(array.length); // => 2
          * console.log(array[0] instanceof Polygons); // => true
          * ```
-         * @param data An array of KAGE data fragments (in which lines are delimited by `"$"`)
-         *     to be rendered.
+         * @param data - An array of KAGE data fragments (in which lines are delimited by `"$"`)
+         * to be rendered.
          * @returns An array of {@link Polygons} instances holding the rendered data
-         *     of each KAGE data fragment.
+         * of each KAGE data fragment.
          */
         // Added by @kurgm
         Kage.prototype.makeGlyphSeparated = function (data) {
@@ -2786,9 +2786,9 @@ var Kage = (function () {
             }
             return { minX: minX, maxX: maxX, minY: minY, maxY: maxY };
         };
-        /** An alias of Buhin constructor. */
+        /** An alias for Buhin constructor. */
         Kage.Buhin = Buhin;
-        /** An alias of Polygons constructor. */
+        /** An alias for Polygons constructor. */
         Kage.Polygons = Polygons;
         return Kage;
     }());
