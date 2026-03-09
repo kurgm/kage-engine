@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-03-08
+### Fixed
+- Improved the pinhole between the end of horizontal stroke and the head stroke type 27 in mincho style.
+
+## [0.6.0] - 2024-10-28
+### Changed
+- Changed the package format from CommonJS (CJS) only to a dual package supporting both CommonJS and ES Modules (ESM).
+
 ## [0.5.0] - 2023-09-10
 ### Added
 - Gothic glyphs now support stroke type 4 (otsu-curve as in 乙) and 6 (complex curve).
@@ -80,7 +88,9 @@
 ## [0.2.0] - 2020-06-05
 
 
-[Unreleased]: https://github.com/kurgm/kage-engine/compare/v0.5.0...master
+[Unreleased]: https://github.com/kurgm/kage-engine/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/kurgm/kage-engine/compare/v0.6.0...v0.6.1
+[0.6.0]: https://github.com/kurgm/kage-engine/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kurgm/kage-engine/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/kurgm/kage-engine/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/kurgm/kage-engine/compare/v0.3.0...v0.3.1

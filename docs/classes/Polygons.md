@@ -1,65 +1,53 @@
+[**@kurgm/kage-engine**](../README.md)
+
+***
+
 [@kurgm/kage-engine](../README.md) / Polygons
 
 # Class: Polygons
 
-Represents the rendered glyph.
+Defined in: [polygons.ts:9](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L9)
 
-A glyph is represented as a series of [Polygon](Polygon.md)'s.
-The contained [Polygon](Polygon.md)'s can be accessed by the [array](Polygons.md#array) property.
+Represents a rendered glyph.
 
-## Table of contents
-
-### Constructors
-
-- [constructor](Polygons.md#constructor)
-
-### Properties
-
-- [[iterator]](Polygons.md#[iterator])
-- [array](Polygons.md#array)
-
-### Methods
-
-- [clear](Polygons.md#clear)
-- [generateEPS](Polygons.md#generateeps)
-- [generateSVG](Polygons.md#generatesvg)
-- [push](Polygons.md#push)
+A glyph is represented as a series of [Polygon](../interfaces/Polygon.md) instances.
+The contained [Polygon](../interfaces/Polygon.md)'s can be accessed by the [array](#array) property.
 
 ## Constructors
 
-### constructor
+### Constructor
 
-• **new Polygons**()
+> **new Polygons**(): `Polygons`
 
-#### Defined in
+Defined in: [polygons.ts:29](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L29)
 
-[polygons.ts:29](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L29)
+#### Returns
+
+`Polygons`
 
 ## Properties
 
-### [iterator]
+### \[iterator\]()
 
-• **[iterator]**: (`this`: [`Polygons`](Polygons.md)) => `Iterator`<[`Polygon`](Polygon.md), `any`, `undefined`\>
+> **\[iterator\]**: (`this`) => `Iterator`\<[`Polygon`](../interfaces/Polygon.md)\>
 
-#### Type declaration
-
-▸ (`this`): `Iterator`<[`Polygon`](Polygon.md), `any`, `undefined`\>
+Defined in: [polygons.ts:159](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L159)
 
 Iterates over its contours.
 
-##### Parameters
+#### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `this` | [`Polygons`](Polygons.md) |
+##### this
 
-##### Returns
+`this`
 
-`Iterator`<[`Polygon`](Polygon.md), `any`, `undefined`\>
+#### Returns
 
-An iterator of its [Polygon](Polygon.md) elements.
+`Iterator`\<[`Polygon`](../interfaces/Polygon.md)\>
 
-**`Example`**
+An iterator of its [Polygon](../interfaces/Polygon.md) elements.
+
+#### Example
 
 ```ts
 for (const polygon of polygons) {
@@ -67,19 +55,17 @@ for (const polygon of polygons) {
 }
 ```
 
-#### Defined in
-
-[polygons.ts:159](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L159)
-
-___
+***
 
 ### array
 
-• **array**: [`Polygon`](Polygon.md)[]
+> **array**: [`Polygon`](../interfaces/Polygon.md)[]
 
-Stores the rendered glyph as an array of instances of [Polygon](Polygon.md).
+Defined in: [polygons.ts:27](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L27)
 
-**`Example`**
+Stores the rendered glyph as an array of [Polygon](../interfaces/Polygon.md) instances.
+
+#### Example
 
 ```ts
 const polygons = new Polygons();
@@ -95,15 +81,13 @@ for (const poly of polygons.array) {
 }
 ```
 
-#### Defined in
-
-[polygons.ts:27](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L27)
-
 ## Methods
 
-### clear
+### clear()
 
-▸ **clear**(): `void`
+> **clear**(): `void`
+
+Defined in: [polygons.ts:35](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L35)
 
 Clears the content.
 
@@ -111,15 +95,13 @@ Clears the content.
 
 `void`
 
-#### Defined in
+***
 
-[polygons.ts:35](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L35)
+### generateEPS()
 
-___
+> **generateEPS**(): `string`
 
-### generateEPS
-
-▸ **generateEPS**(): `string`
+Defined in: [polygons.ts:121](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L121)
 
 Generates a string in EPS format that represents the rendered glyph.
 
@@ -129,23 +111,26 @@ Generates a string in EPS format that represents the rendered glyph.
 
 The string representation of the rendered glyph in EPS format.
 
-#### Defined in
+***
 
-[polygons.ts:121](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L121)
+### generateSVG()
 
-___
+> **generateSVG**(`curve?`): `string`
 
-### generateSVG
-
-▸ **generateSVG**(`curve?`): `string`
+Defined in: [polygons.ts:84](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L84)
 
 Generates a string in SVG format that represents the rendered glyph.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `curve?` | `boolean` | Set to true to use `<path />` format or set to false to use `<polygon />` format. Must be set to true if the glyph was rendered with `kage.kFont.kUseCurve = true`. The `<polygon />` format is used if unspecified. |
+##### curve?
+
+`boolean`
+
+Set to true to use the `<path />` format, or set to false to
+use the `<polygon />` format. Must be set to true if the glyph was rendered
+with `kage.kFont.kUseCurve = true`. Defaults to false (the `<polygon />` format
+is used).
 
 #### Returns
 
@@ -153,29 +138,25 @@ Generates a string in SVG format that represents the rendered glyph.
 
 The string representation of the rendered glyph in SVG format.
 
-#### Defined in
+***
 
-[polygons.ts:84](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L84)
+### push()
 
-___
+> **push**(`polygon`): `void`
 
-### push
+Defined in: [polygons.ts:44](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L44)
 
-▸ **push**(`polygon`): `void`
-
-Appends a new [Polygon](Polygon.md) to the end of the array.
-Nothing is performed if `polygon` is not a valid polygon.
+Appends a new [Polygon](../interfaces/Polygon.md) to the end of the array.
+Does nothing if `polygon` is not a valid polygon.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `polygon` | [`Polygon`](Polygon.md) | An instance of [Polygon](Polygon.md) to be appended. |
+##### polygon
+
+[`Polygon`](../interfaces/Polygon.md)
+
+A [Polygon](../interfaces/Polygon.md) instance to be appended.
 
 #### Returns
 
 `void`
-
-#### Defined in
-
-[polygons.ts:44](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L44)

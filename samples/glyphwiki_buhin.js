@@ -1,5 +1,7 @@
 // This code is licensed under CC0
 
+/* global fetch, console */
+
 import { Kage, Polygons, Buhin } from "@kurgm/kage-engine";
 
 // Replace the body of this function as necessary with the code that retrieves

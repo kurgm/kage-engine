@@ -1,99 +1,105 @@
+[**@kurgm/kage-engine**](../README.md)
+
+***
+
 [@kurgm/kage-engine](../README.md) / Buhin
 
 # Class: Buhin
 
+Defined in: [buhin.ts:4](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L4)
+
 A key-value store that maps a glyph name to a string of KAGE data.
-
-## Table of contents
-
-### Constructors
-
-- [constructor](Buhin.md#constructor)
-
-### Methods
-
-- [push](Buhin.md#push)
-- [search](Buhin.md#search)
-- [set](Buhin.md#set)
 
 ## Constructors
 
-### constructor
+### Constructor
 
-• **new Buhin**()
+> **new Buhin**(): `Buhin`
 
-#### Defined in
+Defined in: [buhin.ts:8](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L8)
 
-[buhin.ts:8](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L8)
+#### Returns
+
+`Buhin`
 
 ## Methods
 
-### push
+### push()
 
-▸ **push**(`name`, `data`): `void`
+> **push**(`name`, `data`): `void`
 
-Adds or updates and element with a given glyph name and KAGE data.
-It is an alias of [set](Buhin.md#set) method.
+Defined in: [buhin.ts:43](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L43)
+
+Adds or updates an element with the given glyph name and KAGE data.
+It is an alias for the [set](#set) method.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `name` | `string` | The name of the glyph. |
-| `data` | `string` | The KAGE data. |
+##### name
+
+`string`
+
+The name of the glyph.
+
+##### data
+
+`string`
+
+The KAGE data.
 
 #### Returns
 
 `void`
 
-#### Defined in
+***
 
-[buhin.ts:43](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L43)
+### search()
 
-___
+> **search**(`name`): `string`
 
-### search
+Defined in: [buhin.ts:30](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L30)
 
-▸ **search**(`name`): `string`
-
-Search the store for a specified glyph name and returns the corresponding
+Searches the store for the given glyph name and returns the corresponding
 KAGE data.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `name` | `string` | The name of the glyph to be looked up. |
+##### name
+
+`string`
+
+The name of the glyph to be looked up.
 
 #### Returns
 
 `string`
 
-The KAGE data if found, or an empty string if not found.
+The KAGE data if found, otherwise an empty string.
 
-#### Defined in
+***
 
-[buhin.ts:30](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L30)
+### set()
 
-___
+> **set**(`name`, `data`): `void`
 
-### set
+Defined in: [buhin.ts:20](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L20)
 
-▸ **set**(`name`, `data`): `void`
-
-Adds or updates an element with a given glyph name and KAGE data.
+Adds or updates an element with the given glyph name and KAGE data.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `name` | `string` | The name of the glyph. |
-| `data` | `string` | The KAGE data. |
+##### name
+
+`string`
+
+The name of the glyph.
+
+##### data
+
+`string`
+
+The KAGE data.
 
 #### Returns
 
 `void`
-
-#### Defined in
-
-[buhin.ts:20](https://github.com/kurgm/kage-engine/blob/master/src/buhin.ts#L20)

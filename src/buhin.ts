@@ -13,19 +13,19 @@ export class Buhin {
 
 	// method
 	/**
-	 * Adds or updates an element with a given glyph name and KAGE data.
-	 * @param name The name of the glyph.
-	 * @param data The KAGE data.
+	 * Adds or updates an element with the given glyph name and KAGE data.
+	 * @param name - The name of the glyph.
+	 * @param data - The KAGE data.
 	 */
 	public set(name: string, data: string): void {
 		this.hash[name] = data;
 	}
 
 	/**
-	 * Search the store for a specified glyph name and returns the corresponding
+	 * Searches the store for the given glyph name and returns the corresponding
 	 * KAGE data.
-	 * @param name The name of the glyph to be looked up.
-	 * @returns The KAGE data if found, or an empty string if not found.
+	 * @param name - The name of the glyph to be looked up.
+	 * @returns The KAGE data if found, otherwise an empty string.
 	 */
 	public search(name: string): string {
 		if (this.hash[name]) {
@@ -35,10 +35,10 @@ export class Buhin {
 	}
 
 	/**
-	 * Adds or updates and element with a given glyph name and KAGE data.
-	 * It is an alias of {@link set} method.
-	 * @param name The name of the glyph.
-	 * @param data The KAGE data.
+	 * Adds or updates an element with the given glyph name and KAGE data.
+	 * It is an alias for the {@link set} method.
+	 * @param name - The name of the glyph.
+	 * @param data - The KAGE data.
 	 */
 	public push(name: string, data: string): void {
 		this.set(name, data);

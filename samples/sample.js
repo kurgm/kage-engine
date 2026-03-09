@@ -1,4 +1,6 @@
-var { Kage, Polygons } = require("..");
+/* global console */
+
+import { Kage, Polygons } from "@kurgm/kage-engine";
 
 var kage = new Kage();
 var polygons = new Polygons();

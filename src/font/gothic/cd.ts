@@ -11,7 +11,9 @@ function cdDrawCurveU(
 	sx2: number, sy2: number, x2: number, y2: number,
 	_ta1: number, _ta2: number) {
 
+	// eslint-disable-next-line no-unassigned-vars
 	let a1: number;
+	// eslint-disable-next-line no-unassigned-vars
 	let a2: number;
 
 	let delta1 = 0;

@@ -161,7 +161,7 @@ function dfDrawFont(
 	}
 }
 
-/** Gothic style font. */
+/** Gothic-style font (ゴシック体). */
 class Gothic extends Mincho implements FontInterface {
 	public override readonly shotai: KShotai = KShotai.kGothic;
 	/** @internal */

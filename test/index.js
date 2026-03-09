@@ -1,6 +1,6 @@
-/* eslint-disable */
+/* global console */
 
-const { Kage, Polygons } = require("../");
+import { Kage, Polygons } from "@kurgm/kage-engine";
 
 /**
  * @param {Record<string, string>} buhins

@@ -1,14 +1,14 @@
 import { Polygon } from "./polygon.js";
 
 /**
- * Represents the rendered glyph.
+ * Represents a rendered glyph.
  *
- * A glyph is represented as a series of {@link Polygon}'s.
+ * A glyph is represented as a series of {@link Polygon} instances.
  * The contained {@link Polygon}'s can be accessed by the {@link array} property.
  */
 export class Polygons {
 	/**
-	 * Stores the rendered glyph as an array of instances of {@link Polygon}.
+	 * Stores the rendered glyph as an array of {@link Polygon} instances.
 	 * @example
 	 * ```ts
 	 * const polygons = new Polygons();
@@ -38,8 +38,8 @@ export class Polygons {
 
 	/**
 	 * Appends a new {@link Polygon} to the end of the array.
-	 * Nothing is performed if `polygon` is not a valid polygon.
-	 * @param polygon An instance of {@link Polygon} to be appended.
+	 * Does nothing if `polygon` is not a valid polygon.
+	 * @param polygon - A {@link Polygon} instance to be appended.
 	 */
 	public push(polygon: Polygon): void {
 		// only a simple check
@@ -75,10 +75,10 @@ export class Polygons {
 
 	/**
 	 * Generates a string in SVG format that represents the rendered glyph.
-	 * @param curve Set to true to use `<path />` format or set to false to use
-	 *     `<polygon />` format. Must be set to true if the glyph was rendered with
-	 *     `kage.kFont.kUseCurve = true`. The `<polygon />` format is used if
-	 *     unspecified.
+	 * @param curve - Set to true to use the `<path />` format, or set to false to
+	 * use the `<polygon />` format. Must be set to true if the glyph was rendered
+	 * with `kage.kFont.kUseCurve = true`. Defaults to false (the `<polygon />` format
+	 * is used).
 	 * @returns The string representation of the rendered glyph in SVG format.
 	 */
 	public generateSVG(curve?: boolean): string {

@@ -1,6 +1,7 @@
 /** @internal */
 // @ts-expect-error Math.hypot is not defined in es5
-export const hypot: (x: number, y: number) => number = Math.hypot ? Math.hypot.bind(Math) : ((x, y) => Math.sqrt(x * x + y * y));
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+export const hypot: (x: number, y: number) => number = Math.hypot ? Math.hypot.bind(Math) : ((x, y) => Math.sqrt(x * x + y * y)); 
 
 /**
  * Calculates a new vector with the same angle and a new magnitude. 
@@ -53,7 +54,7 @@ export function cubicBezierDeriv(p1: number, p2: number, p3: number, p4: number,
 }
 
 /**
- * Find the minimum of a function by ternary search. 
+ * Finds the minimum of a function using ternary search. 
  * @internal
  */
 export function ternarySearchMin(func: (x: number) => number, left: number, right: number, eps: number = 1E-5): number {
@@ -72,7 +73,7 @@ export function ternarySearchMin(func: (x: number) => number, left: number, righ
 }
 
 /**
- * Find the maximum of a function by ternary search. 
+ * Finds the maximum of a function using ternary search. 
  * @internal
  */
 export function ternarySearchMax(func: (x: number) => number, left: number, right: number, eps?: number): number {

@@ -376,7 +376,7 @@ function drawCurveHead(
 			].concat((a1 === 27)
 				? [
 					{ x: 0, y: +kMinWidthT + 2 },
-					{ x: 0, y: 0 },
+					{ x: 0, y: 0.5 },
 				]
 				: [
 					{ x: -kMinWidthT, y: +kMinWidthT + 4 },
