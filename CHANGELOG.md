@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- `Buhin#onMissing` callback that is invoked when `search` is called with a name not registered in the store. Allows surfacing data inconsistencies that would otherwise be silently dropped by the engine. Defaults to `null`, preserving the original silent-fallback behavior. The callback may return a replacement string, or `undefined` to fall back to `""`.
 
 ## [0.6.1] - 2026-03-08
 ### Fixed
