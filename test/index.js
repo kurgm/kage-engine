@@ -212,3 +212,82 @@ testKage({
 	[[94, 29], [94.2, 26.5], [94.6, 24], [95.4, 21.6], [96.7, 19.3], [98.3, 17.3], [100.3, 15.7], [102.6, 14.4], [105, 13.6], [107.5, 13.2], [110, 13], [110, 25], [108.8, 25.1], [107.9, 25.3], [107.3, 25.5], [107, 25.6], [106.8, 25.8], [106.6, 26], [106.5, 26.3], [106.3, 26.9], [106.1, 27.8], [106, 29]],
 	[[110, 19], [110, 25], [130, 25], [130, 22]],
 ]);
+
+// ─── Polygons#normalizeWinding tests ────────────────────────────────
+
+function assertNW(cond, msg) {
+	if (!cond) {
+		throw new Error(`Assertion failed: ${msg}`);
+	}
+}
+
+function signedAreaOfPoints(pts) {
+	let s = 0;
+	const n = pts.length;
+	for (let i = 0; i < n; i++) {
+		const a = pts[i];
+		const b = pts[(i + 1) % n];
+		s += (b.x - a.x) * (b.y + a.y);
+	}
+	return s;
+}
+
+// Render a glyph that produces multiple polygons with mixed winding, then
+// verify that normalizeWinding leaves them all with the same orientation.
+{
+	const kage = new Kage();
+	const polygons = new Polygons();
+	// 龍 — many overlapping strokes; mixed winding is observed in output.
+	kage.kBuhin.push("u9f8d", "1:0:2:26:32:158:32$2:22:7:158:32:133:54:100:78$1:0:4:100:74:100:181");
+	kage.makeGlyph(polygons, "u9f8d");
+	assertNW(polygons.array.length > 0, "the test glyph produces at least one polygon");
+
+	// Default direction: cw.
+	polygons.normalizeWinding();
+	for (const poly of polygons.array) {
+		const area = signedAreaOfPoints(poly.array);
+		// Empty / collinear polygons with area === 0 are allowed (untouched).
+		assertNW(area >= 0, `cw normalization keeps area >= 0 (got ${area})`);
+	}
+
+	// Switch to ccw and verify all polygons flip.
+	polygons.normalizeWinding("ccw");
+	for (const poly of polygons.array) {
+		const area = signedAreaOfPoints(poly.array);
+		assertNW(area <= 0, `ccw normalization keeps area <= 0 (got ${area})`);
+	}
+}
+
+// Idempotency: applying normalizeWinding twice yields the same result as once.
+{
+	const kage = new Kage();
+	const polygons1 = new Polygons();
+	const polygons2 = new Polygons();
+	kage.kBuhin.push("u9f8d", "1:0:2:26:32:158:32$2:22:7:158:32:133:54:100:78$1:0:4:100:74:100:181");
+	kage.makeGlyph(polygons1, "u9f8d");
+	kage.makeGlyph(polygons2, "u9f8d");
+	polygons1.normalizeWinding("cw");
+	polygons2.normalizeWinding("cw");
+	polygons2.normalizeWinding("cw");
+	assertNW(polygons1.array.length === polygons2.array.length, "same polygon count");
+	for (let i = 0; i < polygons1.array.length; i++) {
+		const a1 = polygons1.array[i].array;
+		const a2 = polygons2.array[i].array;
+		assertNW(a1.length === a2.length, `polygon ${i}: same vertex count`);
+		for (let j = 0; j < a1.length; j++) {
+			assertNW(
+				Math.abs(a1[j].x - a2[j].x) < 1e-6 && Math.abs(a1[j].y - a2[j].y) < 1e-6,
+				`polygon ${i} vertex ${j}: same coordinates after re-normalization`
+			);
+		}
+	}
+}
+
+// Empty / degenerate polygons are accepted without error.
+{
+	const polygons = new Polygons();
+	polygons.normalizeWinding();
+	assertNW(polygons.array.length === 0, "empty Polygons stays empty");
+}
+
+console.log("Polygons#normalizeWinding: ok");
