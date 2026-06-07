@@ -5,3 +5,4 @@ export { KShotai } from "./font/index.js";
 
 export type { Font, Mincho, Gothic } from "./font/index.js";
 export type { Polygon, Point } from "./polygon.js";
+export type { WindingDirection } from "./polygons.js";
