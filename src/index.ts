@@ -3,5 +3,6 @@ export { Polygons } from "./polygons.js";
 export { Buhin } from "./buhin.js";
 export { KShotai } from "./font/index.js";
 
+export type { BuhinMissingHandler } from "./buhin.js";
 export type { Font, Mincho, Gothic } from "./font/index.js";
 export type { Polygon, Point } from "./polygon.js";

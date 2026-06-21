@@ -1,6 +1,91 @@
 /* global console */
 
-import { Kage, Polygons } from "@kurgm/kage-engine";
+import { Kage, Polygons, Buhin } from "@kurgm/kage-engine";
+
+// ─── Buhin#onMissing tests ─────────────────────────────────────────
+
+function assert(cond, msg) {
+	if (!cond) {
+		throw new Error(`Assertion failed: ${msg}`);
+	}
+}
+
+// Default behavior: missing names return "" without invoking any callback.
+{
+	const b = new Buhin();
+	b.push("foo", "1:0:0:10:10:20:20");
+	assert(b.search("foo") === "1:0:0:10:10:20:20", "search returns registered data");
+	assert(b.search("bar") === "", "search returns '' for missing names by default");
+	assert(b.onMissing === null, "onMissing defaults to null");
+}
+
+// onMissing fires for missing names and is not invoked for registered ones.
+{
+	const b = new Buhin();
+	b.push("foo", "1:0:0:10:10:20:20");
+	const calls = [];
+	b.onMissing = (name) => {
+		calls.push(name);
+	};
+	assert(b.search("foo") === "1:0:0:10:10:20:20", "registered name skips onMissing");
+	assert(calls.length === 0, "onMissing not called for present name");
+	assert(b.search("bar") === "", "missing name still returns '' when handler returns undefined");
+	assert(calls.length === 1 && calls[0] === "bar", "onMissing called with the missing name");
+}
+
+// onMissing returning a string is used as the lookup result.
+{
+	const b = new Buhin();
+	b.onMissing = () => "1:0:0:0:0:200:200";
+	assert(b.search("anything") === "1:0:0:0:0:200:200", "string return overrides default");
+}
+
+// onMissing throwing propagates to the caller (fail-fast pattern).
+{
+	const b = new Buhin();
+	b.onMissing = (name) => {
+		throw new Error(`missing: ${name}`);
+	};
+	let thrown = null;
+	try {
+		b.search("bar");
+	} catch (e) {
+		thrown = e;
+	}
+	assert(thrown !== null && /missing: bar/.test(thrown.message), "throw propagates from onMissing");
+}
+
+// onMissing is consulted only when the name is genuinely absent — even if the
+// stored value is the empty string, the registered entry takes precedence.
+{
+	const b = new Buhin();
+	b.set("empty", "");
+	let called = false;
+	b.onMissing = () => {
+		called = true;
+		return "fallback";
+	};
+	assert(b.search("empty") === "", "stored '' is returned without invoking onMissing");
+	assert(called === false, "onMissing not called when name is registered");
+}
+
+// End-to-end: a missing 99: target surfaces through onMissing during makeGlyph.
+{
+	const kage = new Kage();
+	const seen = [];
+	kage.kBuhin.onMissing = (name) => {
+		seen.push(name);
+	};
+	// Reference an unregistered buhin from a 99: stroke.
+	kage.kBuhin.push("dummy", "99:0:0:0:0:200:200:not-registered");
+	const polygons = new Polygons();
+	kage.makeGlyph(polygons, "dummy");
+	assert(seen.includes("not-registered"), "onMissing surfaces missing 99: targets during makeGlyph");
+}
+
+console.log("Buhin#onMissing: ok");
+
+
 
 /**
  * @param {Record<string, string>} buhins
