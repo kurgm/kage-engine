@@ -23,6 +23,7 @@
 
 ## Type Aliases
 
+- [BuhinMissingHandler](type-aliases/BuhinMissingHandler.md)
 - [Font](type-aliases/Font.md)
 
 ## References
