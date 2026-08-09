@@ -101,7 +101,8 @@ export class Polygons {
 	 * coordinates are flipped to a y-up system. Use `"ccw"` for renderers that
 	 * follow the SVG / KAGE-internal y-down convention.
 	 *
-	 * @example Preparing polygons for a TrueType `glyf` writer (y-up):
+	 * @example
+	 * Preparing polygons for a TrueType `glyf` writer (y-up):
 	 * ```ts
 	 * const polygons = new Polygons();
 	 * kage.makeGlyph(polygons, "u9f8d");
@@ -109,7 +110,8 @@ export class Polygons {
 	 *                                   // → glyf y-up "cw" outer contours
 	 * ```
 	 *
-	 * @example Producing an SVG `<path>` with non-zero filling:
+	 * @example
+	 * Producing an SVG `<path>` with non-zero filling:
 	 * ```ts
 	 * polygons.normalizeWinding();
 	 * const svg = polygons.generateSVG(true);

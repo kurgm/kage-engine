@@ -47,19 +47,19 @@
   "homepage": "https://github.com/kurgm/kage-engine#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@release-it/bumper": "^7.0.5",
-    "@release-it/keep-a-changelog": "^7.0.1",
+    "@release-it/bumper": "^8.0.0",
+    "@release-it/keep-a-changelog": "^8.0.0",
     "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "eslint": "^10.0.3",
-    "release-it": "^19.2.4",
-    "rollup": "^4.59.0",
+    "eslint": "^10.8.1",
+    "release-it": "^21.0.2",
+    "rollup": "^4.62.4",
     "tsconfig-to-dual-package": "^1.2.0",
     "tslib": "^2.8.1",
-    "typedoc": "^0.28.17",
-    "typedoc-plugin-markdown": "^4.10.0",
+    "typedoc": "^0.28.20",
+    "typedoc-plugin-markdown": "^4.12.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.1"
+    "typescript-eslint": "^8.66.0"
   }
 }

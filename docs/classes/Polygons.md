@@ -27,11 +27,11 @@ Defined in: [polygons.ts:39](https://github.com/kurgm/kage-engine/blob/master/sr
 
 ## Properties
 
-### \[iterator\]()
+### \[iterator\]
 
 > **\[iterator\]**: (`this`) => `Iterator`\<[`Polygon`](../interfaces/Polygon.md)\>
 
-Defined in: [polygons.ts:214](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L214)
+Defined in: [polygons.ts:216](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L216)
 
 Iterates over its contours.
 
@@ -101,7 +101,7 @@ Clears the content.
 
 > **generateEPS**(): `string`
 
-Defined in: [polygons.ts:176](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L176)
+Defined in: [polygons.ts:178](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L178)
 
 Generates a string in EPS format that represents the rendered glyph.
 
@@ -117,7 +117,7 @@ The string representation of the rendered glyph in EPS format.
 
 > **generateSVG**(`curve?`): `string`
 
-Defined in: [polygons.ts:139](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L139)
+Defined in: [polygons.ts:141](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L141)
 
 Generates a string in SVG format that represents the rendered glyph.
 
@@ -144,7 +144,7 @@ The string representation of the rendered glyph in SVG format.
 
 > **normalizeWinding**(`direction?`): `void`
 
-Defined in: [polygons.ts:118](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L118)
+Defined in: [polygons.ts:120](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L120)
 
 Reverses the vertex order of any contour whose signed area does not match
 the requested [WindingDirection](../type-aliases/WindingDirection.md), so all contours share a single
@@ -175,6 +175,7 @@ follow the SVG / KAGE-internal y-down convention.
 
 #### Examples
 
+Preparing polygons for a TrueType `glyf` writer (y-up):
 ```ts
 const polygons = new Polygons();
 kage.makeGlyph(polygons, "u9f8d");
@@ -182,6 +183,7 @@ polygons.normalizeWinding("ccw"); // KAGE-internal y-down "ccw"
                                   // → glyf y-up "cw" outer contours
 ```
 
+Producing an SVG `<path>` with non-zero filling:
 ```ts
 polygons.normalizeWinding();
 const svg = polygons.generateSVG(true);
