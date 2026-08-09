@@ -4,7 +4,7 @@
 
 [@kurgm/kage-engine](../README.md) / BuhinMissingHandler
 
-# Type Alias: BuhinMissingHandler()
+# Type Alias: BuhinMissingHandler
 
 > **BuhinMissingHandler** = (`name`) => `string` \| `undefined`
 

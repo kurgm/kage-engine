@@ -20,7 +20,7 @@ the loop (if the two points differ).
 
 ## Properties
 
-### \[iterator\]()
+### \[iterator\]
 
 > **\[iterator\]**: (`this`) => `Iterator`\<`Readonly`\<[`Point`](Point.md)\>\>
 
