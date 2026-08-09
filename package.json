@@ -32,7 +32,7 @@
     "build:doc": "typedoc",
     "clean": "rm -r lib dist",
     "lint": "eslint 'src/**/*.ts'",
-    "test": "node test/index.js",
+    "test": "node test/index.js && node test/strokes.js",
     "version": "npm run build"
   },
   "repository": {
