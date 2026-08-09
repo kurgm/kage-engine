@@ -3,6 +3,8 @@
 ## [Unreleased]
 ### Added
 - `Buhin#onMissing` callback that is invoked when `search` is called with a name not registered in the store. Allows surfacing data inconsistencies that would otherwise be silently dropped by the engine. Defaults to `null`, preserving the original silent-fallback behavior. The callback may return a replacement string, or `undefined` to fall back to `""`.
+- `Polygons#normalizeWinding(direction?)` method that flips the vertex order of each contour so all contours share a single winding direction. Useful before passing the rendered polygons to a renderer that uses non-zero filling (default for SVG `<path>` and TrueType `glyf`), where mixed winding produces white-out artefacts at stroke intersections. Defaults to `"cw"`.
+- `WindingDirection` type alias (`"cw" | "ccw"`) exported from the entry point.
 
 ## [0.6.1] - 2026-03-08
 ### Fixed

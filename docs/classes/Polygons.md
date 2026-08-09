@@ -6,7 +6,7 @@
 
 # Class: Polygons
 
-Defined in: [polygons.ts:9](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L9)
+Defined in: [polygons.ts:19](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L19)
 
 Represents a rendered glyph.
 
@@ -19,7 +19,7 @@ The contained [Polygon](../interfaces/Polygon.md)'s can be accessed by the [arra
 
 > **new Polygons**(): `Polygons`
 
-Defined in: [polygons.ts:29](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L29)
+Defined in: [polygons.ts:39](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L39)
 
 #### Returns
 
@@ -31,7 +31,7 @@ Defined in: [polygons.ts:29](https://github.com/kurgm/kage-engine/blob/master/sr
 
 > **\[iterator\]**: (`this`) => `Iterator`\<[`Polygon`](../interfaces/Polygon.md)\>
 
-Defined in: [polygons.ts:159](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L159)
+Defined in: [polygons.ts:214](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L214)
 
 Iterates over its contours.
 
@@ -61,7 +61,7 @@ for (const polygon of polygons) {
 
 > **array**: [`Polygon`](../interfaces/Polygon.md)[]
 
-Defined in: [polygons.ts:27](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L27)
+Defined in: [polygons.ts:37](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L37)
 
 Stores the rendered glyph as an array of [Polygon](../interfaces/Polygon.md) instances.
 
@@ -87,7 +87,7 @@ for (const poly of polygons.array) {
 
 > **clear**(): `void`
 
-Defined in: [polygons.ts:35](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L35)
+Defined in: [polygons.ts:45](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L45)
 
 Clears the content.
 
@@ -101,7 +101,7 @@ Clears the content.
 
 > **generateEPS**(): `string`
 
-Defined in: [polygons.ts:121](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L121)
+Defined in: [polygons.ts:176](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L176)
 
 Generates a string in EPS format that represents the rendered glyph.
 
@@ -117,7 +117,7 @@ The string representation of the rendered glyph in EPS format.
 
 > **generateSVG**(`curve?`): `string`
 
-Defined in: [polygons.ts:84](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L84)
+Defined in: [polygons.ts:139](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L139)
 
 Generates a string in SVG format that represents the rendered glyph.
 
@@ -140,11 +140,60 @@ The string representation of the rendered glyph in SVG format.
 
 ***
 
+### normalizeWinding()
+
+> **normalizeWinding**(`direction?`): `void`
+
+Defined in: [polygons.ts:118](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L118)
+
+Reverses the vertex order of any contour whose signed area does not match
+the requested [WindingDirection](../type-aliases/WindingDirection.md), so all contours share a single
+winding orientation.
+
+KAGE assembles each stroke as an independent closed polygon and pushes it
+onto [array](#array) without normalizing winding. This is invisible in
+environments that fill with `evenodd` rules, but produces white-out
+artefacts at stroke intersections under non-zero filling — which is the
+default for both SVG `<path>` (when no `fill-rule` is set) and TrueType
+`glyf`. Calling this method before passing the polygons to such a
+renderer ensures overlapping strokes render as a single filled shape.
+
+#### Parameters
+
+##### direction?
+
+[`WindingDirection`](../type-aliases/WindingDirection.md) = `"cw"`
+
+Target winding direction. Defaults to `"cw"`, which
+matches the convention used by TrueType `glyf` outer contours when the
+coordinates are flipped to a y-up system. Use `"ccw"` for renderers that
+follow the SVG / KAGE-internal y-down convention.
+
+#### Returns
+
+`void`
+
+#### Examples
+
+```ts
+const polygons = new Polygons();
+kage.makeGlyph(polygons, "u9f8d");
+polygons.normalizeWinding("ccw"); // KAGE-internal y-down "ccw"
+                                  // → glyf y-up "cw" outer contours
+```
+
+```ts
+polygons.normalizeWinding();
+const svg = polygons.generateSVG(true);
+```
+
+***
+
 ### push()
 
 > **push**(`polygon`): `void`
 
-Defined in: [polygons.ts:44](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L44)
+Defined in: [polygons.ts:54](https://github.com/kurgm/kage-engine/blob/master/src/polygons.ts#L54)
 
 Appends a new [Polygon](../interfaces/Polygon.md) to the end of the array.
 Does nothing if `polygon` is not a valid polygon.

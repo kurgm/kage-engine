@@ -1,6 +1,16 @@
 import { Polygon } from "./polygon.js";
 
 /**
+ * The winding direction of a polygon's vertex order. Used by
+ * {@link Polygons.normalizeWinding} to choose the target orientation.
+ *
+ * - `"cw"` — clockwise (in a y-axis-down coordinate system, i.e. the system
+ *    used internally by KAGE — `signedArea > 0`).
+ * - `"ccw"` — counter-clockwise (`signedArea < 0`).
+ */
+export type WindingDirection = "cw" | "ccw";
+
+/**
  * Represents a rendered glyph.
  *
  * A glyph is represented as a series of {@link Polygon} instances.
@@ -70,6 +80,51 @@ export class Polygons {
 		}
 		if (minx !== maxx && miny !== maxy) {
 			this.array.push(polygon);
+		}
+	}
+
+	/**
+	 * Reverses the vertex order of any contour whose signed area does not match
+	 * the requested {@link WindingDirection}, so all contours share a single
+	 * winding orientation.
+	 *
+	 * KAGE assembles each stroke as an independent closed polygon and pushes it
+	 * onto {@link array} without normalizing winding. This is invisible in
+	 * environments that fill with `evenodd` rules, but produces white-out
+	 * artefacts at stroke intersections under non-zero filling — which is the
+	 * default for both SVG `<path>` (when no `fill-rule` is set) and TrueType
+	 * `glyf`. Calling this method before passing the polygons to such a
+	 * renderer ensures overlapping strokes render as a single filled shape.
+	 *
+	 * @param direction - Target winding direction. Defaults to `"cw"`, which
+	 * matches the convention used by TrueType `glyf` outer contours when the
+	 * coordinates are flipped to a y-up system. Use `"ccw"` for renderers that
+	 * follow the SVG / KAGE-internal y-down convention.
+	 *
+	 * @example Preparing polygons for a TrueType `glyf` writer (y-up):
+	 * ```ts
+	 * const polygons = new Polygons();
+	 * kage.makeGlyph(polygons, "u9f8d");
+	 * polygons.normalizeWinding("ccw"); // KAGE-internal y-down "ccw"
+	 *                                   // → glyf y-up "cw" outer contours
+	 * ```
+	 *
+	 * @example Producing an SVG `<path>` with non-zero filling:
+	 * ```ts
+	 * polygons.normalizeWinding();
+	 * const svg = polygons.generateSVG(true);
+	 * ```
+	 */
+	public normalizeWinding(direction: WindingDirection = "cw"): void {
+		for (const polygon of this.array) {
+			const area = signedArea(polygon);
+			// Empty / degenerate polygons (area === 0) are left untouched —
+			// reversing them has no observable effect.
+			if (area === 0) continue;
+			// KAGE uses a y-axis-down coordinate system (see signedArea).
+			const isCw = area > 0;
+			const wantCw = direction === "cw";
+			if (isCw !== wantCw) polygon.reverse();
 		}
 	}
 
@@ -164,4 +219,29 @@ export class Polygons {
 			};
 		}
 	}
+}
+
+/**
+ * Twice the signed area of a polygon, computed via the shoelace formula on the
+ * on-curve / off-curve vertex sequence. Off-curve points are included as if
+ * they were on-curve; this is sufficient for orientation detection (the sign
+ * of the result is unchanged by treating control points as polygon vertices)
+ * and avoids depending on the curve flattening machinery.
+ *
+ * In KAGE's y-axis-down coordinate system:
+ *   - positive result → clockwise vertex order
+ *   - negative result → counter-clockwise vertex order
+ *   - zero result     → degenerate polygon (collinear or empty)
+ */
+function signedArea(polygon: Polygon): number {
+	const pts = polygon.array;
+	const n = pts.length;
+	if (n < 3) return 0;
+	let s = 0;
+	for (let i = 0; i < n; i++) {
+		const a = pts[i];
+		const b = pts[(i + 1) % n];
+		s += (b.x - a.x) * (b.y + a.y);
+	}
+	return s;
 }
