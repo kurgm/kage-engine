@@ -44,5 +44,5 @@
     "rewriteRelativeImportExtensions": true,
     "strictPropertyInitialization": false,
   },
-  "exclude": ["**/*.test.ts", "lib", "node_modules"]
+  "exclude": ["**/*.test.ts", "test", "lib", "node_modules"]
 }
