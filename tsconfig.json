@@ -38,6 +38,7 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
 
+    "erasableSyntaxOnly": true,
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
   }
