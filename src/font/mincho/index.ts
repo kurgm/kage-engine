@@ -1,8 +1,8 @@
-import { Polygon } from "../../polygon.js";
-import { Polygons } from "../../polygons.js";
-import { Stroke } from "../../stroke.js";
+import type { Polygon } from "../../polygon.js";
+import type { Polygons } from "../../polygons.js";
+import type { Stroke } from "../../stroke.js";
 import { hypot, normalize, round } from "../../util.js";
-import { FontInterface, StrokeDrawer } from "../index.js";
+import type { FontInterface, StrokeDrawer } from "../index.js";
 import { KShotai } from "../shotai.js";
 
 import { cdDrawBezier, cdDrawCurve, cdDrawLine } from "./cd.js";

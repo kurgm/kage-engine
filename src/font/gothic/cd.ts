@@ -1,9 +1,9 @@
 import { generateFattenCurve } from "../../curve.js";
 import { Polygon } from "../../polygon.js";
-import { Polygons } from "../../polygons.js";
+import type { Polygons } from "../../polygons.js";
 import { normalize } from "../../util.js";
 import { Pen } from "../../pen.js";
-import Gothic from "./index.js";
+import type Gothic from "./index.js";
 
 function cdDrawCurveU(
 	font: Gothic, polygons: Polygons,
