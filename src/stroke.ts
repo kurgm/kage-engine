@@ -1,4 +1,4 @@
-import { isCross, isCrossBox } from "./2d.js";
+import { isCross, isCrossBox } from "./2d.ts";
 
 export function stretch(dp: number, sp: number, p: number, min: number, max: number): number {
 	let p1;

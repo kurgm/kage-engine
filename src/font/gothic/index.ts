@@ -1,11 +1,11 @@
-import type { Polygons } from "../../polygons.js";
-import type { Stroke } from "../../stroke.js";
-import { hypot, normalize } from "../../util.js";
-import type { FontInterface, StrokeDrawer } from "../index.js";
-import { KShotai } from "../shotai.js";
+import type { Polygons } from "../../polygons.ts";
+import type { Stroke } from "../../stroke.ts";
+import { hypot, normalize } from "../../util.ts";
+import type { FontInterface, StrokeDrawer } from "../index.ts";
+import { KShotai } from "../shotai.ts";
 
-import { cdDrawBezier, cdDrawCurve, cdDrawLine } from "./cd.js";
-import Mincho, { dfTransform } from "../mincho/index.js";
+import { cdDrawBezier, cdDrawCurve, cdDrawLine } from "./cd.ts";
+import Mincho, { dfTransform } from "../mincho/index.ts";
 
 function dfDrawFont(
 	font: Gothic, polygons: Polygons,

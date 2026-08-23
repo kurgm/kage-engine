@@ -1,4 +1,4 @@
-import { round } from "./util.js";
+import { round } from "./util.ts";
 
 // Reference : http://www.cam.hi-ho.ne.jp/strong_warriors/teacher/chapter0{4,5}.html
 

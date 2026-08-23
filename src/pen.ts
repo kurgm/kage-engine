@@ -1,5 +1,5 @@
-import { type Point, type PointOptOff, Polygon } from "./polygon.js";
-import { normalize } from "./util.js";
+import { type Point, type PointOptOff, Polygon } from "./polygon.ts";
+import { normalize } from "./util.ts";
 
 /**
  * Calculates global coordinates from local coordinates around a pen
