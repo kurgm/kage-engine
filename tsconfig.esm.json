@@ -4,6 +4,7 @@
     "target": "ES6",
     "module": "ESNext",
     "declaration": true,
-    "outDir": "./lib/esm/"
+    "outDir": "./lib/esm/",
+    "verbatimModuleSyntax": true
   }
 }

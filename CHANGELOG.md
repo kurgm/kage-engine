@@ -6,6 +6,9 @@
 - `Polygons#normalizeWinding(direction?)` method that flips the vertex order of each contour so all contours share a single winding direction. Useful before passing the rendered polygons to a renderer that uses non-zero filling (default for SVG `<path>` and TrueType `glyf`), where mixed winding produces white-out artefacts at stroke intersections. Defaults to `"cw"`.
 - `WindingDirection` type alias (`"cw" | "ccw"`) exported from the entry point.
 
+### Changed
+- Replaced `KShotai` TypeScript `enum` with `as const` object.
+
 ## [0.6.1] - 2026-03-08
 ### Fixed
 - Improved the pinhole between the end of horizontal stroke and the head stroke type 27 in mincho style.

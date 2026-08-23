@@ -76,7 +76,7 @@ kage.kFont.kWidth = 3;
 
 ### kGothic
 
-> `readonly` **kGothic**: [`kGothic`](../enumerations/KShotai.md#kgothic) = `KShotai.kGothic`
+> `readonly` **kGothic**: `1` = `KShotai.kGothic`
 
 Defined in: [kage.ts:37](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L37)
 
@@ -90,7 +90,7 @@ An alias for [KShotai.kGothic](../enumerations/KShotai.md#kgothic).
 
 ### kMincho
 
-> `readonly` **kMincho**: [`kMincho`](../enumerations/KShotai.md#kmincho) = `KShotai.kMincho`
+> `readonly` **kMincho**: `0` = `KShotai.kMincho`
 
 Defined in: [kage.ts:32](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L32)
 

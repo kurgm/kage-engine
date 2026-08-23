@@ -1,5 +1,5 @@
-import { Polygons } from "../polygons.js";
-import { Stroke } from "../stroke.js";
+import type { Polygons } from "../polygons.js";
+import type { Stroke } from "../stroke.js";
 import Mincho from "./mincho/index.js";
 import Gothic from "./gothic/index.js";
 import { KShotai } from "./shotai.js";

@@ -1,4 +1,4 @@
-import { Point, PointOptOff, Polygon } from "./polygon.js";
+import { type Point, type PointOptOff, Polygon } from "./polygon.js";
 import { normalize } from "./util.js";
 
 /**
