@@ -38,8 +38,10 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
 
+    "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "forceConsistentCasingInFileNames": true,
+    "rewriteRelativeImportExtensions": true,
     "strictPropertyInitialization": false,
   }
 }
