@@ -1,9 +1,9 @@
-import { divide_curve, find_offcurve, generateFattenCurve } from "../../curve.js";
-import { Polygon } from "../../polygon.js";
-import type { Polygons } from "../../polygons.js";
-import { hypot, normalize } from "../../util.js";
-import { Pen } from "../../pen.js";
-import type Mincho from "./index.js";
+import { divide_curve, find_offcurve, generateFattenCurve } from "../../curve.ts";
+import { Polygon } from "../../polygon.ts";
+import type { Polygons } from "../../polygons.ts";
+import { hypot, normalize } from "../../util.ts";
+import { Pen } from "../../pen.ts";
+import type Mincho from "./index.ts";
 
 function cdDrawCurveU(
 	font: Mincho, polygons: Polygons,

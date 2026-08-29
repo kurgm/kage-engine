@@ -1,4 +1,4 @@
-import type { Polygon } from "./polygon.js";
+import type { Polygon } from "./polygon.ts";
 
 /**
  * The winding direction of a polygon's vertex order. Used by
