@@ -13,7 +13,7 @@ export default defineConfig(
 		languageOptions: {
 			ecmaVersion: 5,
 			parserOptions: {
-				project: "./tsconfig.json",
+				projectService: true,
 			},
 		},
 		rules: {

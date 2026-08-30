@@ -33,6 +33,7 @@
     "clean": "rm -r lib dist",
     "lint": "eslint 'src/**/*.ts'",
     "test": "node test/index.js && node test/strokes.js",
+    "typecheck": "tsc --build --noEmit",
     "version": "npm run build"
   },
   "repository": {
