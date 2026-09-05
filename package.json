@@ -31,8 +31,9 @@
     "build:dist": "mkdir -p dist && rollup -c",
     "build:doc": "typedoc",
     "clean": "rm -r lib dist",
-    "lint": "eslint 'src/**/*.ts'",
-    "test": "node test/index.js && node test/strokes.js",
+    "lint": "eslint 'src/**/*.ts' 'test/**/*.ts'",
+    "test": "node --test",
+    "typecheck": "tsc --build --noEmit",
     "version": "npm run build"
   },
   "repository": {
@@ -52,6 +53,7 @@
     "@rollup/plugin-terser": "^1.0.0",
     "@rollup/plugin-typescript": "^12.3.0",
     "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^26.2.0",
     "eslint": "^10.8.1",
     "release-it": "^21.0.2",
     "rollup": "^4.62.4",

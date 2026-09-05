@@ -30,7 +30,9 @@ const options = [
 			},
 		],
 		plugins: [
-			typescript({}),
+			typescript({
+				tsconfig: "./tsconfig.base.json",
+			}),
 		],
 	},
 	{
@@ -45,6 +47,7 @@ const options = [
 		],
 		plugins: [
 			typescript({
+				tsconfig: "./tsconfig.base.json",
 				target: "es6",
 			}),
 		],

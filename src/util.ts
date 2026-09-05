@@ -1,5 +1,6 @@
 /** @internal */
-// @ts-expect-error Math.hypot is not defined in es5
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore Math.hypot is not defined in es5
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 export const hypot: (x: number, y: number) => number = Math.hypot ? Math.hypot.bind(Math) : ((x, y) => Math.sqrt(x * x + y * y)); 
 
