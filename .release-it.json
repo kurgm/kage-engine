@@ -17,7 +17,8 @@
 	},
 	"npm": {
 		"publishArgs": ["--provenance"],
-		"skipChecks": true
+		"skipChecks": true,
+		"stage": true
 	},
 	"git": {
 		"tagMatch": "v*",
