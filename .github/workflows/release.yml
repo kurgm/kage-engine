@@ -33,7 +33,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - name: Release
-        run: npx release-it -- "${RELEASE_VERSION}" --ci
+        run: npx --no release-it -- --ci -- "${RELEASE_VERSION}"
         env:
           TZ: Asia/Tokyo
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
