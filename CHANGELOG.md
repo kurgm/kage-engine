@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.7.0] - 2026-09-06
 ### Added
 - `Buhin#onMissing` callback that is invoked when `search` is called with a name not registered in the store. Allows surfacing data inconsistencies that would otherwise be silently dropped by the engine. Defaults to `null`, preserving the original silent-fallback behavior. The callback may return a replacement string, or `undefined` to fall back to `""`.
 - `Polygons#normalizeWinding(direction?)` method that flips the vertex order of each contour so all contours share a single winding direction. Useful before passing the rendered polygons to a renderer that uses non-zero filling (default for SVG `<path>` and TrueType `glyf`), where mixed winding produces white-out artefacts at stroke intersections. Defaults to `"cw"`.
@@ -95,7 +97,7 @@
 ## [0.2.0] - 2020-06-05
 
 
-[Unreleased]: https://github.com/kurgm/kage-engine/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/kurgm/kage-engine/compare/v0.7.0...HEAD
 [0.6.1]: https://github.com/kurgm/kage-engine/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/kurgm/kage-engine/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kurgm/kage-engine/compare/v0.4.0...v0.5.0
@@ -106,3 +108,5 @@
 [0.2.2]: https://github.com/kurgm/kage-engine/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/kurgm/kage-engine/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/kurgm/kage-engine/releases/tag/v0.2.0
+
+[0.7.0]: https://github.com/kurgm/kage-engine/releases/tag/v0.7.0
