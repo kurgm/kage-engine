@@ -4,6 +4,7 @@ export { Buhin } from "./buhin.ts";
 export { KShotai } from "./font/index.ts";
 
 export type { BuhinMissingHandler } from "./buhin.ts";
+export type { CheckGlyphResult } from "./kage.ts";
 export type { Font, Mincho, Gothic } from "./font/index.ts";
 export type { Polygon, Point } from "./polygon.ts";
 export type { WindingDirection } from "./polygons.ts";

@@ -6,7 +6,7 @@
 
 # Class: Kage
 
-Defined in: [kage.ts:22](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L22)
+Defined in: [kage.ts:30](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L30)
 
 The entry point for the KAGE engine (Kanji-glyph Automatic Generating Engine).
 It generates glyph outlines from kanji stroke data described in a dedicated
@@ -31,7 +31,7 @@ Font parameters (stroke width, etc.) can be configured using properties of
 
 > **new Kage**(`size?`): `Kage`
 
-Defined in: [kage.ts:86](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L86)
+Defined in: [kage.ts:94](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L94)
 
 #### Parameters
 
@@ -49,7 +49,7 @@ Defined in: [kage.ts:86](https://github.com/kurgm/kage-engine/blob/master/src/ka
 
 > **kBuhin**: [`Buhin`](Buhin.md)
 
-Defined in: [kage.ts:80](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L80)
+Defined in: [kage.ts:88](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L88)
 
 A storage used to look up components.
 
@@ -59,7 +59,7 @@ A storage used to look up components.
 
 > **kFont**: [`Font`](../type-aliases/Font.md)
 
-Defined in: [kage.ts:49](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L49)
+Defined in: [kage.ts:57](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L57)
 
 Allows configuration of the parameters for the currently selected font.
 Its parameters reset to their default values when [Kage.kShotai](#kshotai) is set.
@@ -78,7 +78,7 @@ kage.kFont.kWidth = 3;
 
 > `readonly` **kGothic**: `1` = `KShotai.kGothic`
 
-Defined in: [kage.ts:37](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L37)
+Defined in: [kage.ts:45](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L45)
 
 An alias for [KShotai.kGothic](../enumerations/KShotai.md#kgothic).
 
@@ -92,7 +92,7 @@ An alias for [KShotai.kGothic](../enumerations/KShotai.md#kgothic).
 
 > `readonly` **kMincho**: `0` = `KShotai.kMincho`
 
-Defined in: [kage.ts:32](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L32)
+Defined in: [kage.ts:40](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L40)
 
 An alias for [KShotai.kMincho](../enumerations/KShotai.md#kmincho).
 
@@ -106,7 +106,7 @@ An alias for [KShotai.kMincho](../enumerations/KShotai.md#kmincho).
 
 > `readonly` `static` **Buhin**: *typeof* [`Buhin`](Buhin.md)
 
-Defined in: [kage.ts:24](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L24)
+Defined in: [kage.ts:32](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L32)
 
 An alias for Buhin constructor.
 
@@ -116,7 +116,7 @@ An alias for Buhin constructor.
 
 > `readonly` `static` **Polygons**: *typeof* [`Polygons`](Polygons.md)
 
-Defined in: [kage.ts:26](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L26)
+Defined in: [kage.ts:34](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L34)
 
 An alias for Polygons constructor.
 
@@ -128,7 +128,7 @@ An alias for Polygons constructor.
 
 > **get** **kShotai**(): [`KShotai`](../enumerations/KShotai.md)
 
-Defined in: [kage.ts:61](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L61)
+Defined in: [kage.ts:69](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L69)
 
 Gets or sets the font as [KShotai](../enumerations/KShotai.md). Setting this property resets all
 font parameters in [Kage.kFont](#kfont). Defaults to [KShotai.kMincho](../enumerations/KShotai.md#kmincho).
@@ -148,7 +148,7 @@ kage.kShotai = kage.kGothic;
 
 > **set** **kShotai**(`shotai`): `void`
 
-Defined in: [kage.ts:64](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L64)
+Defined in: [kage.ts:72](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L72)
 
 ##### Parameters
 
@@ -168,7 +168,7 @@ Defined in: [kage.ts:64](https://github.com/kurgm/kage-engine/blob/master/src/ka
 
 > **get** **kUseCurve**(): `boolean`
 
-Defined in: [kage.ts:72](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L72)
+Defined in: [kage.ts:80](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L80)
 
 Whether to generate contours with off-curve points.
 An alias of [Kage.kFont](#kfont).kUseCurve.
@@ -181,7 +181,7 @@ An alias of [Kage.kFont](#kfont).kUseCurve.
 
 > **set** **kUseCurve**(`value`): `void`
 
-Defined in: [kage.ts:75](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L75)
+Defined in: [kage.ts:83](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L83)
 
 ##### Parameters
 
@@ -195,11 +195,80 @@ Defined in: [kage.ts:75](https://github.com/kurgm/kage-engine/blob/master/src/ka
 
 ## Methods
 
+### checkGlyph()
+
+> **checkGlyph**(`buhin`): [`CheckGlyphResult`](../type-aliases/CheckGlyphResult.md)
+
+Defined in: [kage.ts:231](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L231)
+
+Checks whether the glyph of the given name can be rendered, i.e. whether
+the glyph and every component it references (directly or indirectly) are
+found in [kBuhin](#kbuhin), and whether the references are free of cycles.
+
+[makeGlyph](#makeglyph) does not perform this check: a missing component is
+silently skipped, and a reference cycle makes it recurse until the call
+stack overflows. Call this method beforehand when the data comes from an
+untrusted source.
+
+#### Parameters
+
+##### buhin
+
+`string`
+
+The name of the glyph to be checked.
+
+#### Returns
+
+[`CheckGlyphResult`](../type-aliases/CheckGlyphResult.md)
+
+`"ok"` if the glyph can be rendered, `"notFound"` if the glyph or
+one of its components is not found (or is empty), or `"loop"` if a
+reference cycle is detected. When there are several problems, the first
+one encountered in a depth-first traversal is reported.
+
+#### Example
+
+```ts
+const kage = new Kage();
+kage.kBuhin.push("a", "99:0:0:0:0:200:200:b");
+kage.kBuhin.push("b", "99:0:0:0:0:200:200:a");
+console.log(kage.checkGlyph("a")); // => "loop"
+console.log(kage.checkGlyph("c")); // => "notFound"
+```
+
+***
+
+### checkGlyph2()
+
+> **checkGlyph2**(`data`): [`CheckGlyphResult`](../type-aliases/CheckGlyphResult.md)
+
+Defined in: [kage.ts:241](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L241)
+
+Same as [checkGlyph](#checkglyph), but checks the given KAGE data instead of
+looking up a glyph by name. Empty data is considered renderable.
+
+#### Parameters
+
+##### data
+
+`string`
+
+The KAGE data to be checked (in which lines are delimited by `"$"`).
+
+#### Returns
+
+[`CheckGlyphResult`](../type-aliases/CheckGlyphResult.md)
+
+The same as [checkGlyph](#checkglyph).
+
+***
+
 ### makeGlyph()
 
 > **makeGlyph**(`polygons`, `buhin`): `void`
 
-Defined in: [kage.ts:106](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L106)
+Defined in: [kage.ts:114](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L114)
 
 Renders the glyph of the given name. Existing data in `polygons` (if any) are
 NOT cleared; the new glyph is "overprinted".
@@ -238,7 +307,7 @@ const svg = polygons.generateSVG(); // now `svg` has the string of the rendered 
 
 > **makeGlyph2**(`polygons`, `data`): `void`
 
-Defined in: [kage.ts:124](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L124)
+Defined in: [kage.ts:132](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L132)
 
 Renders the glyph of the given KAGE data. Existing data in `polygons` (if any) are
 NOT cleared; the new glyph is "overprinted".
@@ -276,7 +345,7 @@ const svg = polygons.generateSVG(); // now `svg` has the string of the rendered 
 
 > **makeGlyph3**(`data`): [`Polygons`](Polygons.md)[]
 
-Defined in: [kage.ts:147](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L147)
+Defined in: [kage.ts:155](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L155)
 
 Renders each stroke of the given KAGE data on separate instances of [Polygons](Polygons.md).
 
@@ -310,7 +379,7 @@ console.log(array[0] instanceof Polygons); // => true
 
 > **makeGlyphSeparated**(`data`): [`Polygons`](Polygons.md)[]
 
-Defined in: [kage.ts:181](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L181)
+Defined in: [kage.ts:189](https://github.com/kurgm/kage-engine/blob/master/src/kage.ts#L189)
 
 Renders each KAGE data fragment in the given array on separate instances of
 [Polygons](Polygons.md), with stroke parameters adjusted as if all fragments together
