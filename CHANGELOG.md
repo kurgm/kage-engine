@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+### Added
+- `Kage#checkGlyph(buhin)` and `Kage#checkGlyph2(data)` methods that check whether a glyph can be rendered before calling `makeGlyph`/`makeGlyph2`: they return `"notFound"` if the glyph or any component it references (directly or indirectly) is missing, `"loop"` if the component references contain a cycle, and `"ok"` otherwise. `makeGlyph` itself still silently skips missing components and overflows the call stack on a cycle, so the check lets callers reject such data up front. Ported from [kage-cpp](https://github.com/takushun-wu/kage-cpp)'s `Kage::CheckGlyph`.
+- `CheckGlyphResult` type alias (`"ok" | "notFound" | "loop"`) exported from the entry point.
 
 ## [0.7.0] - 2026-09-06
 ### Added

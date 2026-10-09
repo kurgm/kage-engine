@@ -24,6 +24,7 @@
 ## Type Aliases
 
 - [BuhinMissingHandler](type-aliases/BuhinMissingHandler.md)
+- [CheckGlyphResult](type-aliases/CheckGlyphResult.md)
 - [Font](type-aliases/Font.md)
 - [WindingDirection](type-aliases/WindingDirection.md)
 
