@@ -4,6 +4,14 @@ import { stretch, Stroke } from "./stroke.ts";
 import { KShotai, type Font, select as selectFont } from "./font/index.ts";
 
 /**
+ * The result of {@link Kage.checkGlyph} and {@link Kage.checkGlyph2}.
+ * - `"ok"`: the glyph can be rendered.
+ * - `"notFound"`: the glyph or one of its components is not found.
+ * - `"loop"`: the component references contain a cycle.
+ */
+export type CheckGlyphResult = "ok" | "notFound" | "loop";
+
+/**
  * The entry point for the KAGE engine (Kanji-glyph Automatic Generating Engine).
  * It generates glyph outlines from kanji stroke data described in a dedicated
  * intermediate format called {@link https://glyphwiki.org/wiki/GlyphWiki:KAGE%e3%83%87%e3%83%bc%e3%82%bf%e4%bb%95%e6%a7%98 | KAGE data}.
@@ -195,6 +203,73 @@ export class Kage {
 			result.array = polygons.array.slice(startIndex);
 			return result;
 		});
+	}
+
+	/**
+	 * Checks whether the glyph of the given name can be rendered, i.e. whether
+	 * the glyph and every component it references (directly or indirectly) are
+	 * found in {@link kBuhin}, and whether the references are free of cycles.
+	 *
+	 * {@link makeGlyph} does not perform this check: a missing component is
+	 * silently skipped, and a reference cycle makes it recurse until the call
+	 * stack overflows. Call this method beforehand when the data comes from an
+	 * untrusted source.
+	 * @example
+	 * ```ts
+	 * const kage = new Kage();
+	 * kage.kBuhin.push("a", "99:0:0:0:0:200:200:b");
+	 * kage.kBuhin.push("b", "99:0:0:0:0:200:200:a");
+	 * console.log(kage.checkGlyph("a")); // => "loop"
+	 * console.log(kage.checkGlyph("c")); // => "notFound"
+	 * ```
+	 * @param buhin - The name of the glyph to be checked.
+	 * @returns `"ok"` if the glyph can be rendered, `"notFound"` if the glyph or
+	 * one of its components is not found (or is empty), or `"loop"` if a
+	 * reference cycle is detected. When there are several problems, the first
+	 * one encountered in a depth-first traversal is reported.
+	 */
+	public checkGlyph(buhin: string): CheckGlyphResult {
+		return this.checkGlyphOfName(buhin, []);
+	}
+
+	/**
+	 * Same as {@link checkGlyph}, but checks the given KAGE data instead of
+	 * looking up a glyph by name. Empty data is considered renderable.
+	 * @param data - The KAGE data to be checked (in which lines are delimited by `"$"`).
+	 * @returns The same as {@link checkGlyph}.
+	 */
+	public checkGlyph2(data: string): CheckGlyphResult {
+		return this.checkGlyphOfData(data, []);
+	}
+
+	private checkGlyphOfName(buhin: string, ancestors: string[]): CheckGlyphResult {
+		if (ancestors.indexOf(buhin) !== -1) {
+			return "loop";
+		}
+		const data = this.kBuhin.search(buhin);
+		if (data === "") {
+			return "notFound";
+		}
+		ancestors.push(buhin);
+		const result = this.checkGlyphOfData(data, ancestors);
+		ancestors.pop();
+		return result;
+	}
+
+	private checkGlyphOfData(data: string, ancestors: string[]): CheckGlyphResult {
+		if (data === "") {
+			return "ok";
+		}
+		for (const stroke of data.split("$")) {
+			const columns = stroke.split(":");
+			if (Math.floor(+columns[0]) === 99) {
+				const result = this.checkGlyphOfName(columns[7], ancestors);
+				if (result !== "ok") {
+					return result;
+				}
+			}
+		}
+		return "ok";
 	}
 
 	protected getEachStrokes(glyphData: string): Stroke[] {
